@@ -5,4 +5,4 @@
 > Un clau, obchecto ta unir dos u mas cosas, mas que mas con un martiello.
 
 
-📊 Ejemplos de d3 responsive
+La idea y muchas de las opciones nacen del trabajo de [Pudding](http://pudding.cool) y de este [vídeo](https://www.youtube.com/watch?v=DEmeT6gX674)
