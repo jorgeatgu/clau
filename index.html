@@ -6,37 +6,17 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="css/styles.css">
+        <link rel="stylesheet" type="text/css" href="css/styles.css" inline>
     </head>
     <body>
-        <header>
-            <nav></nav>
-        </header>
+        <article class="chart-lluvia">
+            <svg>
+                <g class="container"></g>
+            </svg>
 
-        <section>
-            <article></article>
-            <article></article>
-            <article></article>
-        </section>
+        </article>
 
-        <footer>
-
-        </footer>
-        <script>
-        (function(i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function() {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-        ga('create', 'UA-36222123-1', 'jorgeatgu.com');
-        ga('send', 'pageview');
-        </script>
+        <script src="js/d3.min.js"></script>
+        <script src="js/index.js"></script>
     </body>
 </html>
