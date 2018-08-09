@@ -1,7 +1,7 @@
 'use strict';
 
 //Estructura similar a la que utilizan en algunos proyectos de pudding.cool
-var margin = { top: 48, right: 48, bottom: 48, left: 48 };
+var margin = { top: 24, right: 24, bottom: 24, left: 24 };
 var width = 0;
 var height = 0;
 var ratio = 1.75;

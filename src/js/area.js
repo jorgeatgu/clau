@@ -1,5 +1,5 @@
 //Estructura similar a la que utilizan en algunos proyectos de pudding.cool
-const margin = { top: 48, right: 48, bottom: 48, left: 48 };
+const margin = { top: 24, right: 24, bottom: 24, left: 24 };
 let width = 0;
 let height = 0;
 const ratio = 1.75;

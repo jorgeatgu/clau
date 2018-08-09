@@ -384,6 +384,11 @@ body {
     background-color: #f1f1f1;
 }
 
+.clau-container {
+    max-width: 90vw;
+    margin: 0 auto;
+}
+
 .title,
 .subtitle {
     font-size: 2rem;
@@ -419,7 +424,6 @@ body {
 
     .clau-container {
         max-width: 60rem;
-        margin: 0 auto;
     }
 
 }
