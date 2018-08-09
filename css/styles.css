@@ -393,9 +393,9 @@ body {
 .subtitle {
     font-size: 2rem;
     font-family: 'Archivo Black', sans-serif;
-    font-weight: bold;
     color: #182956;
     text-transform: uppercase;
+    letter-spacing: 0.06rem;
 }
 
 .title {
@@ -414,7 +414,9 @@ body {
 
 @media only screen and (min-width: 48em) {
 
-    .subtitle {
+    .subtitle,
+    .title {
+        letter-spacing: 0;
         font-size: 3rem;
     }
 
