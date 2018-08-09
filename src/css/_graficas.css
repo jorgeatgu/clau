@@ -17,6 +17,10 @@
     }
 }
 
+.area {
+    fill: rgba(244, 180, 212, .9);
+}
+
 @media only screen and (min-width: 48em) {
 
     .axis-x,

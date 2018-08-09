@@ -362,11 +362,64 @@ template {
             stroke-dasharray: 3px 3px;
         }
 
+.area {
+    fill: rgba(244, 180, 212, .9);
+}
+
 @media only screen and (min-width: 48em) {
 
     .axis-x,
     .axis-y {
         font-size: 0.88rem;
+    }
+
+}
+
+* {
+    box-sizing: border-box;
+    line-height: 1.5;
+}
+
+body {
+    background-color: #f1f1f1;
+}
+
+.title,
+.subtitle {
+    font-size: 2rem;
+    font-family: 'Archivo Black', sans-serif;
+    font-weight: bold;
+    color: #182956;
+    text-transform: uppercase;
+}
+
+.title {
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+}
+
+.text {
+    font-size: 1rem;
+    font-family: 'Merriweather', serif;
+    color: #111;
+}
+
+@media only screen and (min-width: 48em) {
+
+    .subtitle {
+        font-size: 3rem;
+    }
+
+    .title {
+        font-size: 4rem;
+    }
+
+    .clau-container {
+        max-width: 60rem;
+        margin: 0 auto;
     }
 
 }
