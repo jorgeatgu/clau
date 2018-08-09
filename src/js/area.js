@@ -1,6 +1,5 @@
 //Estructura similar a la que utilizan en algunos proyectos de pudding.cool
-
-const margin = { top: 50, right: 50, bottom: 50, left: 110 };
+const margin = { top: 48, right: 48, bottom: 48, left: 48 };
 let width = 0;
 let height = 0;
 const ratio = 1.75;
@@ -28,9 +27,9 @@ function setupElements() {
 
     const g = svg.select('.container');
 
-    g.append('g').attr('class', 'axis axis--x');
+    g.append('g').attr('class', 'axis axis-x');
 
-    g.append('g').attr('class', 'axis axis--y');
+    g.append('g').attr('class', 'axis axis-y');
 
     g.append('g').attr('class', 'area-container');
 
@@ -49,7 +48,7 @@ function drawAxes(g) {
         .tickFormat(d3.format("d"))
         .ticks(13)
 
-    g.select(".axis--x")
+    g.select(".axis-x")
         .attr("transform", "translate(0," + height + ")")
         .call(axisX)
 
@@ -58,7 +57,7 @@ function drawAxes(g) {
         .ticks(5)
         .tickSizeInner(-width)
 
-    g.select(".axis--y")
+    g.select(".axis-y")
         .transition()
         .duration(transitionDuration)
         .call(axisY)

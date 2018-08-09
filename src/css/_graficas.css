@@ -1,0 +1,27 @@
+/* Dando estilos a los ejes verticales/horizontales */
+
+.axis-x,
+.axis-y {
+    font-family: var(--roboto);
+    .domain {
+        stroke: none;
+    }
+}
+
+.axis-y {
+    .tick {
+        line {
+            stroke: #888;
+            stroke-dasharray: 3px 3px;
+        }
+    }
+}
+
+@media only screen and (min-width: 48em) {
+
+    .axis-x,
+    .axis-y {
+        font-size: 14px;
+    }
+
+}
