@@ -18,7 +18,97 @@
 }
 
 .area {
-    fill: rgba(244, 180, 212, .9);
+    fill: var(--area);
+}
+
+.x-hover-line,
+.y-hover-line {
+    stroke: var(--wes-red);
+}
+
+.circle-focus {
+    fill: var(--wes-red);
+}
+
+.text-focus {
+    font-family: var(--roboto);
+    font-size: 12px;
+}
+
+.overlay {
+    fill: transparent;
+}
+
+.chart-lluvia-tooltip-dos {
+    position: relative;
+}
+
+.tooltip {
+    position: absolute;
+    z-index: 2;
+    width: 70px;
+    margin-left: 20px;
+    padding: 10px;
+    border-radius: 3px;
+}
+
+.tooltip-lluvias {
+    background-color: #34009c;
+    height: auto;
+    width: 300px;
+    border-color: #34009c;
+    margin-left: 0;
+    top: 150px;
+    p {
+        &:empty {
+            display: none;
+        }
+    }
+    .tooltipYear {
+        color: var(--white);
+        font-size: 1.1rem;
+        font-weight: normal;
+        max-width: 300px;
+        .textYear {
+            display: block;
+            font-size: 1.3rem;
+        }
+        span {
+            font-weight: bold;
+            font-family: var(--monospace);
+        }
+    }
+}
+
+.bar-vertical {
+    fill: #82ceea;
+}
+
+.chart-lluvia-bar-vertical-tooltip {
+    position: relative;
+}
+
+.tooltip-lluvia-mes-container {
+    position: absolute;
+    font-family: var(--roboto);
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 5px 15px;
+    border-left: 5px solid #34009c;
+    background-color: #F3F3F3;
+    box-shadow: 0 3px 4px rgba(0, 0, 0, .2);
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.tooltip-lluvia-mes {
+    font-size: 16px;
+    color: #34009c;
+}
+
+.tooltip-lluvia-mes-total {
+    font-weight: bold;
 }
 
 @media only screen and (min-width: 48em) {

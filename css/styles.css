@@ -363,7 +363,99 @@ template {
         }
 
 .area {
-    fill: rgba(244, 180, 212, .9);
+    fill: #3a285d;
+}
+
+.x-hover-line,
+.y-hover-line {
+    stroke: #F23818;
+}
+
+.circle-focus {
+    fill: #F23818;
+}
+
+.text-focus {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 0.75rem;
+}
+
+.overlay {
+    fill: transparent;
+}
+
+.chart-lluvia-tooltip-dos {
+    position: relative;
+}
+
+.tooltip {
+    position: absolute;
+    z-index: 2;
+    width: 70px;
+    margin-left: 20px;
+    padding: 0.63rem;
+    border-radius: 3px;
+}
+
+.tooltip-lluvias {
+    background-color: #34009c;
+    height: auto;
+    width: 300px;
+    border-color: #34009c;
+    margin-left: 0;
+    top: 150px;
+}
+
+.tooltip-lluvias p:empty {
+            display: none;
+        }
+
+.tooltip-lluvias .tooltipYear {
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: normal;
+        max-width: 300px;
+    }
+
+.tooltip-lluvias .tooltipYear .textYear {
+            display: block;
+            font-size: 1.3rem;
+        }
+
+.tooltip-lluvias .tooltipYear span {
+            font-weight: bold;
+            font-family: 'SFMono-Regular', Consolas, Menlo, Courier, monospace;
+        }
+
+.bar-vertical {
+    fill: #82ceea;
+}
+
+.chart-lluvia-bar-vertical-tooltip {
+    position: relative;
+}
+
+.tooltip-lluvia-mes-container {
+    position: absolute;
+    font-family: 'Roboto Condensed', sans-serif;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 0.31rem 0.94rem;
+    border-left: 5px solid #34009c;
+    background-color: #F3F3F3;
+    box-shadow: 0 3px 4px rgba(0, 0, 0, .2);
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.tooltip-lluvia-mes {
+    font-size: 1rem;
+    color: #34009c;
+}
+
+.tooltip-lluvia-mes-total {
+    font-weight: bold;
 }
 
 @media only screen and (min-width: 48em) {
@@ -380,8 +472,20 @@ template {
     line-height: 1.5;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+p {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
 body {
-    background-color: #f1f1f1;
+    background-color: #dde8e0;
 }
 
 .clau-container {
@@ -392,7 +496,7 @@ body {
 .title,
 .subtitle {
     font-size: 2rem;
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Rubik', sans-serif;
     color: #182956;
     text-transform: uppercase;
     letter-spacing: 0.06rem;
@@ -410,6 +514,24 @@ body {
     font-size: 1rem;
     font-family: 'Merriweather', serif;
     color: #111;
+    max-width: 30rem;
+}
+
+.footer {
+    background-color: #E25772;
+    width: 100%;
+    padding: 10vh 0;
+}
+
+.footer-texto,
+.footer-links {
+    color: #111;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1rem;
+}
+
+.footer-links {
+    font-weight: bold;
 }
 
 @media only screen and (min-width: 48em) {

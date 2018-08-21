@@ -5,11 +5,14 @@ function areaTooltip() {
     let height = 0;
     const ratio = 1.75;
     const transitionDuration = 300;
-    const chart = d3.select('.chart-lluvia-tooltip');
+    const chart = d3.select('.chart-lluvia-tooltip-dos');
     const svg = chart.select('svg');
     const scales = {};
     let dataz;
     const bisectDate = d3.bisector(function(d) { return d.fecha; }).left;
+    const tooltipDates = chart.append("div")
+        .attr("class", "tooltip tooltip-lluvias")
+        .style("opacity", 0);
 
     //Escala para los ejes X e Y
     function setupScales() {
@@ -27,17 +30,24 @@ function areaTooltip() {
     //Seleccionamos el contenedor donde irán las escalas y en este caso el area donde se pirntara nuestra gráfica
     function setupElements() {
 
-        const g = svg.select('.chart-lluvia-tooltip-container');
+        const g = svg.select('.chart-lluvia-tooltip-dos-container');
 
         g.append('g').attr('class', 'axis axis-x');
 
         g.append('g').attr('class', 'axis axis-y');
 
-        g.append('g').attr('class', 'area-container');
+        g.append('g').attr('class', 'area-container-dos');
 
         g.append('rect').attr('class', 'overlay');
 
-        g.append('g').attr('class', 'focus').style("display", "none");
+        g.append('g').attr('class', 'focus')
+            .style("display", "none")
+            .append("line")
+            .attr("class", "x-hover-line hover-line")
+            .attr("y1", 0);
+
+        g.select('.focus').append("text")
+            .attr("class", "text-focus");
 
     }
 
@@ -72,42 +82,48 @@ function areaTooltip() {
 
         const overlay = g.select('.overlay');
 
-        focus.append("line")
-            .attr("class", "x-hover-line hover-line")
-            .attr("y1", 0)
-            .attr("y2", height);
+        const focusText = g.select('text-focus')
 
-        focus.append("line")
-            .attr("class", "y-hover-line hover-line")
-            .attr("x1", width)
-            .attr("x2", width);
+        focus.select(".x-hover-line").attr("y2", height);
 
-        focus.append("circle")
-            .attr("class", "circle-focus")
-            .attr("r", 8);
-
-        focus.append("text")
-            .attr("class", "text-focus")
-            .attr("x", -10)
+        focusText.attr("x", -10)
             .attr("y", -20)
             .attr("dy", ".31em");
 
-        overlay.attr("width", width + margin.left + margin.right )
-            .attr("height", height )
-            .on("mouseover", function() { focus.style("display", null); })
-            .on("mouseout", function() { focus.style("display", "none"); })
+        overlay.attr("width", width + margin.left + margin.right)
+            .attr("height", height)
+            .on("mouseover", function() {
+                focus.style("display", null);
+            })
+            .on("mouseout", function() {
+                focus.style("display", "none")
+                tooltipDates.style("opacity", 0)
+            })
             .on("mousemove", mousemove);
 
         function mousemove() {
+            const w = chart.node().offsetWidth;
             var x0 = scales.count.x.invert(d3.mouse(this)[0]),
                 i = bisectDate(dataz, x0, 1),
                 d0 = dataz[i - 1],
                 d1 = dataz[i],
                 d = x0 - d0.fecha > d1.fecha - x0 ? d1 : d0;
-            focus.attr("transform", "translate(" + scales.count.x(d.fecha) + "," + scales.count.y(d.dias_lluvia) + ")");
-            focus.select("text").text(d.dias_lluvia);
-            focus.select('.x-hover-line').attr("y2", height - scales.count.y(d.dias_lluvia));
-            focus.select('.y-hover-line').attr('x1', 0 - scales.count.x(d.fecha));
+                //Calculamos la posicion del tooltip
+                const positionX = scales.count.x(d.fecha) + 25;
+                const postionWidthTooltip = positionX + 300;
+                const positionRightTooltip = w - positionX;
+
+                tooltipDates.style("opacity", 1)
+                    .html('<p class="tooltipYear"><span class="textYear">' + d.fecha + '</span>En <span>' + d.dias + '</span> días de lluvia se recogieron <span>' + d.precipitacion_anual + '</span> milímetros de agua.<p/>')
+                    //Dependiendo de la posición del tooltip cambiamos su sentido para que sea legible
+                    .style("left", postionWidthTooltip > w ? 'auto' : positionX + 'px')
+                    .style("right", postionWidthTooltip > w ? positionRightTooltip + 'px' : 'auto');
+
+                focus.select(".x-hover-line")
+                    .attr("transform",
+                        "translate(" + scales.count.x(d.fecha) + "," +
+                        0 + ")");
+
         }
 
     }
@@ -125,7 +141,7 @@ function areaTooltip() {
 
         const translate = "translate(" + margin.left + "," + margin.top + ")";
 
-        const g = svg.select('.chart-lluvia-tooltip-container')
+        const g = svg.select('.chart-lluvia-tooltip-dos-container')
 
         g.attr("transform", translate)
 
@@ -137,8 +153,7 @@ function areaTooltip() {
 
         updateScales(width, height)
 
-        const container = chart.select('.area-container')
-
+        const container = chart.select('.area-container-dos')
 
         const layer = container.selectAll('.area')
                .data([dataz])

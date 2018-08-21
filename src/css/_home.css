@@ -3,8 +3,20 @@
     line-height: 1.5;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+p {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
 body {
-    background-color: var(--f1);
+    background-color: var(--background);
 }
 
 .clau-container {
@@ -33,7 +45,26 @@ body {
     font-size: 1rem;
     font-family: var(--merri);
     color: var(--black);
+    max-width: 30rem;
 }
+
+.footer {
+    background-color: #E25772;
+    width: 100%;
+    padding: 10vh 0;
+}
+
+.footer-texto,
+.footer-links {
+    color: var(--black);
+    font-family: var(--roboto);
+    font-size: 1rem;
+}
+
+.footer-links {
+    font-weight: bold;
+}
+
 
 @media only screen and (min-width: 48em) {
 

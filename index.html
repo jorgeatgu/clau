@@ -1,45 +1,76 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>A clau | d3 responsive</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="css/styles.css">
-        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Archivo+Black|Merriweather" rel="stylesheet">
-    </head>
-    <body>
-        <section class="clau-container">
 
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>A clau | d3 responsive</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Rubik:400,500|Merriweather" rel="stylesheet">
+</head>
+
+<body>
+    <section class="clau-container">
         <h1 class="title">Clau</h1>
         <p class="text">A clau, es una llave en aragonés.</p>
-
-        <p class="text">La idea es tener un repositorio con ejemplos de gráficas hechas con d3 y que sean responsive pero que contengan datos de verdad y todas ellas con tooltips o con herramientas como <a href="http://d3-annotation.susielu.com">d3-annotations</a>. Es algo que no ha sido fácil, he dado muchas vueltas y hay demasiados ejemplos confusos para hacer las gráficas en responsive. Algunos de ellos aprovechan el hack de SVG de prescindir tanto de width y height, obviamente se adapta ya que un SVG por defecto es 100% pero el resultado es malo.</p>
-
+        <p class="text">La idea es tener un repositorio con ejemplos de gráficas hechas con d3 y que se adapten a cualquier dispositivo. Los ejemplos contienen datos de verdad, casi todo extraídos de <a href="https://forno.es">Forno</a>. Todas las gráficas tienen su version con tooltips o con herramientas como <a href="http://d3-annotation.susielu.com">d3-annotations</a>. Es algo que no ha sido fácil, he dado muchas vueltas buscando un camino a seguir, hay demasiado ejemplos vagos y confusos. Algunos de ellos aprovechan el hack de SVG de prescindir tanto de width y height, obviamente se adapta ya que un SVG por defecto es 100% pero el resultado es terrible.</p>
         <p class="text">La tipografía elegida para los número siempre debe ser Roboto Condensed, ya que no todas las tipografías se llevan bien con los números. Roboto es la elegida pero <a href="https://www.invisionapp.com/blog/best-free-fonts-for-numbers/">aquí hay algunas más</a>.</p>
-
         <h3 class="subtitle">
         Gráfica de Area</h3>
+        <p class="text">Sin tooltip</p>
         <article class="chart-lluvia">
             <svg>
                 <g class="container"></g>
             </svg>
-
         </article>
-
         <h3 class="subtitle">
         Gráfica de Area con tooltip</h3>
+        <p class="text">Con un tooltip que solamente pinta el resultado y dos líneas para situar al usuario.</p>
         <article class="chart-lluvia-tooltip">
             <svg>
                 <g class="chart-lluvia-tooltip-container"></g>
             </svg>
-
         </article>
-        </section>
+        <h3 class="subtitle">
+        Gráfica de Area con tooltip II</h3>
+        <p class="text">Con un tooltip que devuelve texto y una línea para ubicar al usuario en la gráfica.</p>
+        <article class="chart-lluvia-tooltip-dos">
+            <svg>
+                <g class="chart-lluvia-tooltip-dos-container"></g>
+            </svg>
+        </article>
+        <h3 class="subtitle">
+        Gráfica de barras vertical sin tooltip </h3>
+        <p class="text">Gráfica de barras en formato vertical sin tooltip.</p>
+        <article class="chart-lluvia-bar-vertical">
+            <svg>
+                <g class="chart-lluvia-bar-vertical-container"></g>
+            </svg>
+        </article>
+        <h3 class="subtitle">
+        Gráfica de barras vertical con tooltip </h3>
+        <p class="text">Gráfica de barras en formato vertical con tooltip fijo. La idea es aprovechar una posición vacía de la gráfica para dejar el tooltip en estático. Es bastante molesto que vaya apareciendo y desapareciendo.</p>
+        <article class="chart-lluvia-bar-vertical-tooltip">
+            <svg>
+                <g class="chart-lluvia-bar-vertical-tooltip-container"></g>
+            </svg>
+        </article>
+    </section>
+    <footer class="footer">
+        <div class="clau-container">
+            <p class="footer-texto">Hecho en Zaragoza con mucha maña por un <a class="footer-links" href="http://jorgeatgu.com" target="_blank">maño</a> - MMXVII</p>
+            <p class="footer-texto">Cualquier consulta escribid a: contacto@jorgeatgu.com</p>
+            <a class="footer-links" href="http://github.com/jorgeatgu/clau">GitHub</a>
+        </div>
+    </footer>
+    <script src="js/d3.min.js"></script>
+    <script src="js/bar-vertical-tooltip.js"></script>
+    <script src="js/bar-vertical.js"></script>
+    <script src="js/area.js"></script>
+    <script src="js/area-tooltip.js"></script>
+    <script src="js/area-tooltip-dos.js"></script>
+</body>
 
-        <script src="js/d3.min.js"></script>
-        <script src="js/area.js"></script>
-        <script src="js/area-tooltip.js"></script>
-    </body>
 </html>
