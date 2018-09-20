@@ -80,7 +80,8 @@
     }
 }
 
-.bar-vertical {
+.bar-vertical,
+.bar-horizontal {
     fill: #82ceea;
 }
 

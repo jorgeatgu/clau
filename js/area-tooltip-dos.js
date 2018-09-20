@@ -5,8 +5,6 @@ function areaTooltip() {
     var margin = { top: 24, right: 24, bottom: 24, left: 24 };
     var width = 0;
     var height = 0;
-    var ratio = 1.75;
-    var transitionDuration = 300;
     var chart = d3.select('.chart-lluvia-tooltip-dos');
     var svg = chart.select('svg');
     var scales = {};
@@ -59,7 +57,7 @@ function areaTooltip() {
 
         var axisY = d3.axisLeft(scales.count.y).tickFormat(d3.format("d")).ticks(5).tickSizeInner(-width);
 
-        g.select(".axis-y").transition().duration(transitionDuration).call(axisY);
+        g.select(".axis-y").call(axisY);
 
         var focus = g.select('.focus');
 

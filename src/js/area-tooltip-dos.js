@@ -3,13 +3,11 @@ function areaTooltip() {
     const margin = { top: 24, right: 24, bottom: 24, left: 24 };
     let width = 0;
     let height = 0;
-    const ratio = 1.75;
-    const transitionDuration = 300;
     const chart = d3.select('.chart-lluvia-tooltip-dos');
     const svg = chart.select('svg');
     const scales = {};
     let dataz;
-    const bisectDate = d3.bisector(function(d) { return d.fecha; }).left;
+    const bisectDate = d3.bisector(d =>  d.fecha).left;
     const tooltipDates = chart.append("div")
         .attr("class", "tooltip tooltip-lluvias")
         .style("opacity", 0);
@@ -74,8 +72,6 @@ function areaTooltip() {
             .tickSizeInner(-width)
 
         g.select(".axis-y")
-            .transition()
-            .duration(transitionDuration)
             .call(axisY)
 
         const focus = g.select('.focus');
@@ -146,9 +142,9 @@ function areaTooltip() {
         g.attr("transform", translate)
 
         const area = d3.area()
-            .x(function(d) { return scales.count.x(d.fecha); })
+            .x(d => scales.count.x(d.fecha))
             .y0(height)
-            .y1(function(d) { return scales.count.y(d.dias) })
+            .y1(d => scales.count.y(d.dias))
             .curve(d3.curveCardinal.tension(0.6));
 
         updateScales(width, height)
@@ -181,7 +177,7 @@ function areaTooltip() {
                       console.log(error);
                 } else {
                       dataz = data
-                      dataz.forEach(function(d) {
+                      dataz.forEach(d => {
                           d.fecha = d.fecha;
                           d.dias_lluvia = d.dias;
                       });

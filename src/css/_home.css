@@ -24,6 +24,10 @@ body {
     margin: 0 auto;
 }
 
+.chart-container {
+    margin: 2rem 0 6rem;
+}
+
 .title,
 .subtitle {
     font-size: 2rem;
@@ -33,12 +37,19 @@ body {
     letter-spacing: 1px;
 }
 
+.quote {
+    padding: 1rem;
+    background-color: var(--white);
+    border-left: 5px solid var(--wes-bluedark);
+}
+
 .title {
     margin-bottom: 1rem;
 }
 
 .subtitle {
     font-size: 1.5rem;
+    margin-bottom: 0;
 }
 
 .text {
@@ -65,13 +76,11 @@ body {
     font-weight: bold;
 }
 
-
 @media only screen and (min-width: 48em) {
 
     .subtitle,
     .title {
         letter-spacing: 0;
-        font-size: 3rem;
     }
 
     .title {

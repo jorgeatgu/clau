@@ -14,48 +14,81 @@
 <body>
     <section class="clau-container">
         <h1 class="title">Clau</h1>
-        <p class="text">A clau, es una llave en aragonés.</p>
+        <blockquote class="text quote">A clau, es una llave en aragonés.</blockquote>
         <p class="text">La idea es tener un repositorio con ejemplos de gráficas hechas con d3 y que se adapten a cualquier dispositivo. Los ejemplos contienen datos de verdad, casi todo extraídos de <a href="https://forno.es">Forno</a>. Todas las gráficas tienen su version con tooltips o con herramientas como <a href="http://d3-annotation.susielu.com">d3-annotations</a>. Es algo que no ha sido fácil, he dado muchas vueltas buscando un camino a seguir, hay demasiado ejemplos vagos y confusos. Algunos de ellos aprovechan el hack de SVG de prescindir tanto de width y height, obviamente se adapta ya que un SVG por defecto es 100% pero el resultado es terrible.</p>
         <p class="text">La tipografía elegida para los número siempre debe ser Roboto Condensed, ya que no todas las tipografías se llevan bien con los números. Roboto es la elegida pero <a href="https://www.invisionapp.com/blog/best-free-fonts-for-numbers/">aquí hay algunas más</a>.</p>
-        <h3 class="subtitle">
-        Gráfica de Area</h3>
-        <p class="text">Sin tooltip</p>
-        <article class="chart-lluvia">
-            <svg>
-                <g class="container"></g>
-            </svg>
-        </article>
-        <h3 class="subtitle">
-        Gráfica de Area con tooltip</h3>
-        <p class="text">Con un tooltip que solamente pinta el resultado y dos líneas para situar al usuario.</p>
-        <article class="chart-lluvia-tooltip">
-            <svg>
-                <g class="chart-lluvia-tooltip-container"></g>
-            </svg>
-        </article>
-        <h3 class="subtitle">
-        Gráfica de Area con tooltip II</h3>
-        <p class="text">Con un tooltip que devuelve texto y una línea para ubicar al usuario en la gráfica.</p>
-        <article class="chart-lluvia-tooltip-dos">
-            <svg>
-                <g class="chart-lluvia-tooltip-dos-container"></g>
-            </svg>
-        </article>
-        <h3 class="subtitle">
-        Gráfica de barras vertical sin tooltip </h3>
-        <p class="text">Gráfica de barras en formato vertical sin tooltip.</p>
-        <article class="chart-lluvia-bar-vertical">
-            <svg>
-                <g class="chart-lluvia-bar-vertical-container"></g>
-            </svg>
-        </article>
-        <h3 class="subtitle">
-        Gráfica de barras vertical con tooltip </h3>
-        <p class="text">Gráfica de barras en formato vertical con tooltip fijo. La idea es aprovechar una posición vacía de la gráfica para dejar el tooltip en estático. Es bastante molesto que vaya apareciendo y desapareciendo.</p>
-        <article class="chart-lluvia-bar-vertical-tooltip">
-            <svg>
-                <g class="chart-lluvia-bar-vertical-tooltip-container"></g>
-            </svg>
+        <section class="chart-container">
+            <h3 class="subtitle">
+            Gráfica de Area</h3>
+            <p class="text">Sin tooltip</p>
+            <article class="chart-lluvia">
+                <svg>
+                    <g class="container"></g>
+                </svg>
+            </article>
+        </section>
+        <section class="chart-container">
+            <h3 class="subtitle">
+            Gráfica de Area con tooltip</h3>
+            <p class="text">Con un tooltip que solamente pinta el resultado y dos líneas para situar al usuario.</p>
+            <article class="chart-lluvia-tooltip">
+                <svg>
+                    <g class="chart-lluvia-tooltip-container"></g>
+                </svg>
+            </article>
+        </section>
+        <section class="chart-container">
+            <h3 class="subtitle">
+            Gráfica de Area con tooltip II</h3>
+            <p class="text">Con un tooltip que devuelve texto y una línea para ubicar al usuario en la gráfica.</p>
+            <article class="chart-lluvia-tooltip-dos">
+                <svg>
+                    <g class="chart-lluvia-tooltip-dos-container"></g>
+                </svg>
+            </article>
+        </section>
+        <section class="chart-container">
+            <h3 class="subtitle">
+            Gráfica de barras vertical sin tooltip </h3>
+            <p class="text">Gráfica de barras en formato vertical sin tooltip.</p>
+            <article class="chart-lluvia-bar-vertical">
+                <svg>
+                    <g class="chart-lluvia-bar-vertical-container"></g>
+                </svg>
+            </article>
+        </section>
+        <section class="chart-container">
+            <h3 class="subtitle">
+            Gráfica de barras vertical con tooltip </h3>
+            <p class="text">Gráfica de barras en formato vertical con tooltip fijo. La idea es aprovechar una posición vacía de la gráfica para dejar el tooltip en estático. Es bastante molesto que vaya apareciendo y desapareciendo.</p>
+            <article class="chart-lluvia-bar-vertical-tooltip">
+                <svg>
+                    <g class="chart-lluvia-bar-vertical-tooltip-container"></g>
+                </svg>
+            </article>
+        </section>
+        <section class="chart-container">
+            <h3 class="subtitle">
+            Gráfica de barras horizontal sin tooltip </h3>
+            <p class="text">Gráfica de barras en formato horizontal sin tooltip.</p>
+            <article class="chart-lluvia-bar-horizontal">
+                <svg>
+                    <g class="chart-lluvia-bar-horizontal-container"></g>
+                </svg>
+            </article>
+        </section>
+        <section class="chart-container">
+            <h3 class="subtitle">Gráfica de scatterplot</h3>
+            <p class="text">Scatter Plot</p>
+            <article class="chart-lluvia-scatter">
+                <svg>
+                    <g class="chart-lluvia-scatter-container"></g>
+                </svg>
+            </article>
+        </section>
+        <article class="grafica-favor-legislatura">
+            <h3 class="partidos-grafico-titulo">DISTRIBUCIÓN DEL VOTO A FAVOR DE ZEC</h3>
+            <p class="partidos-grafico-parrafo">Así han evolucionado a lo largo de la lesgislatura los votos a favor de ZEC al resto de partidos del Ayuntamiento.</p>
         </article>
     </section>
     <footer class="footer">
@@ -71,6 +104,9 @@
     <script src="js/area.js"></script>
     <script src="js/area-tooltip.js"></script>
     <script src="js/area-tooltip-dos.js"></script>
+    <script src="js/bar-horizontal.js"></script>
+    <script src="js/scatter-plot.js"></script>
+    <script src="js/multiple-area.js"></script>
 </body>
 
 </html>

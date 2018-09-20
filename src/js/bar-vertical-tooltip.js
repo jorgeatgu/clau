@@ -15,12 +15,9 @@ function barVerticalTooltip() {
     function setupScales() {
 
         const countX = d3.scaleLinear()
-            .domain([d3.min(dataz, function(d) {
-            return d.fecha;
-        }),
-        d3.max(dataz, function(d) {
-            return d.fecha;
-        })
+            .domain([d3.min(dataz, d => d.fecha
+        ),
+        d3.max(dataz, d => d.fecha)
     ]);
 
         const countY = d3.scaleLinear()
@@ -99,25 +96,19 @@ function barVerticalTooltip() {
 
 
         layer.merge(newLayer)
-            .on("mouseover", function(d) {
+            .on("mouseover", d => {
                 tooltip.transition()
                 .duration(300)
                 .style("opacity", 1);
-                tooltip.html('<div class="tooltip-lluvia-mes-container"><p class="tooltip-lluvia-mes">Lluvia acumulada en ' + d.dia + '<span class="tooltip-lluvia-mes-total">: ' + d.fecha + 'mm</span><p/><p class="tooltip-lluvia-mes">Lluvia acumulada en ' + d.precipitacion_anual + '<span class="tooltip-lluvia-mes-total">: ' + d.fecha + 'mm</span><p/></div>')
+                tooltip.html('<div class="tooltip-lluvia-mes-container"><p class="tooltip-lluvia-mes">Lluvia acumulada en ' + d.dias + '<span class="tooltip-lluvia-mes-total">: ' + d.fecha + 'mm</span><p/><p class="tooltip-lluvia-mes">Lluvia acumulada en ' + d.precipitacion_anual + '<span class="tooltip-lluvia-mes-total">: ' + d.fecha + 'mm</span><p/></div>')
             })
-            .on("mouseout", function(d){
+            .on("mouseout", d => {
                 tooltip.style("opacity", 0)
             })
             .attr("width", width / dataz.length - 1)
-            .attr("x", function(d) {
-                return scales.count.x(d.fecha);
-            })
-            .attr("y", function(d) {
-                return scales.count.y(d.dias);
-            })
-            .attr("height", function(d) {
-                return height - scales.count.y(d.dias);
-            });
+            .attr("x", d => scales.count.x(d.fecha))
+            .attr("y", d => scales.count.y(d.dias))
+            .attr("height", d => height - scales.count.y(d.dias));
 
         drawAxes(g)
 
@@ -135,7 +126,7 @@ function barVerticalTooltip() {
                       console.log(error);
                 } else {
                       dataz = data
-                      dataz.forEach(function(d) {
+                      dataz.forEach( d => {
                           d.fecha = d.fecha;
                           d.dias_lluvia = d.dias;
                       });

@@ -1,11 +1,9 @@
-function barVertical() {
+function barHorizontal() {
     //Estructura similar a la que utilizan en algunos proyectos de pudding.cool
-    const margin = { top: 24, right: 24, bottom: 24, left: 24 };
+    const margin = { top: 24, right: 24, bottom: 24, left: 64 };
     let width = 0;
     let height = 0;
-    let w = 0;
-    let h = 0;
-    const chart = d3.select('.chart-lluvia-bar-vertical');
+    const chart = d3.select('.chart-lluvia-bar-horizontal');
     const svg = chart.select('svg');
     const scales = {};
     let dataz;
@@ -15,12 +13,15 @@ function barVertical() {
 
         const countX = d3.scaleLinear()
             .domain(
-                [d3.min(dataz, d => d.fecha),
-                d3.max(dataz, d => d.fecha)]
+                [0,
+                d3.max(dataz, d => d.dias)]
         );
 
-        const countY = d3.scaleLinear()
-            .domain([0, 60]);
+        const countY = d3.scaleBand()
+            .domain(dataz.map(function(d) { return d.fecha; }))
+            .paddingInner(0.1)
+            .paddingOuter(0.5);
+
 
         scales.count = { x: countX,  y: countY };
 
@@ -29,13 +30,13 @@ function barVertical() {
     //Seleccionamos el contenedor donde irán las escalas y en este caso el area donde se pirntara nuestra gráfica
     function setupElements() {
 
-        const g = svg.select('.chart-lluvia-bar-vertical-container');
+        const g = svg.select('.chart-lluvia-bar-horizontal-container');
 
         g.append('g').attr('class', 'axis axis-x');
 
         g.append('g').attr('class', 'axis axis-y');
 
-        g.append('g').attr('class', 'area-container-chart-vertical');
+        g.append('g').attr('class', 'area-container-chart-horizontal');
 
     }
 
@@ -50,15 +51,15 @@ function barVertical() {
 
         const axisX = d3.axisBottom(scales.count.x)
             .tickFormat(d3.format("d"))
+            .tickSize(-height)
 
         g.select(".axis-x")
-            .attr("transform", "translate(0," + height + ")")
+            .attr("transform", "translate(0," + height  + ")")
             .call(axisX)
 
         const axisY = d3.axisLeft(scales.count.y)
+            .ticks(1)
             .tickFormat(d3.format("d"))
-            .ticks(5)
-            .tickSizeInner(-w)
 
         g.select(".axis-y")
             .call(axisY)
@@ -66,8 +67,8 @@ function barVertical() {
     }
 
     function updateChart(dataz) {
-        w = chart.node().offsetWidth;
-        h = 600;
+        const w = chart.node().offsetWidth;
+        const h = window.innerHeight;
 
         width = w - margin.left - margin.right;
         height = h - margin.top - margin.bottom;
@@ -78,28 +79,27 @@ function barVertical() {
 
         const translate = "translate(" + margin.left + "," + margin.top + ")";
 
-        const g = svg.select('.chart-lluvia-bar-vertical-container')
+        const g = svg.select('.chart-lluvia-bar-horizontal-container')
 
         g.attr("transform", translate)
 
         updateScales(width, height)
 
-        const container = chart.select('.area-container-chart-vertical')
+        const container = chart.select('.area-container-chart-horizontal')
 
-        const layer = container.selectAll('.bar-vertical')
+        const layer = container.selectAll('.bar-horizontal')
                .data(dataz)
 
         const newLayer = layer.enter()
                 .append('rect')
-                .attr('class', 'bar-vertical')
+                .attr('class', 'bar-horizontal')
 
 
         layer.merge(newLayer)
-            .attr("width", width / dataz.length - 1)
-            .attr("x", d => scales.count.x(d.fecha)
-            )
-            .attr("y", d => scales.count.y(d.dias))
-            .attr("height", d => height - scales.count.y(d.dias));
+            .attr("x", 0)
+            .attr("y", d => scales.count.y(d.fecha))
+            .attr("height", height / dataz.length - 2)
+            .attr("width", d => scales.count.x(d.dias));
 
         drawAxes(g)
 
@@ -135,4 +135,4 @@ function barVertical() {
 
 }
 
-barVertical()
+barHorizontal()
