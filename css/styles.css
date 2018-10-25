@@ -494,17 +494,6 @@ template {
 
 }
 
-.chart {
-    max-width: 60rem;
-    margin: 0 auto;
-    background-color: navajowhite;
-
-}
-
-.chart__svg {
-    background-color: blue;
-}
-
 * {
     box-sizing: border-box;
     line-height: 1.5;
