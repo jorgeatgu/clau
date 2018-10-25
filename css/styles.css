@@ -346,11 +346,30 @@ template {
   display: none;
 }
 
+:root {
+    --fontSystem: BlinkMacSystemFont, -apple-system, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Helvetica, sans-serif;
+    --monospace: 'SFMono-Regular', Consolas, Menlo, Courier, monospace;
+    --roboto: 'Roboto Condensed', sans-serif;
+    --archivo: 'Rubik', sans-serif;
+    --merri: 'Merriweather', serif;
+    --black: #111;
+    --white: #fff;
+    --f1: #f1f1f1;
+    --background: #dde8e0;
+    --wes-grey: #B3C0C3;
+    --wes-red: #F23818;
+    --wes-blue: #0097E2;
+    --wes-bluedark: #182956;
+    --wes-gold: #DDB289;
+    --area: #3a285d;
+}
+
 /* Dando estilos a los ejes verticales/horizontales */
 
 .axis-x,
 .axis-y {
     font-family: 'Roboto Condensed', sans-serif;
+    font-family: var(--roboto);
 }
 
 .axis-x .domain, .axis-y .domain {
@@ -364,20 +383,24 @@ template {
 
 .area {
     fill: #3a285d;
+    fill: var(--area);
 }
 
 .x-hover-line,
 .y-hover-line {
     stroke: #F23818;
+    stroke: var(--wes-red);
 }
 
 .circle-focus {
     fill: #F23818;
+    fill: var(--wes-red);
 }
 
 .text-focus {
     font-family: 'Roboto Condensed', sans-serif;
-    font-size: 0.75rem;
+    font-family: var(--roboto);
+    font-size: 12px;
 }
 
 .overlay {
@@ -393,7 +416,7 @@ template {
     z-index: 2;
     width: 70px;
     margin-left: 20px;
-    padding: 0.63rem;
+    padding: 10px;
     border-radius: 3px;
 }
 
@@ -412,6 +435,7 @@ template {
 
 .tooltip-lluvias .tooltipYear {
         color: #fff;
+        color: var(--white);
         font-size: 1.1rem;
         font-weight: normal;
         max-width: 300px;
@@ -425,6 +449,7 @@ template {
 .tooltip-lluvias .tooltipYear span {
             font-weight: bold;
             font-family: 'SFMono-Regular', Consolas, Menlo, Courier, monospace;
+            font-family: var(--monospace);
         }
 
 .bar-vertical,
@@ -439,9 +464,10 @@ template {
 .tooltip-lluvia-mes-container {
     position: absolute;
     font-family: 'Roboto Condensed', sans-serif;
+    font-family: var(--roboto);
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    padding: 0.31rem 0.94rem;
+    padding: 5px 15px;
     border-left: 5px solid #34009c;
     background-color: #F3F3F3;
     box-shadow: 0 3px 4px rgba(0, 0, 0, .2);
@@ -451,7 +477,7 @@ template {
 }
 
 .tooltip-lluvia-mes {
-    font-size: 1rem;
+    font-size: 16px;
     color: #34009c;
 }
 
@@ -463,9 +489,20 @@ template {
 
     .axis-x,
     .axis-y {
-        font-size: 0.88rem;
+        font-size: 14px;
     }
 
+}
+
+.chart {
+    max-width: 60rem;
+    margin: 0 auto;
+    background-color: navajowhite;
+
+}
+
+.chart__svg {
+    background-color: blue;
 }
 
 * {
@@ -487,6 +524,7 @@ p {
 
 body {
     background-color: #dde8e0;
+    background-color: var(--background);
 }
 
 .clau-container {
@@ -502,15 +540,19 @@ body {
 .subtitle {
     font-size: 2rem;
     font-family: 'Rubik', sans-serif;
+    font-family: var(--archivo);
     color: #182956;
+    color: var(--wes-bluedark);
     text-transform: uppercase;
-    letter-spacing: 0.06rem;
+    letter-spacing: 1px;
 }
 
 .quote {
     padding: 1rem;
     background-color: #fff;
+    background-color: var(--white);
     border-left: 5px solid #182956;
+    border-left: 5px solid var(--wes-bluedark);
 }
 
 .title {
@@ -525,7 +567,9 @@ body {
 .text {
     font-size: 1rem;
     font-family: 'Merriweather', serif;
+    font-family: var(--merri);
     color: #111;
+    color: var(--black);
     max-width: 30rem;
 }
 
@@ -538,7 +582,9 @@ body {
 .footer-texto,
 .footer-links {
     color: #111;
+    color: var(--black);
     font-family: 'Roboto Condensed', sans-serif;
+    font-family: var(--roboto);
     font-size: 1rem;
 }
 

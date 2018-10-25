@@ -86,10 +86,25 @@
                 </svg>
             </article>
         </section>
-        <article class="grafica-favor-legislatura">
-            <h3 class="partidos-grafico-titulo">DISTRIBUCIÓN DEL VOTO A FAVOR DE ZEC</h3>
-            <p class="partidos-grafico-parrafo">Así han evolucionado a lo largo de la lesgislatura los votos a favor de ZEC al resto de partidos del Ayuntamiento.</p>
-        </article>
+        <!-- <section class="chart-multiple-lines">
+
+        </section> -->
+        <section class="chart-container">
+            <h3 class="subtitle">
+            Gráfica de area con input </h3>
+            <p class="text">Gráfica de area que se actualiza a través de un input.</p>
+            <article class="chart-lluvia-input">
+                <div class="temperatura-mensual-minima-select" id="mes-mensual-minima"></div>
+                <svg>
+                    <g class="chart-lluvia-input-container"></g>
+                </svg>
+            </article>
+        </section>
+        <section class="chart">
+            <div class="chart__inner">
+                <svg class="chart__svg"></svg>
+            </div>
+        </section>
     </section>
     <footer class="footer">
         <div class="clau-container">
@@ -106,7 +121,8 @@
     <script src="js/area-tooltip-dos.js"></script>
     <script src="js/bar-horizontal.js"></script>
     <script src="js/scatter-plot.js"></script>
-    <script src="js/multiple-area.js"></script>
+    <script src="js/area-input.js"></script>
+    <!-- <script src="js/multiple-area.js"></script> -->
 </body>
 
 </html>

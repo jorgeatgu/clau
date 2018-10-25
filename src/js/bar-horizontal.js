@@ -18,7 +18,7 @@ function barHorizontal() {
         );
 
         const countY = d3.scaleBand()
-            .domain(dataz.map(function(d) { return d.fecha; }))
+            .domain(dataz.map( d => d.fecha))
             .paddingInner(0.1)
             .paddingOuter(0.5);
 
@@ -86,6 +86,7 @@ function barHorizontal() {
         updateScales(width, height)
 
         const container = chart.select('.area-container-chart-horizontal')
+
 
         const layer = container.selectAll('.bar-horizontal')
                .data(dataz)

@@ -13,7 +13,10 @@ function areaTooltip() {
     function setupScales() {
 
         const countX = d3.scaleTime()
-            .domain([1951, 2017]);
+                    .domain([d3.min(dataz, d => d.fecha
+                ),
+                d3.max(dataz, d => d.fecha)
+            ]);
 
         const countY = d3.scaleLinear()
             .domain([0, 60]);

@@ -93,6 +93,9 @@ function updateChart(dataz) {
             .attr('class', 'area')
 
     layer.merge(newLayer)
+        .transition()
+        .duration(600)
+        .ease(d3.easeLinear)
         .attr('d', area)
 
     drawAxes(g)
