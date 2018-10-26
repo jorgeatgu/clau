@@ -68,7 +68,8 @@ function barHorizontal() {
 
     function updateChart(dataz) {
         const w = chart.node().offsetWidth;
-        const h = window.innerHeight;
+        h = dataz.length * 20;
+        console.log(h)
 
         width = w - margin.left - margin.right;
         height = h - margin.top - margin.bottom;
@@ -121,6 +122,10 @@ function barHorizontal() {
                       dataz.forEach( d => {
                           d.fecha = d.fecha;
                           d.dias_lluvia = d.dias;
+                      });
+
+                      dataz.sort(function(a, b) {
+                          return a.dias_lluvia - b.dias_lluvia;
                       });
                       setupElements()
                       setupScales()

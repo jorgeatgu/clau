@@ -1,7 +1,7 @@
 function areaInput() {
 
     //Estructura similar a la que utilizan en algunos proyectos de pudding.cool
-    const margin = { top: 24, right: 24, bottom: 24, left: 24 };
+    const margin = { top: 16, right: 16, bottom: 24, left: 32 };
     let width = 0;
     let height = 0;
     const chart = d3.select('.chart-lluvia-input');
@@ -46,23 +46,27 @@ function areaInput() {
     function drawAxes(g) {
 
         const axisX = d3.axisBottom(scales.count.x)
+            .tickPadding(5)
             .tickFormat(d3.format("d"))
             .ticks(13)
 
         g.select(".axis-x")
             .attr("transform", "translate(0," + height + ")")
             .transition()
-            .duration(200)
-            .call(axisX)
+            .duration(300)
+            .ease(d3.easeLinear)
+            .call(axisX);
 
         const axisY = d3.axisLeft(scales.count.y)
-            .tickSize(-width)
+            .tickPadding(5)
             .tickFormat(d => d + temp)
-            .ticks(2);
+            .tickSize(-width)
+            .ticks(6);
 
         g.select(".axis-y")
             .transition()
-            .duration(200)
+            .duration(300)
+            .ease(d3.easeLinear)
             .call(axisY)
     }
 
