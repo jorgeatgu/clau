@@ -494,6 +494,12 @@ template {
 
 }
 
+.line {
+    fill: none;
+    stroke: #3a285d;
+    stroke: var(--area);
+}
+
 * {
     box-sizing: border-box;
     line-height: 1.5;

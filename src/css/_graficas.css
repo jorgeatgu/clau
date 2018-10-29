@@ -120,3 +120,8 @@
     }
 
 }
+
+.line {
+    fill: none;
+    stroke: var(--area);
+}
