@@ -1,4 +1,4 @@
-function barVertical() {
+const barVertical = () => {
     //Estructura similar a la que utilizan en algunos proyectos de pudding.cool
     const margin = { top: 24, right: 24, bottom: 24, left: 24 };
     let width = 0;
@@ -13,7 +13,7 @@ function barVertical() {
     const parseDate = d3.timeParse("%x");
 
     //Escala para los ejes X e Y
-    function setupScales() {
+    const setupScales = () => {
 
         const countX = d3.scaleTime()
             .domain([d3.min(dataz, d => d.fecha),d3.max(dataz, d => d.fecha)]);
@@ -26,7 +26,7 @@ function barVertical() {
     }
 
     //Seleccionamos el contenedor donde irán las escalas y en este caso el area donde se pirntara nuestra gráfica
-    // function setupElements() {
+    // const setupElements = () => {
 
     //     chart.append('g').attr('.chart-lluvia-bar-vertical-container');
 
@@ -42,13 +42,13 @@ function barVertical() {
     // }
 
     //Actualizando escalas
-    function updateScales(width, height){
+    const updateScales = (width, height) => {
         scales.count.x.range([0, width]);
         scales.count.y.range([height, 0]);
     }
 
     //Dibujando ejes
-    function drawAxes(g) {
+    const drawAxes = (g) => {
 
         const axisX = d3.axisBottom(scales.count.x)
             .tickFormat(d3.timeFormat("%Y"))
@@ -68,7 +68,7 @@ function barVertical() {
 
     }
 
-    function updateChart(dataz) {
+    const updateChart = (dataz) => {
         w = chart.node().offsetWidth;
         h = 600;
 
@@ -124,12 +124,12 @@ function barVertical() {
 
     }
 
-    function resize() {
+    const resize = () => {
         updateChart(dataz)
     }
 
     // LOAD THE DATA
-    function loadData() {
+    const loadData = () => {
 
         d3.csv('csv/legislatura-psoe-votos-a-favor.csv', function(error, data) {
                 if (error) {
@@ -155,6 +155,3 @@ function barVertical() {
 }
 
 barVertical()
-
-
-

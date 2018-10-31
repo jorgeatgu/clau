@@ -1,4 +1,4 @@
-function areaTooltip() {
+const areaTooltipDue = () => {
     //Estructura similar a la que utilizan en algunos proyectos de pudding.cool
     const margin = { top: 24, right: 24, bottom: 24, left: 24 };
     let width = 0;
@@ -13,7 +13,7 @@ function areaTooltip() {
         .style("opacity", 0);
 
     //Escala para los ejes X e Y
-    function setupScales() {
+    const setupScales = () => {
 
         const countX = d3.scaleTime()
                     .domain([d3.min(dataz, d => d.fecha
@@ -29,7 +29,7 @@ function areaTooltip() {
     }
 
     //Seleccionamos el contenedor donde irán las escalas y en este caso el area donde se pirntara nuestra gráfica
-    function setupElements() {
+    const setupElements = () => {
 
         const g = svg.select('.chart-lluvia-tooltip-dos-container');
 
@@ -53,13 +53,13 @@ function areaTooltip() {
     }
 
     //Actualizando escalas
-    function updateScales(width, height){
+    const updateScales = (width, height) => {
         scales.count.x.range([0, width]);
         scales.count.y.range([height, 0]);
     }
 
     //Dibujando ejes
-    function drawAxes(g) {
+    const drawAxes = (g) => {
 
         const axisX = d3.axisBottom(scales.count.x)
             .tickFormat(d3.format("d"))
@@ -168,14 +168,14 @@ function areaTooltip() {
 
     }
 
-    function resize() {
+    const resize = () => {
         updateChart(dataz)
     }
 
     // LOAD THE DATA
-    function loadData() {
+    const loadData = () => {
 
-        d3.csv('csv/dias-de-lluvia.csv', function(error, data) {
+        d3.csv('csv/dias-de-lluvia.csv', (error, data) => {
                 if (error) {
                       console.log(error);
                 } else {
@@ -198,4 +198,4 @@ function areaTooltip() {
 
 }
 
-areaTooltip()
+areaTooltipDue()

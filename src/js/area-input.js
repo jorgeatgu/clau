@@ -1,4 +1,4 @@
-function areaInput() {
+const areaInput = () => {
 
     //Estructura similar a la que utilizan en algunos proyectos de pudding.cool
     const margin = { top: 16, right: 16, bottom: 24, left: 32 };
@@ -10,7 +10,7 @@ function areaInput() {
     const temp = "ºC";
 
     //Escala para los ejes X e Y
-    function setupScales() {
+    const setupScales = () => {
 
         const countX = d3.scaleTime()
             .domain([1951, 2018]);
@@ -24,7 +24,7 @@ function areaInput() {
     }
 
     //Seleccionamos el contenedor donde irán las escalas y en este caso el area donde se pirntara nuestra gráfica
-    function setupElements() {
+    const setupElements = () => {
 
         const g = svg.select('.chart-lluvia-input-container');
 
@@ -43,7 +43,7 @@ function areaInput() {
     }
 
     //Dibujando ejes
-    function drawAxes(g) {
+    const drawAxes = (g) => {
 
         const axisX = d3.axisBottom(scales.count.x)
             .tickPadding(5)
@@ -116,7 +116,7 @@ function areaInput() {
 
     function update(mes) {
 
-        d3.csv("csv/total-media-limpio.csv", function(error, data) {
+        d3.csv("csv/total-media-limpio.csv", (error, data) => {
 
             data = data.filter(function(d) {
                 return String(d.mes).match(mes);
@@ -143,17 +143,15 @@ function areaInput() {
 
     }
 
-    function resize() {
+    const resize = () => {
 
-        d3.csv("csv/total-media-limpio.csv", function(error, data) {
+        d3.csv("csv/total-media-limpio.csv", (error, data) => {
 
             const mesActual = d3.select("#mes-mensual-minima")
                 .select("select")
                 .property("value")
 
-            data = data.filter( d => {
-                return String(d.mes).match(mesActual);
-            });
+            data = data.filter(d => String(d.mes).match(mesActual));
 
             updateChart(data)
 
@@ -162,16 +160,14 @@ function areaInput() {
 
     }
 
-    function menuMes() {
-        d3.csv('csv/total-media-limpio.csv', function(error, data) {
+    const menuMes = () => {
+        d3.csv('csv/total-media-limpio.csv', (error, data) => {
             if (error) {
                 console.log(error);
             } else {
 
                 const nest = d3.nest()
-                    .key(d => {
-                        return d.mes;
-                    })
+                    .key(d => d.mes)
                     .entries(data);
 
                 const mesMenuMensualMinima = d3.select("#mes-mensual-minima");
@@ -182,12 +178,8 @@ function areaInput() {
                     .data(nest)
                     .enter()
                     .append("option")
-                    .attr("value", d => {
-                        return d.key;
-                    })
-                    .text(d => {
-                        return d.key;
-                    })
+                    .attr("value", d => d.key)
+                    .text(d => d.key)
 
                 mesMenuMensualMinima.on('change', function() {
 
@@ -207,16 +199,14 @@ function areaInput() {
     }
 
     // LOAD THE DATA
-    function loadData() {
+    const loadData = () => {
 
-        d3.csv('csv/total-media-limpio.csv', function(error, data) {
+        d3.csv('csv/total-media-limpio.csv', (error, data) => {
             if (error) {
                 console.log(error);
             } else {
 
-                data = data.filter(d => {
-                    return String(d.mes).match(/Enero/);
-                });
+                data = data.filter(d => String(d.mes).match(/Enero/));
 
                 data.forEach(d => {
                     d.max = +d.max;

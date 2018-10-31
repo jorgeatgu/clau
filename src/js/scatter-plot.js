@@ -1,4 +1,4 @@
-function barscatter() {
+const barscatter = () => {
     //Estructura similar a la que utilizan en algunos proyectos de pudding.cool
     const margin = { top: 24, right: 24, bottom: 24, left: 24 };
     let width = 0;
@@ -11,18 +11,16 @@ function barscatter() {
     const temp = "º";
     let dataz;
 
-    function getYear(stringDate) {
-        return stringDate.split('-')[2];
-    }
+    const getYear = (stringDate) => stringDate.split('-')[2];
 
-    function removeYear(stringDay) {
+    const removeYear = (stringDay) => {
         const inicio = 0;
         const fin = 5;
         return stringDay.substring(0, 5);
     }
 
     //Escala para los ejes X e Y
-    function setupScales() {
+    const setupScales = () => {
 
         const countX = d3.scaleLinear()
             .domain(
@@ -49,7 +47,7 @@ function barscatter() {
     }
 
     //Seleccionamos el contenedor donde irán las escalas y en este caso el area donde se pirntara nuestra gráfica
-    function setupElements() {
+    const setupElements = () => {
 
         const g = svg.select('.chart-lluvia-scatter-container');
 
@@ -62,13 +60,13 @@ function barscatter() {
     }
 
     //Actualizando escalas
-    function updateScales(width, height) {
+    const updateScales = (width, height) => {
         scales.count.x.range([0, width]);
         scales.count.y.range([height, 20]);
     }
 
     //Dibujando ejes
-    function drawAxes(g) {
+    const drawAxes = (g) => {
 
         const axisX = d3.axisBottom(scales.count.x)
             .tickFormat(d3.format("d"))
@@ -88,7 +86,7 @@ function barscatter() {
 
     }
 
-    function updateChart(dataz) {
+    const updateChart = (dataz) => {
         w = chart.node().offsetWidth;
         h = 600;
 
@@ -118,12 +116,8 @@ function barscatter() {
 
 
         layer.merge(newLayer)
-            .attr("cx", function(d) {
-                return scales.count.x(d.year);
-            })
-            .attr("cy", function(d) {
-                return scales.count.y(d.minima);
-            })
+            .attr("cx", d => scales.count.x(d.year))
+            .attr("cy", d => scales.count.y(d.minima))
             .attr("r", 6)
             .style("fill", "#DD435C")
             .attr('fill-opacity', .5);
@@ -132,14 +126,14 @@ function barscatter() {
 
     }
 
-    function resize() {
+    const resize = () => {
         updateChart(dataz)
     }
 
     // LOAD THE DATA
-    function loadData() {
+    const loadData = () => {
 
-        d3.csv('csv/tropicales-por-dia.csv', function(error, data) {
+        d3.csv('csv/tropicales-por-dia.csv', (error, data) => {
             if (error) {
                 console.log(error);
             } else {

@@ -1,36 +1,37 @@
-const line = () => {
+const multipleLine = () => {
     //Estructura similar a la que utilizan en algunos proyectos de pudding.cool
     const margin = { top: 24, right: 24, bottom: 24, left: 24 };
     let width = 0;
     let height = 0;
-    const chart = d3.select('.line-lluvia');
+    const chart = d3.select('.multiline-lluvia');
     const svg = chart.select('svg');
     const scales = {};
-    let dataz;
+    let data;
+    let dataComb;
 
     //Escala para los ejes X e Y
     const setupScales = () => {
 
         const countX = d3.scaleTime()
-            .domain([1951, 2017]);
+            .domain([2008, 2017]);
 
         const countY = d3.scaleLinear()
-            .domain([0, 60]);
+            .domain([0, 650]);
 
-        scales.count = { x: countX,  y: countY };
+        scales.count = { x: countX, y: countY };
 
     }
 
     //Seleccionamos el contenedor donde irán las escalas y en este caso el area donde se pirntara nuestra gráfica
     const setupElements = () => {
 
-        const g = svg.select('.line-lluvia-container');
+        const g = svg.select('.multiline-lluvia-container');
 
         g.append('g').attr('class', 'axis axis-x');
 
         g.append('g').attr('class', 'axis axis-y');
 
-        g.append('g').attr('class', 'line-lluvia-container-dos');
+        g.append('g').attr('class', 'multiline-lluvia-container-dos');
 
     }
 
@@ -45,7 +46,6 @@ const line = () => {
 
         const axisX = d3.axisBottom(scales.count.x)
             .tickFormat(d3.format("d"))
-            .ticks(13)
 
         g.select(".axis-x")
             .attr("transform", "translate(0," + height + ")")
@@ -60,7 +60,7 @@ const line = () => {
             .call(axisY)
     }
 
-    const updateChart = (dataz) => {
+    const updateChart = (data) => {
         const w = chart.node().offsetWidth;
         const h = 600;
 
@@ -73,66 +73,72 @@ const line = () => {
 
         const translate = "translate(" + margin.left + "," + margin.top + ")";
 
-        const g = svg.select('.line-lluvia-container')
+        const g = svg.select('.multiline-lluvia-container')
 
         g.attr("transform", translate)
 
-        const line = d3.line()
-            .x(d => scales.count.x(d.fecha))
-            .y(d => scales.count.y(d.dias));
 
         updateScales(width, height)
 
-        const container = chart.select('.line-lluvia-container-dos')
+        const dataComb = d3.nest()
+            .key(d => d.puesto)
+            .entries(data);
 
-        const layer = container.selectAll('.line')
-               .data([dataz])
 
-        const newLayer = layer.enter()
-                .append('path')
-                .attr('class', 'line')
-                .attr('stroke-width', '1.5')
+        const container = chart.select('.multiline-lluvia-container-dos')
 
-        const dots = container.selectAll('.circles')
-            .data(dataz)
+        const colors = ["#b114c0", "#9C1B12", "#759CA7", "#CEBAC6", "#2D3065"]
 
-        const dotsLayer = dots.enter()
-            .append("circle")
-            .attr("class", "circles")
-            .attr("fill", "#921d5d")
+        const color = d3.scaleOrdinal(colors);
 
-        layer.merge(newLayer)
-            .attr('d', line)
+        const line = d3.line()
+            .x(d => scales.count.x(d.fecha))
+            .y(d => scales.count.y(d.cantidad));
 
-        dots.merge(dotsLayer)
-            .attr("cx", d => scales.count.x(d.fecha))
-            .attr("cy", d => scales.count.y(d.dias_lluvia))
-            .attr('r', 3)
+        lines = container.selectAll('.line').remove().exit().data(dataComb)
+
+        dataComb.forEach(d => {
+
+            container.append("path")
+                .attr("class", "line " + d.key)
+                .style("stroke", () => d.color = color(d.key))
+                .attr("d", line(d.values));
+        });
 
         drawAxes(g)
 
     }
 
     const resize = () => {
-        updateChart(dataz)
+
+        d3.csv('csv/data-line-puestos.csv', (error, data) => {
+            if (error) {
+                console.log(error);
+            } else {
+
+                updateChart(data)
+            }
+
+        });
     }
 
     // LOAD THE DATA
     const loadData = () => {
 
-        d3.csv('csv/dias-de-lluvia.csv', (error, data) => {
-                if (error) {
-                      console.log(error);
-                } else {
-                      dataz = data
-                      dataz.forEach(d => {
-                          d.fecha = d.fecha;
-                          d.dias_lluvia = d.dias;
-                      });
-                      setupElements()
-                      setupScales()
-                      updateChart(dataz)
-                }
+        d3.csv('csv/data-line-puestos.csv', (error, data) => {
+            if (error) {
+                console.log(error);
+            } else {
+
+                data.forEach(d => {
+                    d.fecha = d.fecha;
+                    d.cantidad = +d.cantidad;
+                });
+
+                setupElements()
+                setupScales()
+                updateChart(data)
+            }
 
         });
     }
@@ -143,4 +149,4 @@ const line = () => {
 
 }
 
-line();
+multipleLine();
