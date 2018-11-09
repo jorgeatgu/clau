@@ -527,6 +527,11 @@ body {
     margin: 0 auto;
 }
 
+.clau-container-full {
+    max-width: 90%;
+    margin: 0 auto;
+}
+
 .chart-container {
     margin: 2rem 0 6rem;
 }
