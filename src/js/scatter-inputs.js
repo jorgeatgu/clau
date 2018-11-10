@@ -1,328 +1,297 @@
 const scatterInput = () => {
 
-    var dataFiltered;
-    var xRange;
-    var yRange;
-    var xAxis;
-    var yAxis;
-    var temp = "ºC";
-    var barPadding = 2;
-
-    var dedicatoria = 'Dedicado a Maria del Carmen Tobajas Urieta y Agustín Aznar Gracia. Gracias por todo.';
-        console.log(dedicatoria);
-
-    var margin = { top: 50, right: 50, bottom: 50, left: 110 },
-        width = 1200 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
-
-    //Creando los div que contendrán los tooltips con la información del año y de la temperatura
-    var div = d3.select(".grafica-temp")
-        .append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0);
+    //Estructura similar a la que utilizan en algunos proyectos de pudding.cool
+    const margin = { top: 48, right: 16, bottom: 24, left: 32 };
+    let width = 0;
+    let height = 0;
+    const chart = d3.select('.scatter-inputs');
+    const svg = chart.select('svg');
+    const scales = {};
+    let dataz;
+    const temp = "ºC";
+    const dedicatoria = 'Dedicado a Maria del Carmen Tobajas Urieta y Agustín Aznar Gracia. Gracias por todo.';
 
     //Eliminando el año para quedarnos solamente con el día y la fecha en formato: DD-MM
-    function getYear(stringDate) {
-        return stringDate.split('-')[2];
+    const getYear = (stringDate) => stringDate.split('-')[2];
+
+    //Escala para los ejes X e Y
+    const setupScales = () => {
+
+        const countX = d3.scaleLinear()
+            .domain(
+                [d3.min(dataz, function(d) {
+                        return d.year;
+                    }),
+                    d3.max(dataz, function(d) {
+                        return d.year;
+                    })
+                ]
+            );
+
+        const countY = d3.scaleLinear()
+            .domain([d3.min(dataz, function(d) {
+                    return d.minima;
+                }),
+                d3.max(dataz, function(d) {
+                    return d.minima;
+                })
+            ])
+
+
+        scales.count = { x: countX, y: countY };
+
     }
 
-    var svg = d3.select('.grafica-temp')
-        .append('svg')
-        .attr('class', 'chart-temp')
-        .attr("viewBox", "0 0 " + (width + margin.left + margin.right) + " " + (height + margin.top + margin.bottom))
-        .append("g")
-        .attr("transform", "translate(" + (margin.left - margin.right) + "," + margin.top + ")");
+    //Seleccionamos el contenedor donde irán las escalas y en este caso el area donde se pirntara nuestra gráfica
+    const setupElements = () => {
 
-    var xRange = d3.scaleLinear()
-        .range([30, width]);
+        const g = svg.select('.scatter-inputs-container');
 
-    var yRange = d3.scaleLinear()
-        .range([height, -20]);
+        g.append('g').attr('class', 'axis axis-x');
 
-    var xAxis = d3.axisBottom(xRange)
-        .tickPadding(15)
-        .tickFormat(d3.format("d"))
-        .tickSize(-height)
-        .ticks(20);
+        g.append('g').attr('class', 'axis axis-y');
 
-    var yAxis = d3.axisLeft(yRange)
-        .tickPadding(10)
-        .tickFormat(function(d) { return d + temp; })
-        .tickSize(-width + 30)
-        .ticks(6);
+        g.append('g').attr('class', 'scatter-inputs-container-dos');
 
-    d3.csv('csv/temperaturas.csv', function(err, data) {
+    }
 
-        dataFiltered = data.filter(function(d) {
-            return String(d.fecha).match(/02-01/);
-        });
+    //Actualizando escalas
+    const updateScales = (width, height) => {
+        scales.count.x.range([10, width]);
+        scales.count.y.range([height, -10]);
+    }
 
-        dataFiltered.forEach(function(d) {
-            d.fecha = d.fecha;
-            d.maxima = +d.maxima;
-            d.minima = +d.minima;
-            d.year = getYear(d.fecha);
-        });
+    //Dibujando ejes
+    const drawAxes = (g) => {
 
-        maxTemp = d3.max(dataFiltered, function(d) {
-            return d.maxima;
-        });
-        minTemp = d3.min(dataFiltered, function(d) {
-            return d.maxima;
-        });
+        const axisX = d3.axisBottom(scales.count.x)
+            .tickPadding(10)
+            .tickFormat(d3.format("d"))
+            .tickSize(-height)
+            .ticks(20)
 
-        xRange.domain([d3.min(dataFiltered, function(d) {
-                return d.year;
-            }),
-            d3.max(dataFiltered, function(d) {
-                return d.year;
-            })
-        ]);
+        g.select(".axis-x")
+            .attr("transform", "translate(0," + height + ")")
+            .transition()
+            .duration(300)
+            .ease(d3.easeLinear)
+            .call(axisX);
 
-        yRange.domain([d3.min(dataFiltered, function(d) {
-                return d.maxima;
-            }),
-            d3.max(dataFiltered, function(d) {
-                return d.maxima;
-            })
-        ]);
+        const axisY = d3.axisLeft(scales.count.y)
+            .tickFormat(d => d + temp)
+            .tickSize(-width)
+            .ticks(6);
 
-        svg.append("g")
-            .attr("class", "xAxis")
-            .attr("transform", "translate(0,400)")
+        g.select(".axis-y")
+            .transition()
+            .duration(300)
+            .ease(d3.easeLinear)
+            .call(axisY)
+    }
+
+    const updateChart = (dataz) => {
+
+        const w = chart.node().offsetWidth;
+        const h = 500;
+
+        width = w - margin.left - margin.right;
+        height = h - margin.top - margin.bottom;
+
+        svg
+            .attr('width', w)
+            .attr('height', h);
+
+        const translate = "translate(" + margin.left + "," + margin.top + ")";
+
+        const g = svg.select('.scatter-inputs-container')
+
+        g.attr("transform", translate)
+
+        updateScales(width, height)
+
+        const container = chart.select('.scatter-inputs-container-dos')
+
+        const layer = container.selectAll('.scatter-inputs-circles')
+            .data(dataz)
+
+        const newLayer = layer.enter()
+            .append('circle')
+            .attr('class', 'scatter-inputs-circles')
+
+        layer.merge(newLayer)
             .transition()
             .duration(1000)
-            .call(xAxis);
-
-        svg.append("g")
-            .attr("class", "yAxis")
-            .attr("transform", "translate(30, 0)")
-            .transition()
-            .duration(1000)
-            .call(yAxis);
-
-        svg.append("text")
-            .attr("class", "legend-top")
-            .attr("transform", "rotate(0)")
-            .attr("y", -20)
-            .attr("x", 190)
-            .style("text-anchor", "end")
-            .text("🔥Temperaturas máximas");
-
-        svg.selectAll("dot")
-            .data(dataFiltered)
-            .enter()
-            .append("circle")
-            .attr("class", "circles")
-            .on("mouseover", function(d) {
-                div.transition()
-                div.attr("class","tooltip tooltipMax")
-                div.style("opacity", 1)
-                    .html('<p class="tooltipRect">La temperatura máxima en ' + d.year + ' fue de ' + d.maxima + 'ºC<p/>')
-                    .style("left", (d3.event.pageX) + "px")
-                    .style("top", (d3.event.pageY - 28) + "px");
-            })
-            .on("mouseout", function(d) {
-                div.transition()
-                    .duration(200)
-                    .style("opacity", 0);
-            })
-            .attr("r", 0)
-            .attr("cx", function(d) {
-                return xRange(d.year);
-            })
-            .attr("cy", function(d) {
-                return yRange(d.maxima);
-            })
-            .transition()
-            .duration(1000)
+            .attr("cx", d => scales.count.x(d.year))
+            .attr("cy", d => scales.count.y(d.minima))
             .attr("r", 6)
-            .style("fill", "#dc7176");
-    });
+            .style("fill", "#257d98")
+            .attr('fill-opacity', .5);
 
-    function update() {
-        var valueDateDay = d3.select("#updateButtonDay").property("value");
-        var valueDateMonth = d3.select("#updateButtonMonth").property("value");
-        if (valueDateDay < 10) valueDateDay = ('0' + valueDateDay).slice(-2);
-        if (valueDateMonth < 10) valueDateMonth = ('0' + valueDateMonth).slice(-2);
-        var valueDate = valueDateDay + '-' + valueDateMonth;
-        var reValueDate = new RegExp("^.*" + valueDate + ".*", "gi");
-
-        d3.csv('csv/temperaturas.csv', function(err, data) {
-
-            dataFiltered = data.filter(function(d) {
-                return String(d.fecha).match(reValueDate);
-            });
-
-            dataFiltered.forEach(function(d) {
-                d.fecha = d.fecha;
-                d.maxima = +d.maxima;
-                d.minima = +d.minima;
-                d.year = getYear(d.fecha);
-            });
-
-            maxTemp = d3.max(dataFiltered, function(d) {
-                return d.maxima;
-            });
-            minTemp = d3.min(dataFiltered, function(d) {
-                return d.maxima;
-            });
-
-            xRange.domain([d3.min(dataFiltered, function(d) {
-                    return d.year;
-                }),
-                d3.max(dataFiltered, function(d) {
-                    return d.year;
-                })
-            ]);
-
-            yRange.domain([d3.min(dataFiltered, function(d) {
-                    return d.maxima;
-                }),
-                d3.max(dataFiltered, function(d) {
-                    return d.maxima;
-                })
-            ]);
-
-            d3.select('.yAxis')
-                .transition()
-                .duration(1000)
-                .call(yAxis);
-
-            d3.select('.xAxis')
-                .transition()
-                .duration(1000)
-                .call(xAxis);
-
-            d3.select('.legend-top')
-                .text("🔥 Temperaturas máximas");
-
-            var circles = svg.selectAll("circle")
-                .data(dataFiltered);
-
-            circles.transition()
-                .duration(1000)
-                .attr("r", 6)
-                .style("fill", "#dc7176")
-                .attr("cx", function(d) {
-                    return xRange(d.year);
-                })
-                .attr("cy", function(d) {
-                    return yRange(d.maxima);
-                });
-
-            circles.on("mouseover", function(d) {
-                    div.transition()
-                    div.attr("class","tooltip tooltipMax")
-                    div.style("opacity", 1)
-                        .html('<p class="tooltipRect">La temperatura máxima en ' + d.year + ' fue de ' + d.maxima + 'ºC<p/>')
-                        .style("left", (d3.event.pageX) + "px")
-                        .style("top", (d3.event.pageY - 28) + "px");
-                })
-                .on("mouseout", function(d) {
-                    div.transition()
-                        .duration(200)
-                        .style("opacity", 0);
-                });
-
-            circles.exit()
-                .remove()
-        });
+        drawAxes(g)
 
     }
 
-    function updateMin() {
-        var valueDateDay = d3.select("#updateButtonDay").property("value");
-        var valueDateMonth = d3.select("#updateButtonMonth").property("value");
+    d3.select("#update")
+        .on("click", function(dataz) {
+            updateMax()
+        });
+
+    d3.select("#updateMin")
+        .on("click", function(dataz) {
+            updateMin()
+        });
+
+    const updateMax = () => {
+
+        let valueDateDay = d3.select("#updateButtonDay").property("value");
+        let valueDateMonth = d3.select("#updateButtonMonth").property("value");
         if (valueDateDay < 10) valueDateDay = ('0' + valueDateDay).slice(-2);
         if (valueDateMonth < 10) valueDateMonth = ('0' + valueDateMonth).slice(-2);
-        var valueDate = valueDateDay + '-' + valueDateMonth;
-        var reValueDate = new RegExp("^.*" + valueDate + ".*", "gi");
+        let valueDate = valueDateDay + '-' + valueDateMonth;
+        let reValueDate = new RegExp("^.*" + valueDate + ".*", "gi");
 
-        d3.csv('csv/temperaturas.csv', function(err, data) {
+        d3.csv("csv/temperaturas.csv", (error, dataz) => {
 
-            dataFilterMin = data.filter(function(d) {
-                return String(d.fecha).match(reValueDate);
-            });
+            dataz = dataz.filter(d => String(d.fecha).match(reValueDate));
 
-            dataFilterMin.forEach(function(d) {
+            dataz.forEach(d => {
                 d.fecha = d.fecha;
                 d.maxima = +d.maxima;
                 d.minima = +d.minima;
                 d.year = getYear(d.fecha);
             });
 
-            maxTemp = d3.max(dataFilterMin, function(d) {
-                return d.minima;
-            });
-            minTemp = d3.min(dataFilterMin, function(d) {
-                return d.minima;
-            });
+            scales.count.x.range([10, width]);
+            scales.count.y.range([height, -10]);
 
-            xRange.domain([d3.min(dataFilterMin, function(d) {
-                    return d.year;
-                }),
-                d3.max(dataFilterMin, function(d) {
-                    return d.year;
-                })
-            ]);
+            const countX = d3.scaleTime()
+                .domain(
+                        [d3.min(dataz, d => d.year),
+                        d3.max(dataz, d => d.year)]
+                        );
 
-            yRange.domain([d3.min(dataFilterMin, function(d) {
-                    return d.minima;
-                }),
-                d3.max(dataFilterMin, function(d) {
-                    return d.minima;
-                })
-            ]);
+            const countY = d3.scaleLinear()
+                .domain(
+                        [d3.min(dataz, d => d.maxima),
+                        d3.max(dataz, d => d.maxima)]
+                        );
 
-            d3.select('.yAxis')
+            scales.count = { x: countX, y: countY };
+
+            const translate = "translate(" + margin.left + "," + margin.top + ")";
+
+            const g = svg.select('.scatter-inputs-container')
+
+            g.attr("transform", translate)
+
+            updateScales(width, height)
+
+            const container = chart.select('.scatter-inputs-container-dos')
+
+            const layer = container.selectAll('.scatter-inputs-circles')
+                .data(dataz)
+
+            const newLayer = layer.enter()
+                .append('circle')
+                .attr('class', 'scatter-inputs-circles')
+
+            layer.merge(newLayer)
                 .transition()
                 .duration(1000)
-                .call(yAxis);
-
-            d3.select('.xAxis')
-                .transition()
-                .duration(1000)
-                .call(xAxis);
-
-
-            d3.select('.legend-top')
-                .text("☃️ Temperaturas mínimas");
-
-            var circles = svg.selectAll("circle")
-                .data(dataFilterMin);
-
-            circles.transition()
-                .duration(1000)
+                .attr("cx", d => scales.count.x(d.year))
+                .attr("cy", d => scales.count.y(d.maxima))
                 .attr("r", 6)
                 .style("fill", "#257d98")
-                .attr("cx", function(d) {
-                    return xRange(d.year);
-                })
-                .attr("cy", function(d) {
-                    return yRange(d.minima);
-                });
+                .attr('fill-opacity', .5);
 
-            circles.on("mouseover", function(d) {
-                    div.transition()
-                    // .duration(200)
-                    div.style("opacity", 1)
-                    div.attr("class","tooltip tooltipMin")
-                        .html('<p class="tooltipRect">La temperatura mínima en ' + d.year + ' fue de ' + d.minima + 'ºC<p/>')
-                        .style("left", (d3.event.pageX) + "px")
-                        .style("top", (d3.event.pageY - 28) + "px");
-                })
-                .on("mouseout", function(d) {
-                    div.transition()
-                        .duration(200)
-                        .style("opacity", 0);
-                });
+            drawAxes(g)
 
-            circles.exit()
-                .remove();
         });
 
+
     }
+
+    const updateMin = () => {
+
+        let valueDateDay = d3.select("#updateButtonDay").property("value");
+        let valueDateMonth = d3.select("#updateButtonMonth").property("value");
+        if (valueDateDay < 10) valueDateDay = ('0' + valueDateDay).slice(-2);
+        if (valueDateMonth < 10) valueDateMonth = ('0' + valueDateMonth).slice(-2);
+        let valueDate = valueDateDay + '-' + valueDateMonth;
+        let reValueDate = new RegExp("^.*" + valueDate + ".*", "gi");
+
+        d3.csv("csv/temperaturas.csv", (error, dataz) => {
+
+            dataz = dataz.filter(d => String(d.fecha).match(reValueDate));
+
+            dataz.forEach(d => {
+                d.fecha = d.fecha;
+                d.maxima = +d.maxima;
+                d.minima = +d.minima;
+                d.year = getYear(d.fecha);
+            });
+
+            scales.count.x.range([10, width]);
+            scales.count.y.range([height, -10]);
+
+            const countX = d3.scaleTime()
+                .domain(
+                        [d3.min(dataz, d => d.year ),
+                        d3.max(dataz, d => d.year )]
+                        );
+
+            const countY = d3.scaleLinear()
+                .domain(
+                        [d3.min(dataz, d => d.minima ),
+                        d3.max(dataz, d => d.minima )]
+                        );
+
+            scales.count = { x: countX, y: countY };
+
+            updateChart(dataz)
+
+        });
+
+
+    }
+
+    const resize = () => {
+
+        updateChart(dataz)
+
+    }
+
+    // LOAD THE DATA
+    const loadData = () => {
+
+        d3.csv('csv/temperaturas.csv', (error, data) => {
+            if (error) {
+                console.log(error);
+            } else {
+
+                dataz = data
+
+                dataz = data.filter(d => String(d.fecha).match(/02-01/));
+
+                dataz.forEach(d => {
+                    d.fecha = d.fecha;
+                    d.maxima = +d.maxima;
+                    d.minima = +d.minima;
+                    d.year = getYear(d.fecha);
+                });
+
+                setupElements()
+                setupScales()
+                updateChart(dataz)
+            }
+
+        });
+    }
+
+    window.addEventListener('resize', resize)
+
+    loadData()
+
 }
 
 scatterInput()
