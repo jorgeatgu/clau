@@ -19,22 +19,14 @@ const scatterInput = () => {
 
         const countX = d3.scaleLinear()
             .domain(
-                [d3.min(dataz, function(d) {
-                        return d.year;
-                    }),
-                    d3.max(dataz, function(d) {
-                        return d.year;
-                    })
+                [d3.min(dataz, d => d.year),
+                    d3.max(dataz, d => d.year)
                 ]
             );
 
         const countY = d3.scaleLinear()
-            .domain([d3.min(dataz, function(d) {
-                    return d.minima;
-                }),
-                d3.max(dataz, function(d) {
-                    return d.minima;
-                })
+            .domain([d3.min(dataz, d => d.minima),
+                d3.max(dataz, d => d.minima)
             ])
 
 
@@ -73,7 +65,7 @@ const scatterInput = () => {
         g.select(".axis-x")
             .attr("transform", "translate(0," + height + ")")
             .transition()
-            .duration(300)
+            .duration(600)
             .ease(d3.easeLinear)
             .call(axisX);
 
@@ -84,7 +76,7 @@ const scatterInput = () => {
 
         g.select(".axis-y")
             .transition()
-            .duration(300)
+            .duration(600)
             .ease(d3.easeLinear)
             .call(axisY)
     }
@@ -120,7 +112,8 @@ const scatterInput = () => {
 
         layer.merge(newLayer)
             .transition()
-            .duration(1000)
+            .duration(600)
+            .ease(d3.easeLinear)
             .attr("cx", d => scales.count.x(d.year))
             .attr("cy", d => scales.count.y(d.minima))
             .attr("r", 6)
@@ -132,12 +125,12 @@ const scatterInput = () => {
     }
 
     d3.select("#update")
-        .on("click", function(dataz) {
+        .on("click", (dataz) => {
             updateMax()
         });
 
     d3.select("#updateMin")
-        .on("click", function(dataz) {
+        .on("click", (dataz) => {
             updateMin()
         });
 
@@ -166,15 +159,17 @@ const scatterInput = () => {
 
             const countX = d3.scaleTime()
                 .domain(
-                        [d3.min(dataz, d => d.year),
-                        d3.max(dataz, d => d.year)]
-                        );
+                    [d3.min(dataz, d => d.year),
+                        d3.max(dataz, d => d.year)
+                    ]
+                );
 
             const countY = d3.scaleLinear()
                 .domain(
-                        [d3.min(dataz, d => d.maxima),
-                        d3.max(dataz, d => d.maxima)]
-                        );
+                    [d3.min(dataz, d => d.maxima),
+                        d3.max(dataz, d => d.maxima)
+                    ]
+                );
 
             scales.count = { x: countX, y: countY };
 
@@ -197,11 +192,12 @@ const scatterInput = () => {
 
             layer.merge(newLayer)
                 .transition()
-                .duration(1000)
+                .duration(600)
+                .ease(d3.easeLinear)
                 .attr("cx", d => scales.count.x(d.year))
                 .attr("cy", d => scales.count.y(d.maxima))
                 .attr("r", 6)
-                .style("fill", "#257d98")
+                .style("fill", "#dc7176")
                 .attr('fill-opacity', .5);
 
             drawAxes(g)
@@ -236,15 +232,18 @@ const scatterInput = () => {
 
             const countX = d3.scaleTime()
                 .domain(
-                        [d3.min(dataz, d => d.year ),
-                        d3.max(dataz, d => d.year )]
-                        );
+                    [d3.min(dataz, d => d.year),
+                        d3.max(dataz, d => d.year)
+                    ]
+                );
 
             const countY = d3.scaleLinear()
                 .domain(
-                        [d3.min(dataz, d => d.minima ),
-                        d3.max(dataz, d => d.minima )]
-                        );
+                    [d3.min(dataz, d => d.minima),
+                        d3.max(dataz, d => d.minima)
+                    ]
+                );
+
 
             scales.count = { x: countX, y: countY };
 
@@ -257,7 +256,45 @@ const scatterInput = () => {
 
     const resize = () => {
 
-        updateChart(dataz)
+        let valueDateDay = d3.select("#updateButtonDay").property("value");
+        let valueDateMonth = d3.select("#updateButtonMonth").property("value");
+
+        let valueDateResize = valueDateDay + '-' + valueDateMonth;
+
+        d3.csv("csv/temperaturas.csv", (error, dataz) => {
+
+            dataz = dataz.filter(d => String(d.fecha).match(valueDateResize));
+
+            dataz.forEach(d => {
+                d.fecha = d.fecha;
+                d.maxima = +d.maxima;
+                d.minima = +d.minima;
+                d.year = getYear(d.fecha);
+            });
+
+            scales.count.x.range([10, width]);
+            scales.count.y.range([height, -10]);
+
+            const countX = d3.scaleTime()
+                .domain(
+                    [d3.min(dataz, d => d.year),
+                        d3.max(dataz, d => d.year)
+                    ]
+                );
+
+            const countY = d3.scaleLinear()
+                .domain(
+                    [d3.min(dataz, d => d.minima),
+                        d3.max(dataz, d => d.minima)
+                    ]
+                );
+
+            scales.count = { x: countX, y: countY };
+
+            updateChart(dataz)
+
+        });
+
 
     }
 

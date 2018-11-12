@@ -1,45 +1,48 @@
-const barVertical = () => {
-    //Estructura similar a la que utilizan en algunos proyectos de pudding.cool
+const multipleLines = () => {
+
     const margin = { top: 24, right: 24, bottom: 24, left: 24 };
     let width = 0;
     let height = 0;
     let w = 0;
     let h = 0;
     const chart = d3.select('.chart-multiple-lines');
+    const svg = chart.selectAll('svg');
     const scales = {};
-    let dataz;
     const colors = ["#9a1622", "#e30613", "#0080b8", "#f07a36"]
     const color = d3.scaleOrdinal(colors);
-    const parseDate = d3.timeParse("%x");
+    let parseDate = d3.timeParse("%x");
+    let dataz;
 
-    //Escala para los ejes X e Y
     const setupScales = () => {
 
         const countX = d3.scaleTime()
-            .domain([d3.min(dataz, d => d.fecha),d3.max(dataz, d => d.fecha)]);
+            .domain(
+                [d3.min(dataz, d => d.fecha),
+                    d3.max(dataz, d => d.fecha)
+                ]
+            );
 
         const countY = d3.scaleLinear()
-            .domain([d3.min(dataz, d => d.votos),d3.max(dataz, d => d.votos)]);
+            .domain([d3.min(dataz, d => d.votos),
+                d3.max(dataz, d => d.votos)
+            ])
 
-        scales.count = { x: countX,  y: countY };
+        scales.count = { x: countX, y: countY };
 
     }
 
     //Seleccionamos el contenedor donde irán las escalas y en este caso el area donde se pirntara nuestra gráfica
-    // const setupElements = () => {
+    const setupElements = () => {
 
-    //     chart.append('g').attr('.chart-lluvia-bar-vertical-container');
+        const g = svg.select('.chart-multiple-lines-container');
 
-    //     const g = svg.append('g')
+        g.append('g').attr('class', 'axis axis-x');
 
+        g.append('g').attr('class', 'axis axis-y');
 
-    //     g.append('g').attr('class', 'axis axis-x');
+        g.append('g').attr('class', 'chart-multiple-lines-container-dos');
 
-    //     g.append('g').attr('class', 'axis axis-y');
-
-    //     g.append('g').attr('class', 'area-container-chart-vertical');
-
-    // }
+    }
 
     //Actualizando escalas
     const updateScales = (width, height) => {
@@ -60,12 +63,11 @@ const barVertical = () => {
 
         const axisY = d3.axisLeft(scales.count.y)
             .tickFormat(d3.format("d"))
+            .tickSizeInner(-width)
             .ticks(5)
-            .tickSizeInner(-w)
 
         g.select(".axis-y")
             .call(axisY)
-
     }
 
     const updateChart = (dataz) => {
@@ -75,52 +77,45 @@ const barVertical = () => {
         width = w - margin.left - margin.right;
         height = h - margin.top - margin.bottom;
 
-        const symbols = d3.nest()
-            .key(function(d) { return d.presentada; })
-            .entries(dataz);
-
-            console.log(symbols)
-
-        symbols.forEach(function(s) {
-            s.maxPrice = d3.max(s.values, function(d) { return d.votos; });
-        });
-
-        chart
-            .selectAll("svg")
-            .data(symbols)
-            .enter()
-            .append("svg")
-            .attr('width', w)
-            .attr('height', h)
-            .append('g').attr('class', 'area-container-chart-vertical')
-            .append('g').attr('class', 'axis axis-x');
+        svg
+            .attr('width', w )
+            .attr('height', h);
 
         const translate = "translate(" + margin.left + "," + margin.top + ")";
 
-        const g = chart.select('.chart-lluvia-bar-vertical-container')
+        const g = svg.select('.chart-multiple-lines-container')
 
         g.attr("transform", translate)
+
+        const nestData = d3.nest()
+            .key(d => d.presentada)
+            .entries(dataz);
 
         const area = d3.area()
             .x(d => scales.count.x(d.fecha))
             .y0(height)
             .y1(d => scales.count.y(d.votos))
-            .curve(d3.curveCardinal.tension(0.6));
+            .curve(d3.curveBasis);
+
 
         updateScales(width, height)
 
-        const container = chart.select('.area-container-chart-vertical')
+        const container = chart.select('.chart-multiple-lines-container-dos')
 
-        const layer = container.selectAll('.area')
-               .data([dataz])
 
-        const newLayer = layer.enter()
-                .append('path')
-                .attr('class', 'area')
-                .attr('class', d => d.key)
+        areas = container.selectAll('.area').remove().exit().data(nestData)
 
-        layer.merge(newLayer)
-            .attr("d", d => area(d.values));
+        nestData.forEach(d => {
+
+            container.append("path")
+                .attr("class", "area " + d.key)
+                .style("stroke", () => d.color = color(d.key))
+                .style("opacity", 0.7)
+                .attr("d", area(d.values));
+        });
+
+
+        drawAxes(g)
 
     }
 
@@ -131,19 +126,23 @@ const barVertical = () => {
     // LOAD THE DATA
     const loadData = () => {
 
-        d3.csv('csv/legislatura-psoe-votos-a-favor.csv', function(error, data) {
-                if (error) {
-                      console.log(error);
-                } else {
-                      dataz = data
-                      dataz.forEach( d => {
-                          d.votos = +d.votos;
-                          d.fecha = parseDate(d.fecha);
-                      });
-                      // setupElements()
-                      setupScales()
-                      updateChart(dataz)
-                }
+
+        d3.csv('csv/legislatura-cha-votos-a-favor.csv',(error, data) => {
+            if (error) {
+                console.log(error);
+            } else {
+                dataz = data
+
+                dataz.forEach(d => {
+                    d.votos = +d.votos;
+                    d.fecha = parseDate(d.fecha);
+                });
+
+                console.log(dataz)
+                setupElements()
+                setupScales()
+                updateChart(dataz)
+            }
 
         });
     }
@@ -154,4 +153,4 @@ const barVertical = () => {
 
 }
 
-barVertical()
+multipleLines()
