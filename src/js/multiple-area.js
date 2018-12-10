@@ -97,7 +97,6 @@ const multipleLines = () => {
             .y1(d => scales.count.y(d.votos))
             .curve(d3.curveBasis);
 
-
         updateScales(width, height)
 
         const container = chart.select('.chart-multiple-lines-container-dos')

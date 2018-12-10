@@ -37,7 +37,7 @@ const areaInput = () => {
     }
 
     //Actualizando escalas
-    function updateScales(width, height) {
+    const updateScales = (width, height) => {
         scales.count.x.range([0, width]);
         scales.count.y.range([height, 0]);
     }
