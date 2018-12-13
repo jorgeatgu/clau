@@ -92,7 +92,7 @@ const barVerticalTooltip = () => {
 
         const newLayer = layer.enter()
                 .append('rect')
-                .attr('class', 'bar-vertical')
+                .attr('class', 'bar-vertical bar-bgc4')
 
 
         layer.merge(newLayer)

@@ -91,7 +91,7 @@ const barVertical = () => {
 
         const newLayer = layer.enter()
                 .append('rect')
-                .attr('class', 'bar-vertical')
+                .attr('class', 'bar-vertical bar-bgc3')
 
 
         layer.merge(newLayer)

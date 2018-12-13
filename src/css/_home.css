@@ -20,8 +20,9 @@ body {
 }
 
 .clau-container {
-    max-width: 90vw;
     margin: 0 auto;
+    width: 100%;
+    padding: 2rem 0;
 }
 
 .clau-container-full {
@@ -30,7 +31,8 @@ body {
 }
 
 .chart-container {
-    margin: 2rem 0 6rem;
+    max-width: 90vw;
+    margin: 2rem auto 6rem;
 }
 
 .title,
@@ -59,7 +61,7 @@ body {
 
 .text {
     font-size: 1rem;
-    font-family: var(--merri);
+    font-family: var(--adamina);
     color: var(--black);
     max-width: 30rem;
 }
@@ -92,7 +94,7 @@ body {
         font-size: 4rem;
     }
 
-    .clau-container {
+    .chart-container {
         max-width: 60rem;
     }
 

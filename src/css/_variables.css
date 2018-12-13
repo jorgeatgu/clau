@@ -3,7 +3,7 @@
     --monospace: 'SFMono-Regular', Consolas, Menlo, Courier, monospace;
     --roboto: 'Roboto Condensed', sans-serif;
     --archivo: 'Rubik', sans-serif;
-    --merri: 'Merriweather', serif;
+    --adamina: 'Adamina', serif;
     --black: #111;
     --white: #fff;
     --f1: #f1f1f1;
@@ -14,4 +14,18 @@
     --wes-bluedark: #182956;
     --wes-gold: #DDB289;
     --area: #3a285d;
+    --wes-bg1: #CFCA9E;
+    --wes-bgc1: #C96553;
+    --wes-bg2: #DDE8E0;
+    --wes-bgc2: #759CA7;
+    --wes-bg3: #FBD5C5;
+    --wes-bgc3: #360C05;
+    --wes-bg4: #D5D5D3;
+    --wes-bgc4: #CDAA27;
+    --wes-bg5: #FAEFD2;
+    --wes-bgc5: #8A9DA4;
+    --wes-bg6: #CCC494;
+    --wes-bgc6: #29211F;
+    --wes-bg7: #D3DDDC;
+    --wes-bgc7: #456455;
 }

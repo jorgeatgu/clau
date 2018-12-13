@@ -351,7 +351,7 @@ template {
     --monospace: 'SFMono-Regular', Consolas, Menlo, Courier, monospace;
     --roboto: 'Roboto Condensed', sans-serif;
     --archivo: 'Rubik', sans-serif;
-    --merri: 'Merriweather', serif;
+    --adamina: 'Adamina', serif;
     --black: #111;
     --white: #fff;
     --f1: #f1f1f1;
@@ -362,6 +362,20 @@ template {
     --wes-bluedark: #182956;
     --wes-gold: #DDB289;
     --area: #3a285d;
+    --wes-bg1: #CFCA9E;
+    --wes-bgc1: #C96553;
+    --wes-bg2: #DDE8E0;
+    --wes-bgc2: #759CA7;
+    --wes-bg3: #FBD5C5;
+    --wes-bgc3: #360C05;
+    --wes-bg4: #D5D5D3;
+    --wes-bgc4: #CDAA27;
+    --wes-bg5: #FAEFD2;
+    --wes-bgc5: #8A9DA4;
+    --wes-bg6: #CCC494;
+    --wes-bgc6: #29211F;
+    --wes-bg7: #D3DDDC;
+    --wes-bgc7: #456455;
 }
 
 /* Dando estilos a los ejes verticales/horizontales */
@@ -384,6 +398,76 @@ template {
 .area {
     fill: #3a285d;
     fill: var(--area);
+}
+
+.area-bgc1 {
+    fill: #C96553;
+    fill: var(--wes-bgc1);
+}
+
+.bg1 {
+    background-color: #CFCA9E;
+    background-color: var(--wes-bg1);
+}
+
+.area-bgc2 {
+    fill: #759CA7;
+    fill: var(--wes-bgc2);
+}
+
+.bg2 {
+    background-color: #DDE8E0;
+    background-color: var(--wes-bg2);
+}
+
+.bar-bgc3 {
+    fill: #360C05;
+    fill: var(--wes-bgc3);
+}
+
+.bg3 {
+    background-color: #FBD5C5;
+    background-color: var(--wes-bg3);
+}
+
+.bar-bgc4 {
+    fill: #CDAA27;
+    fill: var(--wes-bgc4);
+}
+
+.bg4 {
+    background-color: #D5D5D3;
+    background-color: var(--wes-bg4);
+}
+
+.bar-bgc5 {
+    fill: #8A9DA4;
+    fill: var(--wes-bgc5);
+}
+
+.bg5 {
+    background-color: #FAEFD2;
+    background-color: var(--wes-bg5);
+}
+
+.scatter-bgc6 {
+    fill: #29211F;
+    fill: var(--wes-bgc6);
+}
+
+.bg6 {
+    background-color: #CCC494;
+    background-color: var(--wes-bg6);
+}
+
+.area-bgc7 {
+    fill: #456455;
+    fill: var(--wes-bgc7);
+}
+
+.bg7 {
+    background-color: #D3DDDC;
+    background-color: var(--wes-bg7);
 }
 
 .x-hover-line,
@@ -421,10 +505,10 @@ template {
 }
 
 .tooltip-lluvias {
-    background-color: #34009c;
+    background-color: #8B8379;
     height: auto;
     width: 300px;
-    border-color: #34009c;
+    border-color: #8B8379;
     margin-left: 0;
     top: 150px;
 }
@@ -451,11 +535,6 @@ template {
             font-family: 'SFMono-Regular', Consolas, Menlo, Courier, monospace;
             font-family: var(--monospace);
         }
-
-.bar-vertical,
-.bar-horizontal {
-    fill: #82ceea;
-}
 
 .chart-lluvia-bar-vertical-tooltip {
     position: relative;
@@ -523,8 +602,9 @@ body {
 }
 
 .clau-container {
-    max-width: 90vw;
     margin: 0 auto;
+    width: 100%;
+    padding: 2rem 0;
 }
 
 .clau-container-full {
@@ -533,7 +613,8 @@ body {
 }
 
 .chart-container {
-    margin: 2rem 0 6rem;
+    max-width: 90vw;
+    margin: 2rem auto 6rem;
 }
 
 .title,
@@ -566,8 +647,8 @@ body {
 
 .text {
     font-size: 1rem;
-    font-family: 'Merriweather', serif;
-    font-family: var(--merri);
+    font-family: 'Adamina', serif;
+    font-family: var(--adamina);
     color: #111;
     color: var(--black);
     max-width: 30rem;
@@ -603,7 +684,7 @@ body {
         font-size: 4rem;
     }
 
-    .clau-container {
+    .chart-container {
         max-width: 60rem;
     }
 

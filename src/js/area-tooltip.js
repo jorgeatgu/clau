@@ -144,7 +144,7 @@ const areaTooltip = () => {
 
         const newLayer = layer.enter()
                 .append('path')
-                .attr('class', 'area')
+                .attr('class', 'area area-bgc1')
 
         layer.merge(newLayer)
             .attr('d', area)

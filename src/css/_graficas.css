@@ -21,6 +21,62 @@
     fill: var(--area);
 }
 
+.area-bgc1 {
+    fill: var(--wes-bgc1);
+}
+
+.bg1 {
+    background-color: var(--wes-bg1);
+}
+
+.area-bgc2 {
+    fill: var(--wes-bgc2);
+}
+
+.bg2 {
+    background-color: var(--wes-bg2);
+}
+
+.bar-bgc3 {
+    fill: var(--wes-bgc3);
+}
+
+.bg3 {
+    background-color: var(--wes-bg3);
+}
+
+.bar-bgc4 {
+    fill: var(--wes-bgc4);
+}
+
+.bg4 {
+    background-color: var(--wes-bg4);
+}
+
+.bar-bgc5 {
+    fill: var(--wes-bgc5);
+}
+
+.bg5 {
+    background-color: var(--wes-bg5);
+}
+
+.scatter-bgc6 {
+    fill: var(--wes-bgc6);
+}
+
+.bg6 {
+    background-color: var(--wes-bg6);
+}
+
+.area-bgc7 {
+    fill: var(--wes-bgc7);
+}
+
+.bg7 {
+    background-color: var(--wes-bg7);
+}
+
 .x-hover-line,
 .y-hover-line {
     stroke: var(--wes-red);
@@ -53,10 +109,10 @@
 }
 
 .tooltip-lluvias {
-    background-color: #34009c;
+    background-color: #8B8379;
     height: auto;
     width: 300px;
-    border-color: #34009c;
+    border-color: #8B8379;
     margin-left: 0;
     top: 150px;
     p {
@@ -78,11 +134,6 @@
             font-family: var(--monospace);
         }
     }
-}
-
-.bar-vertical,
-.bar-horizontal {
-    fill: #82ceea;
 }
 
 .chart-lluvia-bar-vertical-tooltip {

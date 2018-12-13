@@ -8,7 +8,7 @@ const multipleLines = () => {
     const chart = d3.select('.chart-multiple-lines');
     const svg = chart.selectAll('svg');
     const scales = {};
-    const colors = ["#7c5c76", "#b662ca", "#691b9e", "#4eb4f3"]
+    const colors = ["#c4cdf6", "#0a60a8", "#b28bef", "#5c2f8e"]
     const color = d3.scaleOrdinal(colors);
     let parseDate = d3.timeParse("%x");
     let dataz;

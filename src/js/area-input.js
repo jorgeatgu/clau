@@ -102,7 +102,7 @@ const areaInput = () => {
 
         const newLayer = layer.enter()
             .append('path')
-            .attr('class', 'area')
+            .attr('class', 'area area-bgc7')
 
         layer.merge(newLayer)
             .transition()

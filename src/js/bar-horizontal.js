@@ -93,7 +93,7 @@ const barHorizontal = () => {
 
         const newLayer = layer.enter()
                 .append('rect')
-                .attr('class', 'bar-horizontal')
+                .attr('class', 'bar-horizontal bar-bgc5')
 
 
         layer.merge(newLayer)

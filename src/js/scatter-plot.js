@@ -112,15 +112,14 @@ const barscatter = () => {
 
         const newLayer = layer.enter()
             .append('circle')
-            .attr('class', 'scatter-circles')
+            .attr('class', 'scatter-circles scatter-bgc6')
 
 
         layer.merge(newLayer)
             .attr("cx", d => scales.count.x(d.year))
             .attr("cy", d => scales.count.y(d.minima))
             .attr("r", 6)
-            .style("fill", "#DD435C")
-            .attr('fill-opacity', .5);
+            .attr('fill-opacity', 0.6);
 
         drawAxes(g)
 
