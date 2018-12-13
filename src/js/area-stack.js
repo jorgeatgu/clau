@@ -93,7 +93,7 @@ const areaStack = () => {
 
         const color = d3.scaleOrdinal()
             .domain(keys)
-            .range(['#1DACE6', '#1D366A', '#F24C29', '#E4C3A0',  '#C3CED0'])
+            .range(["#375b8b", "#3295e9", "#625ad0", "#bfd6fa", "#49cbca"])
 
 
         updateScales(width, height)

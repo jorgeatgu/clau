@@ -8,7 +8,7 @@ const multipleLines = () => {
     const chart = d3.select('.chart-multiple-lines');
     const svg = chart.selectAll('svg');
     const scales = {};
-    const colors = ["#9a1622", "#e30613", "#0080b8", "#f07a36"]
+    const colors = ["#7c5c76", "#b662ca", "#691b9e", "#4eb4f3"]
     const color = d3.scaleOrdinal(colors);
     let parseDate = d3.timeParse("%x");
     let dataz;
@@ -108,8 +108,8 @@ const multipleLines = () => {
 
             container.append("path")
                 .attr("class", "area " + d.key)
-                .style("stroke", () => d.color = color(d.key))
-                .style("opacity", 0.7)
+                .style("fill", () => d.color = color(d.key))
+                .style("opacity", 0.85)
                 .attr("d", area(d.values));
         });
 
