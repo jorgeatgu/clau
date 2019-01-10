@@ -1,0 +1,115 @@
+.temperature-container {
+    max-width: 45rem;
+    margin: 0 auto;
+}
+
+.temperature-max,
+.temperature-min {
+    background-color: var(--white);
+    padding: 1rem 0;
+}
+
+.temperature-max {
+    background-color: #ebbfb0;
+}
+
+.temperature-min {
+    background-color: #B8DBDB;
+}
+
+.temperature-max-text {
+    font-size: 1rem;
+    font-family: var(--text);
+    color: var(--black);
+    max-width: 25rem;
+    padding: 0 1rem;
+}
+
+.temperature-max-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    font-family: var(--title);
+    margin: 0;
+    padding: 0 1rem;
+}
+
+.chart-temperature-max {
+    width: 100%;
+    margin-top: 4rem;
+    .circles-max {
+        fill: #670509;
+    }
+    .tick {
+        text {
+            font-size: 11px;
+            font-family: var(--roboto);
+        }
+    }
+    .annotation-note-title {
+        font-family: var(--roboto);
+        font-size: 14px;
+        font-weight: normal;
+        fill: #670509;
+    }
+    .note-line,
+    .connector {
+        stroke: #670509;
+    }
+    .subject {
+        display: none;
+    }
+}
+
+.chart-temperature-min {
+    width: 100%;
+    margin-top: 4rem;
+    .circles-min {
+        fill: #2e4e74;
+    }
+    .tick {
+        text {
+            font-size: 11px;
+            font-family: var(--roboto);
+        }
+    }
+    .annotation-note-title {
+        font-family: var(--roboto);
+        font-size: 14px;
+        font-weight: normal;
+        fill: #2e4e74;
+    }
+    .note-line,
+    .connector {
+        stroke: #2e4e74;
+    }
+    .subject {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 48rem) {
+
+    .temperature-max-number {
+        font-size: 10rem;
+    }
+
+    .temperature-max,
+    .temperature-min {
+        padding: 5rem 0;
+    }
+
+    .chart-temperature-max,
+    .chart-temperature-min {
+        .tick {
+            text {
+                font-size: 14px;
+                font-family: var(--roboto);
+            }
+        }
+    }
+
+    .temperature-max-title {
+        font-size: 2rem;
+    }
+
+}

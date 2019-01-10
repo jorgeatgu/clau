@@ -6,5 +6,8 @@
 
 @import '_reset';
 @import '_variables';
-@import '_graficas';
 @import '_home';
+@import '_graficas';
+@import '_proyectos';
+@import '_temperature';
+@import '_footer';

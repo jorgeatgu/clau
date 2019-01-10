@@ -184,3 +184,9 @@
         }
     }
 }
+
+.chart-temperature-max {
+    .axis-x .domain {
+        stroke: var(--black);
+    }
+}
