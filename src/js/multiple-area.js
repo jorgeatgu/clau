@@ -137,7 +137,6 @@ const multipleLines = () => {
                     d.fecha = parseDate(d.fecha);
                 });
 
-                console.log(dataz)
                 setupElements()
                 setupScales()
                 updateChart(dataz)

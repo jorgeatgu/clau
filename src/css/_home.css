@@ -66,23 +66,6 @@ body {
     max-width: 30rem;
 }
 
-.footer {
-    background-color: #E25772;
-    width: 100%;
-    padding: 10vh 0;
-}
-
-.footer-texto,
-.footer-links {
-    color: var(--black);
-    font-family: var(--roboto);
-    font-size: 1rem;
-}
-
-.footer-links {
-    font-weight: bold;
-}
-
 @media only screen and (min-width: 48em) {
 
     .subtitle,

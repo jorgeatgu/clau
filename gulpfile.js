@@ -16,6 +16,7 @@ notify = require('gulp-notify');
 stylelint = require('stylelint');
 browserSync = require('browser-sync');
 babel = require('gulp-babel');
+replace = require('gulp-replace');
 
 var paths = {
   js: 'src/js',
@@ -174,6 +175,12 @@ gulp.task('images', function() {
         .pipe(newer(paths.images))
         .pipe(imagemin())
         .pipe(gulp.dest(paths.buildImages));
+});
+
+gulp.task('replace-path', function() {
+    gulp.src('./index.html')
+        .pipe(replace(/js/g, 'clau/js'))
+        .pipe(gulp.dest('dist/'))
 });
 
 

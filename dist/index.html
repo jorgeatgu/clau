@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>A clau | d3 responsive</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Rubik:400,500|Adamina" rel="stylesheet">
+    <link rel="stylesheet" type="text/clau/css" href="clau/css/styles.clau/css">
+    <link href="https://fonts.googleapis.com/clau/css?family=Roboto+Condensed:400,700|Rubik:400,500|Adamina" rel="stylesheet">
 </head>
+
 <body>
     <section class="clau-container">
         <article class="chart-container">
@@ -160,17 +162,6 @@
     </section>
     <section class="clau-container">
         <section class="chart-container">
-            <h3 class="subtitle">Gráfica de barras stacked</h3>
-            <p class="text">Comparar varios datos que ocurren en el mismo espacio y tiempo.</p>
-            <article class="bar-stack">
-                <svg>
-                    <g class="bar-stack-container"></g>
-                </svg>
-            </article>
-        </section>
-    </section>
-    <section class="clau-container">
-        <section class="chart-container">
             <h3 class="subtitle">Gráfica de barras verticales al 100%</h3>
             <p class="text">Con abundantes datos quizás una buena práctica sea aprovechar casi todo el espacio de la pantalla. También vamos a prescindir de la escala vertical.</p>
         </section>
@@ -186,22 +177,22 @@
         <section class="chart-container">
             <h3 class="subtitle">Scatterplot con dos inputs</h3>
             <p class="text"></p>
-            <article class="scatter-inputs">
-                <svg>
-                    <g class="scatter-inputs-container"></g>
-                </svg>
-                <div class="container-inputs">
-                    <label class="inputs-label" for="updateButtonDay">Día</label>
-                    <input maxlength="2" class="input-update-grafica" id="updateButtonDay" type="text" value="31" />
-                </div>
-                <div class="container-inputs">
-                    <label class="inputs-label" for="updateButtonMonth">Mes</label>
-                    <input maxlength="2" class="input-update-grafica" id="updateButtonMonth" type="text" value="12" />
-                </div>
-                <button class="btn-update-grafica roboto btn-update-max" id="update">MÁXIMAS</button>
-                <button class="btn-update-grafica roboto btn-update-min" id="updateMin"> MÍNIMAS</button>
-            </article>
         </section>
+        <article class="scatter-inputs">
+            <svg>
+                <g class="scatter-inputs-container"></g>
+            </svg>
+            <div class="container-inputs">
+                <label class="inputs-label" for="updateButtonDay">Día</label>
+                <input maxlength="2" class="input-update-grafica" id="updateButtonDay" type="text" value="31" />
+            </div>
+            <div class="container-inputs">
+                <label class="inputs-label" for="updateButtonMonth">Mes</label>
+                <input maxlength="2" class="input-update-grafica" id="updateButtonMonth" type="text" value="12" />
+            </div>
+            <button class="btn-update-grafica roboto btn-update-max" id="update">MÁXIMAS</button>
+            <button class="btn-update-grafica roboto btn-update-min" id="updateMin"> MÍNIMAS</button>
+        </article>
     </div>
     <footer class="footer">
         <div class="clau-container">
@@ -225,7 +216,6 @@
     <script src="js/scatter-inputs.js"></script>
     <script src="js/multiple-area.js"></script>
     <script src="js/area-stack.js"></script>
-    <script src="js/bar-stacked-vertical.js"></script>
 </body>
 
 </html>

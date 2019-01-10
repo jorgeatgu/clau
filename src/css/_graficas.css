@@ -176,3 +176,11 @@
     fill: none;
     stroke: var(--area);
 }
+
+.bar-stack-container {
+    .tick {
+        text {
+            font-family: var(--roboto);
+        }
+    }
+}
