@@ -9,7 +9,6 @@ const scatterInput = () => {
     const scales = {};
     let dataz;
     const temp = "ºC";
-    const dedicatoria = 'Dedicado a Maria del Carmen Tobajas Urieta y Agustín Aznar Gracia. Gracias por todo.';
 
     //Eliminando el año para quedarnos solamente con el día y la fecha en formato: DD-MM
     const getYear = (stringDate) => stringDate.split('-')[2];
@@ -44,6 +43,19 @@ const scatterInput = () => {
         g.append('g').attr('class', 'axis axis-y');
 
         g.append('g').attr('class', 'scatter-inputs-container-dos');
+
+        g.append("text")
+            .attr("class", "legend")
+            .attr("y", "94%")
+            .style("text-anchor", "start")
+            .text("Porcentaje de ofertas");
+
+        g.append("text")
+            .attr("class", "legend-number")
+            .attr("x", "2rem")
+            .attr("y", "23%")
+            .style("text-anchor", "start")
+            .text("257");
 
     }
 
