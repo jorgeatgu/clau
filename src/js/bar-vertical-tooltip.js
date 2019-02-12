@@ -100,7 +100,7 @@ const barVerticalTooltip = () => {
                 tooltip.transition()
                 .duration(300)
                 .style("opacity", 1);
-                tooltip.html('<div class="tooltip-lluvia-mes-container"><p class="tooltip-lluvia-mes">Lluvia acumulada en ' + d.dias + '<span class="tooltip-lluvia-mes-total">: ' + d.fecha + 'mm</span><p/><p class="tooltip-lluvia-mes">Lluvia acumulada en ' + d.precipitacion_anual + '<span class="tooltip-lluvia-mes-total">: ' + d.fecha + 'mm</span><p/></div>')
+                tooltip.html('<div class="tooltip-lluvia-mes-container"><p class="tooltip-lluvia-mes">Lluvia acumulada en ' + d.fecha + '<span class="tooltip-lluvia-mes-total">: ' + d.dias + 'mm</span><p/><p class="tooltip-lluvia-mes">Lluvia acumulada en ' + d.fecha + '<span class="tooltip-lluvia-mes-total">: ' + d.precipitacion_anual + 'mm</span><p/></div>')
             })
             .on("mouseout", d => {
                 tooltip.style("opacity", 0)
