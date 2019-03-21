@@ -12,14 +12,13 @@
   ],
   "author": "Jorge Aznar",
   "lint-staged": {
-    "src/css/*.css": "stylelint"
+    "src/css/*.css": "stylelint",
+    "src/js/*.js": "prettier --write"
   },
   "pre-commit": "lint-staged",
   "scripts": {
     "server-on": "browser-sync start --server --files '*.css, *.html' --tunnel jorgeatgu",
-    "lint-staged": "lint-staged",
-    "inline:css": "gulp inline",
-    "remove:uncss": "gulp remove"
+    "lint-staged": "lint-staged"
   },
   "license": "MIT",
   "devDependencies": {
@@ -28,6 +27,7 @@
     "babel-preset-env": "^1.7.0",
     "browser-sync": "^2.26.3",
     "debounce": "^1.2.0",
+    "eslint-plugin-import": "^2.16.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^6.0.0",
     "gulp-babel": "^8.0.0",
@@ -47,6 +47,7 @@
     "postcss-reporter": "^6.0.0",
     "postcss-sorting": "^4.0.0",
     "pre-commit": "^1.2.2",
+    "prettier": "^1.16.4",
     "stylelint": "^9.6.0"
   }
 }
