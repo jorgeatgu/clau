@@ -36,7 +36,6 @@ const scatterInput = () => {
         g.append('g').attr('class', 'axis axis-y');
 
         g.append('g').attr('class', 'scatter-inputs-container-dos');
-
     };
 
     const updateScales = (width, height) => {
@@ -132,7 +131,7 @@ const scatterInput = () => {
         let valueDate = valueDateDay + '-' + valueDateMonth;
         let reValueDate = new RegExp('^.*' + valueDate + '.*', 'gi');
 
-        d3.csv('csv/temperaturas.csv', dataz => {
+        d3.csv('csv/temperaturas.csv', (dataz) => {
             dataz = dataz.filter((d) => String(d.fecha).match(reValueDate));
 
             dataz.forEach((d) => {
@@ -205,7 +204,7 @@ const scatterInput = () => {
         let valueDate = valueDateDay + '-' + valueDateMonth;
         let reValueDate = new RegExp('^.*' + valueDate + '.*', 'gi');
 
-        d3.csv('csv/temperaturas.csv', dataz => {
+        d3.csv('csv/temperaturas.csv', (dataz) => {
             dataz = dataz.filter((d) => String(d.fecha).match(reValueDate));
 
             dataz.forEach((d) => {
@@ -243,7 +242,7 @@ const scatterInput = () => {
 
         let valueDateResize = valueDateDay + '-' + valueDateMonth;
 
-        d3.csv('csv/temperaturas.csv', dataz => {
+        d3.csv('csv/temperaturas.csv', (dataz) => {
             dataz = dataz.filter((d) => String(d.fecha).match(valueDateResize));
 
             dataz.forEach((d) => {

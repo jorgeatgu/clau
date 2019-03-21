@@ -17,14 +17,14 @@ const multipleLines = () => {
             .scaleTime()
             .domain([
                 d3.min(dataz, (d) => d.fecha),
-                d3.max(dataz, (d) => d.fecha),
+                d3.max(dataz, (d) => d.fecha)
             ]);
 
         const countY = d3
             .scaleLinear()
             .domain([
                 d3.min(dataz, (d) => d.votos),
-                d3.max(dataz, (d) => d.votos),
+                d3.max(dataz, (d) => d.votos)
             ]);
 
         scales.count = { x: countX, y: countY };

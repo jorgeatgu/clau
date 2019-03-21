@@ -106,7 +106,7 @@ const areaInput = () => {
     }
 
     function update(mes) {
-        d3.csv('csv/total-media-limpio.csv', data => {
+        d3.csv('csv/total-media-limpio.csv', (data) => {
             data = data.filter(function(d) {
                 return String(d.mes).match(mes);
             });
@@ -131,7 +131,7 @@ const areaInput = () => {
     }
 
     const resize = () => {
-        d3.csv('csv/total-media-limpio.csv', data => {
+        d3.csv('csv/total-media-limpio.csv', (data) => {
             const mesActual = d3
                 .select('#mes-mensual-minima')
                 .select('select')
