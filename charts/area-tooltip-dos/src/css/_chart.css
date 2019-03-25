@@ -1,0 +1,72 @@
+.chart {
+    background-color: var(--bg);
+    padding: 3rem;
+}
+
+.area {
+    fill: var(--element-chart);
+}
+
+.overlay {
+    fill: transparent;
+}
+
+.tooltip {
+    position: absolute;
+    z-index: 2;
+    width: 70px;
+    margin-left: 20px;
+    padding: 10px;
+    border-radius: 3px;
+}
+
+.tooltip-lluvias {
+    background-color: #8B8379;
+    height: auto;
+    width: 300px;
+    border-color: #8B8379;
+    margin-left: 0;
+    top: 150px;
+    p:empty {
+        display: none;
+    }
+    .tooltipYear {
+        color: var(--white);
+        font-size: 1.1rem;
+        font-weight: normal;
+        max-width: 300px;
+        .textYear {
+            display: block;
+            font-size: 1.3rem;
+        }
+        span {
+            font-weight: bold;
+            font-family: var(--monospace);
+        }
+    }
+}
+
+.chart-lluvia-tooltip-dos {
+    text {
+        font-family: var(--roboto);
+        font-size: .75rem;
+    }
+    .axis-y {
+        .tick {
+            /* stylelint-disable */
+            line {
+                stroke-dasharray: 3px 3px;
+            }
+            /* stylelint-enable */
+        }
+        .domain {
+            stroke: none;
+        }
+    }
+    .hover-line {
+        stroke: var(--line);
+    }
+    .circle-focus {
+        fill: var(--line);
+    }
+}

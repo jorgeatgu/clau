@@ -350,12 +350,13 @@ template {
     --fontSystem: BlinkMacSystemFont, -apple-system, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Helvetica, sans-serif;
     --monospace: 'SFMono-Regular', Consolas, Menlo, Courier, monospace;
     --roboto: 'Roboto Condensed', sans-serif;
-    --archivo: 'Rubik', sans-serif;
+    --title: 'Staatliches', cursive;
+    --archivo: 'Space Mono', monospace;
     --adamina: 'Adamina', serif;
     --black: #111;
     --white: #fff;
     --f1: #f1f1f1;
-    --background: #dde8e0;
+    --background: #efef99;
     --wes-grey: #B3C0C3;
     --wes-red: #F23818;
     --wes-blue: #0097E2;
@@ -380,7 +381,7 @@ template {
 
 * {
     box-sizing: border-box;
-    line-height: 1.3;
+    line-height: 1.4;
 }
 
 h1,
@@ -396,7 +397,7 @@ p {
 }
 
 body {
-    background-color: #dde8e0;
+    background-color: #efef99;
     background-color: var(--background);
 }
 
@@ -419,11 +420,12 @@ body {
 .title,
 .subtitle {
     font-size: 3rem;
-    font-family: 'Rubik', sans-serif;
-    font-family: var(--archivo);
+    font-family: 'Staatliches', cursive;
+    font-family: var(--title);
     color: #182956;
     color: var(--wes-bluedark);
-    letter-spacing: 1px;
+    letter-spacing: 2px;
+
 }
 
 .quote {
@@ -454,11 +456,6 @@ body {
 }
 
 @media only screen and (min-width: 48em) {
-
-    .subtitle,
-    .title {
-        letter-spacing: 0;
-    }
 
     .chart-container {
         max-width: 60rem;
@@ -828,6 +825,7 @@ body {
 .temperature-max-title {
     font-size: 1.25rem;
     font-weight: bold;
+    font-family: 'Staatliches', cursive;
     font-family: var(--title);
     margin: 0;
     padding: 0 1rem;

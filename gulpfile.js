@@ -18,12 +18,12 @@ const browserSync = require('browser-sync');
 const babel = require('gulp-babel');
 
 var paths = {
-    js: '**/src/js',
-    css: '**/src/css',
+    js: 'src/js',
+    css: 'src/css',
     images: 'src/img/*',
-    buildCss: '**/css/',
-    buildJs: '**/js/',
-    buildImages: '**/img/'
+    buildCss: 'css/',
+    buildJs: 'js/',
+    buildImages: 'img/'
 };
 
 var watch = {

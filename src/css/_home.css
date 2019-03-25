@@ -1,6 +1,6 @@
 * {
     box-sizing: border-box;
-    line-height: 1.3;
+    line-height: 1.4;
 }
 
 h1,
@@ -38,9 +38,10 @@ body {
 .title,
 .subtitle {
     font-size: 3rem;
-    font-family: var(--archivo);
+    font-family: var(--title);
     color: var(--wes-bluedark);
-    letter-spacing: 1px;
+    letter-spacing: 2px;
+
 }
 
 .quote {
@@ -67,11 +68,6 @@ body {
 }
 
 @media only screen and (min-width: 48em) {
-
-    .subtitle,
-    .title {
-        letter-spacing: 0;
-    }
 
     .chart-container {
         max-width: 60rem;

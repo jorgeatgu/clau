@@ -2,12 +2,13 @@
     --fontSystem: BlinkMacSystemFont, -apple-system, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Helvetica, sans-serif;
     --monospace: 'SFMono-Regular', Consolas, Menlo, Courier, monospace;
     --roboto: 'Roboto Condensed', sans-serif;
+    --title: 'Staatliches', cursive;
     --archivo: 'Space Mono', monospace;
     --adamina: 'Adamina', serif;
     --black: #111;
     --white: #fff;
     --f1: #f1f1f1;
-    --background: #dde8e0;
+    --background: #efef99;
     --wes-grey: #B3C0C3;
     --wes-red: #F23818;
     --wes-blue: #0097E2;

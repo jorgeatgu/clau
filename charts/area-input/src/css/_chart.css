@@ -1,0 +1,55 @@
+.chart {
+    background-color: var(--bg);
+    padding: 3rem;
+}
+
+.area {
+    fill: var(--element-chart);
+}
+
+.chart-lluvia-input {
+    text {
+        font-family: var(--roboto);
+        font-size: .75rem;
+    }
+    .axis-y {
+        .tick {
+            /* stylelint-disable */
+            line {
+                stroke-dasharray: 3px 3px;
+            }
+            /* stylelint-enable */
+        }
+        .domain {
+            stroke: none;
+        }
+    }
+    .lluvias-por-mes-select,
+    .temperatura-mensual-select,
+    .temperatura-mensual-minima-select {
+        border-radius: 5px;
+        padding: 1rem;
+        border: 1px solid #ddd;
+        background-color: var(--white);
+        margin: 25px 0;
+        width: 7rem;
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            -ms-appearance: none;
+            appearance: none;
+            box-shadow: none;
+            border: 0 !important;
+            width: 100%;
+            background-color: transparent;
+            height: 100%;
+            background-image: url(../img/select-arrow.svg);
+            background-repeat: no-repeat;
+            -webkit-background-size: 100%;
+            background-size: 1rem;
+            font-size: 1rem;
+            font-family: var(--roboto);
+            background-position: 95% center;
+        }
+    }
+}

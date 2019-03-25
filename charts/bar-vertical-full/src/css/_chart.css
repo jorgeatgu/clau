@@ -1,0 +1,26 @@
+.chart {
+    background-color: var(--bg);
+    padding: 3rem;
+}
+
+.vertical-full-lluvia {
+    text {
+        font-family: var(--roboto);
+        font-size: .75rem;
+    }
+    .axis-y {
+        .tick {
+            /* stylelint-disable */
+            line {
+                stroke-dasharray: 3px 3px;
+            }
+            /* stylelint-enable */
+        }
+        .domain {
+            stroke: none;
+        }
+    }
+    .bar-vertical {
+        fill: var(--element-chart);
+    }
+}

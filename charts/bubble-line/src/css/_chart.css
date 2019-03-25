@@ -1,0 +1,25 @@
+.chart {
+    padding: 3rem;
+}
+
+.chart-temperature-max {
+    text {
+        font-family: var(--roboto);
+        font-size: .75rem;
+    }
+    .axis-y {
+        .tick {
+            /* stylelint-disable */
+            line {
+                stroke-dasharray: 3px 3px;
+            }
+            /* stylelint-enable */
+        }
+        .domain {
+            stroke: none;
+        }
+    }
+    .circles-max {
+        fill: var(--element-chart);
+    }
+}

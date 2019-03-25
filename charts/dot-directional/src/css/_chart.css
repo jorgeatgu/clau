@@ -1,0 +1,27 @@
+.chart {
+    padding: 3rem;
+}
+
+.area {
+    fill: #3a285d;
+}
+
+.chart-diff-records {
+    margin-bottom: 3rem;
+    text {
+        font-family: var(--roboto);
+        font-size: .75rem;
+    }
+    .axis-y {
+        .tick {
+            /* stylelint-disable */
+            line {
+                stroke-dasharray: 3px 3px;
+            }
+            /* stylelint-enable */
+        }
+        .domain {
+            stroke: none;
+        }
+    }
+}
