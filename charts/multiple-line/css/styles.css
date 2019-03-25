@@ -375,7 +375,7 @@ template {
   --black: #111;
   --white: #fff;
   --bg: #f1f1f1;
-  --element-chart:;
+  --element-chart: #921d5d;
 }
 
 .chart {
@@ -384,30 +384,34 @@ template {
     padding: 3rem;
 }
 
-.chart-lluvia-bar-horizontal text {
+.multiline-lluvia text {
         font-family: 'Roboto Condensed', sans-serif;
         font-family: var(--roboto);
         font-size: .75rem;
     }
 
-.chart-lluvia-bar-horizontal .bar-horizontal {
-        fill: ;
+.multiline-lluvia .bar-horizontal {
+        fill: #921d5d;
         fill: var(--element-chart);
     }
 
-.chart-lluvia-bar-horizontal .axis-y .tick, .chart-lluvia-bar-horizontal .axis-x .tick {
+.multiline-lluvia .axis-y .tick, .multiline-lluvia .axis-x .tick {
             /* stylelint-enable */
         }
 
 /* stylelint-disable */
 
-.chart-lluvia-bar-horizontal .axis-y .tick line, .chart-lluvia-bar-horizontal .axis-x .tick line {
+.multiline-lluvia .axis-y .tick line, .multiline-lluvia .axis-x .tick line {
                 stroke-dasharray: 3px 3px;
             }
 
-.chart-lluvia-bar-horizontal .axis-y .domain, .chart-lluvia-bar-horizontal .axis-x .domain {
+.multiline-lluvia .axis-y .domain, .multiline-lluvia .axis-x .domain {
             stroke: none;
         }
+
+.multiline-lluvia .line {
+        fill: none;
+    }
 
 body {
     margin: 0;

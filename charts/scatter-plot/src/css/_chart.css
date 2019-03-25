@@ -3,7 +3,7 @@
     padding: 3rem;
 }
 
-.chart-lluvia-bar-horizontal {
+.chart-lluvia-scatter {
     text {
         font-family: var(--roboto);
         font-size: .75rem;

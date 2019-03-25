@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,257 +10,41 @@
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Staatliches|Adamina" rel="stylesheet">
 </head>
+
 <body>
     <section class="clau-container">
         <article class="chart-container">
+            <svg class="icon-clau" width="186" height="186" viewBox="0 0 186 186" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <rect stroke-width="1" id="Rectangle" fill="#F7EA3C" x="0" y="0" width="186" height="186" rx="8"></rect>
+                <path d="M131.461538,116.230769 L131.461538,93 L93,93 L93,62.2307692 L100.692308,62.2307692 L100.692308,77.6153846 L135.307692,77.6153846 L135.307692,43 L100.692308,43 L100.692308,58.3846154 L81.3480769,58.3846154 C80.3884615,49.7442308 73.0480769,43 64.1538462,43 C54.6096154,43 46.8461538,50.7634615 46.8461538,60.3076923 C46.8461538,69.8519231 54.6096154,77.6153846 64.1538462,77.6153846 C73.0480769,77.6153846 80.3884615,70.8711538 81.3480769,62.2307692 L89.1538462,62.2307692 L89.1538462,93 L54.5384615,93 L54.5384615,116.230769 C48.0269231,117.169231 43,122.771154 43,129.538462 C43,136.959615 49.0403846,143 56.4615385,143 C63.2288462,143 68.8307692,137.973077 69.7692308,131.461538 L81.4615385,131.461538 L81.4615385,143 L108.384615,143 L108.384615,116.076923 L81.4615385,116.076923 L81.4615385,127.615385 L69.7692308,127.615385 C68.9211538,121.732692 64.2673077,117.078846 58.3846154,116.230769 L58.3846154,96.8461538 L127.615385,96.8461538 L127.615385,116.230769 C121.103846,117.169231 116.076923,122.771154 116.076923,129.538462 C116.076923,136.959615 122.117308,143 129.538462,143 C136.959615,143 143,136.959615 143,129.538462 C143,122.771154 137.973077,117.169231 131.461538,116.230769 Z M105,47 L132,47 L132,74 L105,74 L105,47 Z M63.5,74 C56.0576429,74 50,67.9423571 50,60.5 C50,53.0576429 56.0576429,47 63.5,47 C70.9423571,47 77,53.0576429 77,60.5 C77,67.9423571 70.9423571,74 63.5,74 Z M86,120 L105,120 L105,139 L86,139 L86,120 Z M66,129.5 C66,134.7383 61.7383,139 56.5,139 C51.2617,139 47,134.7383 47,129.5 C47,124.2617 51.2617,120 56.5,120 C61.7383,120 66,124.2617 66,129.5 Z M129.5,139 C124.2617,139 120,134.7383 120,129.5 C120,124.2617 124.2617,120 129.5,120 C134.7383,120 139,124.2617 139,129.5 C139,134.7383 134.7383,139 129.5,139 Z" id="Shape" fill="#192A55" fill-rule="nonzero"></path>
+            </svg>
             <h1 class="title">Clau</h1>
-            <p class="text">Aquí están disponibles múltiples gráficas que he ido acumulando con el paso del tiempo. Todas las gráficas están hechas con d3v5, son fácilmente reutilizables y se adaptan a cualquier tipo de dispositivo. Los ejemplos contienen datos de verdad, casi todo extraídos de <a href="https://forno.es">Forno</a>, <a href="https://vulturno.co">Vulturno</a> y <a href="https://casacaida.co">Casa Caída</a>. </p>
+            <p class="text">Aquí están disponibles las múltiples gráficas que he ido acumulando con el paso del tiempo. Todas las gráficas están hechas con d3v5, son fácilmente reutilizables y se adaptan a cualquier tipo de dispositivo. Los ejemplos contienen datos de verdad, casi todo extraídos de <a href="https://forno.es">Forno</a>, <a href="https://vulturno.co">Vulturno</a> y <a href="https://casacaida.co">Casa Caída</a>. </p>
             <p class="text">La versión d3v4 introdujo un cambio bastante importante, aprovechando el sistema de módulos de JavaScript se paso a modularizar toda la librería. Así podemos crear nuestras propias versiones de d3 con lo justo y necesario. Cada una de las gráficas que te vas a encontrar están modularizadas, solo tienen lo necesario para funcionar. Esto se consigue instalando cada módulo a través de NPM, luego importamos esos modulos a través del <code>index.js</code> y con Rollup unificamos y minificamos el archivo resultante.</p>
         </article>
     </section>
-    <section class="clau-container">
-        <section class="chart-container">
-            <h3 class="subtitle">
-            Gráfica de Area</h3>
-            <p class="text">Sin tooltip</p>
-            <article class="chart-lluvia">
-                <svg>
-                    <g class="container"></g>
-                </svg>
-            </article>
-        </section>
-    </section>
-    <section class="clau-container bg1">
-        <section class="chart-container">
-            <h3 class="subtitle">
-            Gráfica de Area con tooltip</h3>
-            <p class="text">Con un tooltip que solamente pinta el resultado y dos líneas para situar al usuario.</p>
-            <article class="chart-lluvia-tooltip">
-                <svg>
-                    <g class="chart-lluvia-tooltip-container"></g>
-                </svg>
-            </article>
-        </section>
-    </section>
-    <section class="clau-container bg2">
-        <section class="chart-container">
-            <h3 class="subtitle">
-            Gráfica de Area con tooltip II</h3>
-            <p class="text">Con un tooltip que devuelve texto y una línea para ubicar al usuario en la gráfica.</p>
-            <article class="chart-lluvia-tooltip-dos">
-                <svg>
-                    <g class="chart-lluvia-tooltip-dos-container"></g>
-                </svg>
-            </article>
-        </section>
-    </section>
-    <section class="clau-container bg3">
-        <section class="chart-container">
-            <h3 class="subtitle">
-            Gráfica de barras vertical sin tooltip </h3>
-            <p class="text">Gráfica de barras en formato vertical sin tooltip.</p>
-            <article class="chart-lluvia-bar-vertical">
-                <svg>
-                    <g class="chart-lluvia-bar-vertical-container"></g>
-                </svg>
-            </article>
-        </section>
-    </section>
-    <section class="clau-container bg4">
-        <section class="chart-container">
-            <h3 class="subtitle">
-            Gráfica de barras vertical con tooltip </h3>
-            <p class="text">Gráfica de barras en formato vertical con tooltip fijo. La idea es aprovechar una posición vacía de la gráfica para dejar el tooltip en estático. Es bastante molesto que vaya apareciendo y desapareciendo.</p>
-            <article class="chart-lluvia-bar-vertical-tooltip">
-                <svg>
-                    <g class="chart-lluvia-bar-vertical-tooltip-container"></g>
-                </svg>
-            </article>
-        </section>
-    </section>
-    <section class="clau-container bg5">
-        <section class="chart-container">
-            <h3 class="subtitle">
-            Gráfica de barras horizontal sin tooltip </h3>
-            <p class="text">Gráfica de barras en formato horizontal sin tooltip.</p>
-            <article class="chart-lluvia-bar-horizontal">
-                <svg>
-                    <g class="chart-lluvia-bar-horizontal-container"></g>
-                </svg>
-            </article>
-        </section>
-    </section>
-    <section class="clau-container bg6">
-        <section class="chart-container">
-            <h3 class="subtitle">Gráfica de scatterplot</h3>
-            <p class="text">Scatter Plot</p>
-            <article class="chart-lluvia-scatter">
-                <svg>
-                    <g class="chart-lluvia-scatter-container"></g>
-                </svg>
-            </article>
-        </section>
-    </section>
-    <section class="clau-container">
-        <section class="chart-container">
-            <h3 class="subtitle">Múltiples gráficas de area</h3>
-            <p class="text">A partir de un dataset creamos varias gráficas de area</p>
-            <article class="chart-multiple-lines">
-                <svg>
-                    <g class="chart-multiple-lines-container"></g>
-                </svg>
-            </article>
-        </section>
-    </section>
-    <section class="clau-container bg7">
-        <section class="chart-container">
-            <h3 class="subtitle">
-            Gráfica de area con input </h3>
-            <p class="text">Gráfica de area que se actualiza a través de un input.</p>
-            <article class="chart-lluvia-input">
-                <div class="temperatura-mensual-minima-select" id="mes-mensual-minima"></div>
-                <svg>
-                    <g class="chart-lluvia-input-container"></g>
-                </svg>
-            </article>
-        </section>
-    </section>
-    <section class="clau-container">
-        <section class="chart-container">
-            <h3 class="subtitle">Gráfica de línea con dots</h3>
-            <p class="text">Una gráfica de línea con círculos para reforzar el resultado a primera vista.</p>
-            <article class="line-lluvia">
-                <svg>
-                    <g class="line-lluvia-container"></g>
-                </svg>
-            </article>
-        </section>
-    </section>
-    <section class="clau-container">
-        <section class="chart-container">
-            <h3 class="subtitle">Gráfica de línea multiple</h3>
-            <p class="text">No es una buena práctica pintar múltiples líneas en la misma gráfica.</p>
-            <article class="multiline-lluvia">
-                <svg>
-                    <g class="multiline-lluvia-container"></g>
-                </svg>
-            </article>
-        </section>
-    </section>
-    <section class="clau-container">
-        <section class="chart-container">
-            <h3 class="subtitle">Gráfica de area stack</h3>
-            <p class="text">Comparar varios datos que ocurren en el mismo espacio y tiempo.</p>
-            <article class="area-stack">
-                <svg>
-                    <g class="area-stack-container"></g>
-                </svg>
-            </article>
-        </section>
-    </section>
-    <section class="clau-container">
-        <section class="chart-container">
-            <h3 class="subtitle">Gráfica de barras stacked</h3>
-            <p class="text">Comparar varios datos que ocurren en el mismo espacio y tiempo.</p>
-            <article class="bar-stack">
-                <svg>
-                    <g class="bar-stack-container"></g>
-                </svg>
-            </article>
-        </section>
-    </section>
-    <section class="clau-container temperature-max">
-        <article class="chart-container">
-            <section class="temperature-container">
-                <h3 class="subtitle">Temperaturas máximas</h3>
-                <p class="text">Una gráfica para visualizar cuando se establecieron los récords de temperaturas máximas en las 45 estaciones analizadas.</p>
-                <article class="chart-temperature-max">
-                    <svg>
-                        <g class="chart-temperature-max-container"></g>
-                    </svg>
-                </article>
-            </section>
-
-        </article>
-    </section>
-    <section class="clau-container">
-        <section class="chart-container">
-            <h3 class="subtitle">Gráfica de barras verticales al 100%</h3>
-            <p class="text">Con abundantes datos quizás una buena práctica sea aprovechar casi todo el espacio de la pantalla. También vamos a prescindir de la escala vertical.</p>
-        </section>
-    </section>
-    <section class="clau-container-full">
-        <article class="vertical-full-lluvia">
-            <svg>
-                <g class="vertical-full-lluvia-container"></g>
-            </svg>
-        </article>
-    </section>
-    <section class="clau-container">
-        <article class="chart-container">
-            <div id="vis"></div>
-        </article>
-    </section>
-    <div class="clau-container">
-        <section class="chart-container">
-            <h3 class="subtitle">Scatterplot con dos inputs</h3>
-            <article class="scatter-inputs">
-                <svg>
-                    <g class="scatter-inputs-container"></g>
-                </svg>
-                <div class="container-inputs">
-                    <label class="inputs-label" for="updateButtonDay">Día</label>
-                    <input maxlength="2" class="input-update-grafica" id="updateButtonDay" type="text" value="31" />
-                </div>
-                <div class="container-inputs">
-                    <label class="inputs-label" for="updateButtonMonth">Mes</label>
-                    <input maxlength="2" class="input-update-grafica" id="updateButtonMonth" type="text" value="12" />
-                </div>
-                <button class="btn-update-grafica roboto btn-update-max" id="update">MÁXIMAS</button>
-                <button class="btn-update-grafica roboto btn-update-min" id="updateMin"> MÍNIMAS</button>
-            </article>
-        </section>
-    </div>
-    <div class="clau-container">
-        <section class="temperature-container-full">
-            <h3 class="subtitle">Force Layout</h3>
-            <article id="frosty" class="chart-force-two">
-                <svg class="charts">
-                    <g class="chart-force-two-container"></g>
-                </svg>
-            </article>
-        </section>
-    </div>
-    <section class="clau-container">
-        <section class="chart-container">
-            <h3 class="subtitle">Force Layout</h3>
-            <article class="chart-diff-records">
-                <svg class="charts">
-                    <g class="chart-diff-records-container"></g>
-                </svg>
-            </article>
-        </section>
-    </section>
-    <section class="clau-container">
-        <section class="chart-container">
-            <h3 class="subtitle">Directional dot</h3>
-            <article class="chart-diff-records">
-                <svg class="charts">
-                    <g class="chart-diff-records-container"></g>
-                </svg>
-            </article>
-        </section>
-    </section>
-    <section class="clau-container">
-        <section class="chart-container">
-            <h3 class="subtitle">Force Layout</h3>
-            <section class="temperature-container-full">
-                <article id="force-maxima" class="chart-force-maxima">
-                    <svg class="charts">
-                    </svg>
-                </article>
-            </section>
-        </section>
+    <section class="chart-container">
+        <h4 class="subtitle">GRÁFICAS</h4>
+        <div class="chart-grid">
+            <a href="charts/area/" class="chart-grid-element"><span class="chart-grid-title">AREA</span></a>
+            <a href="charts/area-input/" class="chart-grid-element"><span class="chart-grid-title">AREA INPUT</span></a>
+            <a href="charts/area-stack/" class="chart-grid-element"><span class="chart-grid-title">AREA STACK</span></a>
+            <a href="charts/area-tooltip/" class="chart-grid-element"><span class="chart-grid-title">AREA TOOLTIP</span></a>
+            <a href="charts/area-tooltip-v2/" class="chart-grid-element"><span class="chart-grid-title">AREA TOOLTIP V2</span></a>
+            <a href="charts/bar-horizontal/" class="chart-grid-element"><span class="chart-grid-title">BAR HORIZONTAL</span></a>
+            <a href="charts/bar-stacked-vertical/" class="chart-grid-element"><span class="chart-grid-title">BAR STACKED VERTICAL</span></a>
+            <a href="charts/bar-vertical/" class="chart-grid-element"><span class="chart-grid-title">BAR VERTICAL</span></a>
+            <a href="charts/bar-vertical-full/" class="chart-grid-element"><span class="chart-grid-title">BAR VERTICAL FULL</span></a>
+            <a href="charts/bar-vertical-tooltiparea-input/" class="chart-grid-element"><span class="chart-grid-title">BAR VERTICAL TOOLTIP</span></a>
+            <a href="charts/bubble-line/" class="chart-grid-element"><span class="chart-grid-title">BUBBLE LINE</span></a>
+            <a href="charts/dot-directional/" class="chart-grid-element"><span class="chart-grid-title">DOT DIRECTIONAL</span></a>
+            <a href="charts/force-layout/" class="chart-grid-element"><span class="chart-grid-title">FORCE LAYOUT</span></a>
+            <a href="charts/line/" class="chart-grid-element"><span class="chart-grid-title">LINE</span></a>
+            <a href="charts/multiple-line/" class="chart-grid-element"><span class="chart-grid-title">MULTIPLE LINE</span></a>
+            <a href="charts/scatter-inputs/" class="chart-grid-element"><span class="chart-grid-title">SCATTER INPUTS</span></a>
+            <a href="charts/scatter/" class="chart-grid-element"><span class="chart-grid-title">SCATTER</span></a>
+            <a href="charts/slider/" class="chart-grid-element"><span class="chart-grid-title">SLIDER</span></a>
+        </div>
     </section>
     <footer class="footer">
         <div class="chart-container">
@@ -268,25 +53,6 @@
             <a class="footer-links" href="http://github.com/jorgeatgu/clau">GitHub</a>
         </div>
     </footer>
-    <script src="js/d3.min.js"></script>
-    <script src="js/bar-vertical-tooltip.js"></script>
-    <script src="js/bar-vertical.js"></script>
-    <script src="js/area.js"></script>
-    <script src="js/area-tooltip.js"></script>
-    <script src="js/area-tooltip-dos.js"></script>
-    <script src="js/bar-horizontal.js"></script>
-    <script src="js/scatter-plot.js"></script>
-    <script src="js/area-input.js"></script>
-    <script src="js/line.js"></script>
-    <script src="js/multiple-line.js"></script>
-    <script src="js/bar-vertical-full.js"></script>
-    <script src="js/scatter-inputs.js"></script>
-    <script src="js/multiple-area.js"></script>
-    <script src="js/area-stack.js"></script>
-    <script src="js/bar-stacked-vertical.js"></script>
-    <script src="js/bubble-line.js"></script>
-    <script src="js/slider.js"></script>
-    <script src="js/force-layout.js"></script>
-    <script src="js/dot-directional.js"></script>
 </body>
+
 </html>

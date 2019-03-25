@@ -3,7 +3,7 @@
     padding: 3rem;
 }
 
-.chart-lluvia-bar-horizontal {
+.multiline-lluvia {
     text {
         font-family: var(--roboto);
         font-size: .75rem;
@@ -23,5 +23,8 @@
         .domain {
             stroke: none;
         }
+    }
+    .line {
+        fill: none;
     }
 }

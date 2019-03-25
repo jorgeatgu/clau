@@ -9,18 +9,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Staatliches|Adamina" rel="stylesheet">
-
 </head>
 
 <body>
     <header>
         <nav></nav>
     </header>
-    <section>
-        <article></article>
-        <article></article>
-        <article></article>
-    </section>
+    <div class="chart">
+        <section class="chart-container">
+            <h3 class="subtitle">Scatterplot con dos inputs</h3>
+            <article class="scatter-inputs">
+                <svg>
+                    <g class="scatter-inputs-container"></g>
+                </svg>
+                <div class="container-inputs">
+                    <label class="inputs-label" for="updateButtonDay">Día</label>
+                    <input maxlength="2" class="input-update-grafica" id="updateButtonDay" type="text" value="31" />
+                </div>
+                <div class="container-inputs">
+                    <label class="inputs-label" for="updateButtonMonth">Mes</label>
+                    <input maxlength="2" class="input-update-grafica" id="updateButtonMonth" type="text" value="12" />
+                </div>
+                <button class="btn-update-grafica roboto btn-update-max" id="update">MÁXIMAS</button>
+                <button class="btn-update-grafica roboto btn-update-min" id="updateMin"> MÍNIMAS</button>
+            </article>
+        </section>
+    </div>
     <footer class="footer">
         <div class="chart-container">
             <p class="footer-texto">Hecho en Zaragoza con mucha maña por un <a class="footer-links" href="http://jorgeatgu.com" target="_blank">maño</a> - MMXIX</p>
