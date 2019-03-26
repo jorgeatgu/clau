@@ -1,3 +1,7 @@
+import wesPalette from './../../color.js';
+
+wesPalette();
+
 const areaInput = () => {
     const margin = {
         top: 16,

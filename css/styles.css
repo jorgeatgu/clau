@@ -397,8 +397,7 @@ p {
 }
 
 body {
-    background-color: #111;
-    background-color: var(--black);
+    background-color: #002f41;
 }
 
 .chart-container {
