@@ -381,7 +381,7 @@ template {
 .chart {
     background-color: #f1f1f1;
     background-color: var(--bg);
-    padding: 3rem;
+    padding: .5rem;
 }
 
 .area {
@@ -408,6 +408,15 @@ template {
 .chart-lluvia .axis-y .domain {
             stroke: none;
         }
+
+@media only screen and (min-width: 48rem) {
+
+    .chart {
+        background-color: #f1f1f1;
+        background-color: var(--bg);
+        padding: 3rem;
+    }
+}
 
 body {
     margin: 0;

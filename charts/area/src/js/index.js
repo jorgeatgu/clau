@@ -1,5 +1,5 @@
 const area = () => {
-    const margin = { top: 24, right: 24, bottom: 24, left: 24 };
+    const margin = { top: 24, right: 16, bottom: 24, left: 16 };
     let width = 0;
     let height = 0;
     const chart = d3.select('.chart-lluvia');
