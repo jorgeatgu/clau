@@ -685,8 +685,6 @@
 
   var filterEvents = {};
 
-  exports.event = null;
-
   if (typeof document !== "undefined") {
     var element = document.documentElement;
     if (!("onmouseenter" in element)) {
@@ -706,12 +704,9 @@
 
   function contextListener(listener, index, group) {
     return function(event1) {
-      var event0 = exports.event; // Events can be reentrant (e.g., focus).
-      exports.event = event1;
       try {
         listener.call(this, this.__data__, index, group);
       } finally {
-        exports.event = event0;
       }
     };
   }
@@ -863,32 +858,6 @@
     return typeof selector === "string"
         ? new Selection([[document.querySelector(selector)]], [document.documentElement])
         : new Selection([[selector]], root);
-  }
-
-  function sourceEvent() {
-    var current = exports.event, source;
-    while (source = current.sourceEvent) current = source;
-    return current;
-  }
-
-  function point(node, event) {
-    var svg = node.ownerSVGElement || node;
-
-    if (svg.createSVGPoint) {
-      var point = svg.createSVGPoint();
-      point.x = event.clientX, point.y = event.clientY;
-      point = point.matrixTransform(node.getScreenCTM().inverse());
-      return [point.x, point.y];
-    }
-
-    var rect = node.getBoundingClientRect();
-    return [event.clientX - rect.left - node.clientLeft, event.clientY - rect.top - node.clientTop];
-  }
-
-  function mouse(node) {
-    var event = sourceEvent();
-    if (event.changedTouches) event = event.changedTouches[0];
-    return point(node, event);
   }
 
   function selectAll(selector) {
@@ -2753,188 +2722,6 @@
   selection.prototype.interrupt = selection_interrupt;
   selection.prototype.transition = selection_transition;
 
-  var prefix = "$";
-
-  function Map$1() {}
-
-  Map$1.prototype = map.prototype = {
-    constructor: Map$1,
-    has: function(key) {
-      return (prefix + key) in this;
-    },
-    get: function(key) {
-      return this[prefix + key];
-    },
-    set: function(key, value) {
-      this[prefix + key] = value;
-      return this;
-    },
-    remove: function(key) {
-      var property = prefix + key;
-      return property in this && delete this[property];
-    },
-    clear: function() {
-      for (var property in this) if (property[0] === prefix) delete this[property];
-    },
-    keys: function() {
-      var keys = [];
-      for (var property in this) if (property[0] === prefix) keys.push(property.slice(1));
-      return keys;
-    },
-    values: function() {
-      var values = [];
-      for (var property in this) if (property[0] === prefix) values.push(this[property]);
-      return values;
-    },
-    entries: function() {
-      var entries = [];
-      for (var property in this) if (property[0] === prefix) entries.push({key: property.slice(1), value: this[property]});
-      return entries;
-    },
-    size: function() {
-      var size = 0;
-      for (var property in this) if (property[0] === prefix) ++size;
-      return size;
-    },
-    empty: function() {
-      for (var property in this) if (property[0] === prefix) return false;
-      return true;
-    },
-    each: function(f) {
-      for (var property in this) if (property[0] === prefix) f(this[property], property.slice(1), this);
-    }
-  };
-
-  function map(object, f) {
-    var map = new Map$1;
-
-    // Copy constructor.
-    if (object instanceof Map$1) object.each(function(value, key) { map.set(key, value); });
-
-    // Index array by numeric index or specified key function.
-    else if (Array.isArray(object)) {
-      var i = -1,
-          n = object.length,
-          o;
-
-      if (f == null) while (++i < n) map.set(i, object[i]);
-      else while (++i < n) map.set(f(o = object[i], i, object), o);
-    }
-
-    // Convert object to map.
-    else if (object) for (var key in object) map.set(key, object[key]);
-
-    return map;
-  }
-
-  function nest() {
-    var keys = [],
-        sortKeys = [],
-        sortValues,
-        rollup,
-        nest;
-
-    function apply(array, depth, createResult, setResult) {
-      if (depth >= keys.length) {
-        if (sortValues != null) array.sort(sortValues);
-        return rollup != null ? rollup(array) : array;
-      }
-
-      var i = -1,
-          n = array.length,
-          key = keys[depth++],
-          keyValue,
-          value,
-          valuesByKey = map(),
-          values,
-          result = createResult();
-
-      while (++i < n) {
-        if (values = valuesByKey.get(keyValue = key(value = array[i]) + "")) {
-          values.push(value);
-        } else {
-          valuesByKey.set(keyValue, [value]);
-        }
-      }
-
-      valuesByKey.each(function(values, key) {
-        setResult(result, key, apply(values, depth, createResult, setResult));
-      });
-
-      return result;
-    }
-
-    function entries(map, depth) {
-      if (++depth > keys.length) return map;
-      var array, sortKey = sortKeys[depth - 1];
-      if (rollup != null && depth >= keys.length) array = map.entries();
-      else array = [], map.each(function(v, k) { array.push({key: k, values: entries(v, depth)}); });
-      return sortKey != null ? array.sort(function(a, b) { return sortKey(a.key, b.key); }) : array;
-    }
-
-    return nest = {
-      object: function(array) { return apply(array, 0, createObject, setObject); },
-      map: function(array) { return apply(array, 0, createMap, setMap); },
-      entries: function(array) { return entries(apply(array, 0, createMap, setMap), 0); },
-      key: function(d) { keys.push(d); return nest; },
-      sortKeys: function(order) { sortKeys[keys.length - 1] = order; return nest; },
-      sortValues: function(order) { sortValues = order; return nest; },
-      rollup: function(f) { rollup = f; return nest; }
-    };
-  }
-
-  function createObject() {
-    return {};
-  }
-
-  function setObject(object, key, value) {
-    object[key] = value;
-  }
-
-  function createMap() {
-    return map();
-  }
-
-  function setMap(map, key, value) {
-    map.set(key, value);
-  }
-
-  function Set() {}
-
-  var proto = map.prototype;
-
-  Set.prototype = set$2.prototype = {
-    constructor: Set,
-    has: proto.has,
-    add: function(value) {
-      value += "";
-      this[prefix + value] = value;
-      return this;
-    },
-    remove: proto.remove,
-    clear: proto.clear,
-    values: proto.keys,
-    size: proto.size,
-    empty: proto.empty,
-    each: proto.each
-  };
-
-  function set$2(object, f) {
-    var set = new Set;
-
-    // Copy constructor.
-    if (object instanceof Set) object.each(function(value) { set.add(value); });
-
-    // Otherwise, assume it’s an array.
-    else if (object) {
-      var i = -1, n = object.length;
-      if (f == null) while (++i < n) set.add(object[i]);
-      else while (++i < n) set.add(f(object[i], i, object));
-    }
-
-    return set;
-  }
-
   function ascending$1(a, b) {
     return a < b ? -1 : a > b ? 1 : a >= b ? 0 : NaN;
   }
@@ -2973,20 +2760,6 @@
 
   var ascendingBisect = bisector(ascending$1);
   var bisectRight = ascendingBisect.right;
-
-  function sequence(start, stop, step) {
-    start = +start, stop = +stop, step = (n = arguments.length) < 2 ? (stop = start, start = 0, 1) : n < 3 ? 1 : +step;
-
-    var i = -1,
-        n = Math.max(0, Math.ceil((stop - start) / step)) | 0,
-        range = new Array(n);
-
-    while (++i < n) {
-      range[i] = start + i * step;
-    }
-
-    return range;
-  }
 
   var e10 = Math.sqrt(50),
       e5 = Math.sqrt(10),
@@ -3093,131 +2866,6 @@
       default: this.range(range).domain(domain); break;
     }
     return this;
-  }
-
-  const implicit = Symbol("implicit");
-
-  function ordinal() {
-    var index = new Map(),
-        domain = [],
-        range = [],
-        unknown = implicit;
-
-    function scale(d) {
-      var key = d + "", i = index.get(key);
-      if (!i) {
-        if (unknown !== implicit) return unknown;
-        index.set(key, i = domain.push(d));
-      }
-      return range[(i - 1) % range.length];
-    }
-
-    scale.domain = function(_) {
-      if (!arguments.length) return domain.slice();
-      domain = [], index = new Map();
-      for (const value of _) {
-        const key = value + "";
-        if (index.has(key)) continue;
-        index.set(key, domain.push(value));
-      }
-      return scale;
-    };
-
-    scale.range = function(_) {
-      return arguments.length ? (range = Array.from(_), scale) : range.slice();
-    };
-
-    scale.unknown = function(_) {
-      return arguments.length ? (unknown = _, scale) : unknown;
-    };
-
-    scale.copy = function() {
-      return ordinal(domain, range).unknown(unknown);
-    };
-
-    initRange.apply(scale, arguments);
-
-    return scale;
-  }
-
-  function band() {
-    var scale = ordinal().unknown(undefined),
-        domain = scale.domain,
-        ordinalRange = scale.range,
-        r0 = 0,
-        r1 = 1,
-        step,
-        bandwidth,
-        round = false,
-        paddingInner = 0,
-        paddingOuter = 0,
-        align = 0.5;
-
-    delete scale.unknown;
-
-    function rescale() {
-      var n = domain().length,
-          reverse = r1 < r0,
-          start = reverse ? r1 : r0,
-          stop = reverse ? r0 : r1;
-      step = (stop - start) / Math.max(1, n - paddingInner + paddingOuter * 2);
-      if (round) step = Math.floor(step);
-      start += (stop - start - step * (n - paddingInner)) * align;
-      bandwidth = step * (1 - paddingInner);
-      if (round) start = Math.round(start), bandwidth = Math.round(bandwidth);
-      var values = sequence(n).map(function(i) { return start + step * i; });
-      return ordinalRange(reverse ? values.reverse() : values);
-    }
-
-    scale.domain = function(_) {
-      return arguments.length ? (domain(_), rescale()) : domain();
-    };
-
-    scale.range = function(_) {
-      return arguments.length ? ([r0, r1] = _, r0 = +r0, r1 = +r1, rescale()) : [r0, r1];
-    };
-
-    scale.rangeRound = function(_) {
-      return [r0, r1] = _, r0 = +r0, r1 = +r1, round = true, rescale();
-    };
-
-    scale.bandwidth = function() {
-      return bandwidth;
-    };
-
-    scale.step = function() {
-      return step;
-    };
-
-    scale.round = function(_) {
-      return arguments.length ? (round = !!_, rescale()) : round;
-    };
-
-    scale.padding = function(_) {
-      return arguments.length ? (paddingInner = Math.min(1, paddingOuter = +_), rescale()) : paddingInner;
-    };
-
-    scale.paddingInner = function(_) {
-      return arguments.length ? (paddingInner = Math.min(1, _), rescale()) : paddingInner;
-    };
-
-    scale.paddingOuter = function(_) {
-      return arguments.length ? (paddingOuter = +_, rescale()) : paddingOuter;
-    };
-
-    scale.align = function(_) {
-      return arguments.length ? (align = Math.max(0, Math.min(1, _)), rescale()) : align;
-    };
-
-    scale.copy = function() {
-      return band(domain(), [r0, r1])
-          .round(round)
-          .paddingInner(paddingInner)
-          .paddingOuter(paddingOuter)
-          .align(align);
-    };
-
-    return initRange.apply(rescale(), arguments);
   }
 
   function constant$2(x) {
@@ -3746,25 +3394,6 @@
     initRange.apply(scale, arguments);
 
     return linearish(scale);
-  }
-
-  function nice(domain, interval) {
-    domain = domain.slice();
-
-    var i0 = 0,
-        i1 = domain.length - 1,
-        x0 = domain[i0],
-        x1 = domain[i1],
-        t;
-
-    if (x1 < x0) {
-      t = i0, i0 = i1, i1 = t;
-      t = x0, x0 = x1, x1 = t;
-    }
-
-    domain[i0] = interval.floor(x0);
-    domain[i1] = interval.ceil(x1);
-    return domain;
   }
 
   var t0$1 = new Date,
@@ -4710,134 +4339,6 @@
       ? parseIsoNative
       : utcParse(isoSpecifier);
 
-  var durationSecond$1 = 1000,
-      durationMinute$1 = durationSecond$1 * 60,
-      durationHour$1 = durationMinute$1 * 60,
-      durationDay$1 = durationHour$1 * 24,
-      durationWeek$1 = durationDay$1 * 7,
-      durationMonth = durationDay$1 * 30,
-      durationYear = durationDay$1 * 365;
-
-  function date$1(t) {
-    return new Date(t);
-  }
-
-  function number$1(t) {
-    return t instanceof Date ? +t : +new Date(+t);
-  }
-
-  function calendar(year, month, week, day, hour, minute, second, millisecond, format) {
-    var scale = continuous(identity$1, identity$1),
-        invert = scale.invert,
-        domain = scale.domain;
-
-    var formatMillisecond = format(".%L"),
-        formatSecond = format(":%S"),
-        formatMinute = format("%I:%M"),
-        formatHour = format("%I %p"),
-        formatDay = format("%a %d"),
-        formatWeek = format("%b %d"),
-        formatMonth = format("%B"),
-        formatYear = format("%Y");
-
-    var tickIntervals = [
-      [second,  1,      durationSecond$1],
-      [second,  5,  5 * durationSecond$1],
-      [second, 15, 15 * durationSecond$1],
-      [second, 30, 30 * durationSecond$1],
-      [minute,  1,      durationMinute$1],
-      [minute,  5,  5 * durationMinute$1],
-      [minute, 15, 15 * durationMinute$1],
-      [minute, 30, 30 * durationMinute$1],
-      [  hour,  1,      durationHour$1  ],
-      [  hour,  3,  3 * durationHour$1  ],
-      [  hour,  6,  6 * durationHour$1  ],
-      [  hour, 12, 12 * durationHour$1  ],
-      [   day,  1,      durationDay$1   ],
-      [   day,  2,  2 * durationDay$1   ],
-      [  week,  1,      durationWeek$1  ],
-      [ month,  1,      durationMonth ],
-      [ month,  3,  3 * durationMonth ],
-      [  year,  1,      durationYear  ]
-    ];
-
-    function tickFormat(date) {
-      return (second(date) < date ? formatMillisecond
-          : minute(date) < date ? formatSecond
-          : hour(date) < date ? formatMinute
-          : day(date) < date ? formatHour
-          : month(date) < date ? (week(date) < date ? formatDay : formatWeek)
-          : year(date) < date ? formatMonth
-          : formatYear)(date);
-    }
-
-    function tickInterval(interval, start, stop, step) {
-      if (interval == null) interval = 10;
-
-      // If a desired tick count is specified, pick a reasonable tick interval
-      // based on the extent of the domain and a rough estimate of tick size.
-      // Otherwise, assume interval is already a time interval and use it.
-      if (typeof interval === "number") {
-        var target = Math.abs(stop - start) / interval,
-            i = bisector(function(i) { return i[2]; }).right(tickIntervals, target);
-        if (i === tickIntervals.length) {
-          step = tickStep(start / durationYear, stop / durationYear, interval);
-          interval = year;
-        } else if (i) {
-          i = tickIntervals[target / tickIntervals[i - 1][2] < tickIntervals[i][2] / target ? i - 1 : i];
-          step = i[1];
-          interval = i[0];
-        } else {
-          step = Math.max(tickStep(start, stop, interval), 1);
-          interval = millisecond;
-        }
-      }
-
-      return step == null ? interval : interval.every(step);
-    }
-
-    scale.invert = function(y) {
-      return new Date(invert(y));
-    };
-
-    scale.domain = function(_) {
-      return arguments.length ? domain(Array.from(_, number$1)) : domain().map(date$1);
-    };
-
-    scale.ticks = function(interval, step) {
-      var d = domain(),
-          t0 = d[0],
-          t1 = d[d.length - 1],
-          r = t1 < t0,
-          t;
-      if (r) t = t0, t0 = t1, t1 = t;
-      t = tickInterval(interval, t0, t1, step);
-      t = t ? t.range(t0, t1 + 1) : []; // inclusive stop
-      return r ? t.reverse() : t;
-    };
-
-    scale.tickFormat = function(count, specifier) {
-      return specifier == null ? tickFormat : format(specifier);
-    };
-
-    scale.nice = function(interval, step) {
-      var d = domain();
-      return (interval = tickInterval(interval, d[0], d[d.length - 1], step))
-          ? domain(nice(d, interval))
-          : scale;
-    };
-
-    scale.copy = function() {
-      return copy(scale, calendar(year, month, week, day, hour, minute, second, millisecond, format));
-    };
-
-    return scale;
-  }
-
-  function time() {
-    return initRange.apply(calendar(year, month, sunday, day, hour, minute, second, millisecond, exports.timeFormat).domain([new Date(2000, 0, 1), new Date(2000, 0, 2)]), arguments);
-  }
-
   var slice = Array.prototype.slice;
 
   function identity$3(x) {
@@ -4858,7 +4359,7 @@
     return "translate(0," + (y + 0.5) + ")";
   }
 
-  function number$2(scale) {
+  function number$1(scale) {
     return function(d) {
       return +scale(d);
     };
@@ -4894,7 +4395,7 @@
           range = scale.range(),
           range0 = +range[0] + 0.5,
           range1 = +range[range.length - 1] + 0.5,
-          position = (scale.bandwidth ? center : number$2)(scale.copy()),
+          position = (scale.bandwidth ? center : number$1)(scale.copy()),
           selection = context.selection ? context.selection() : context,
           path = selection.selectAll(".domain").data([null]),
           tick = selection.selectAll(".tick").data(values, scale).order(),
@@ -5006,6 +4507,116 @@
 
   function axisLeft(scale) {
     return axis(left, scale);
+  }
+
+  var prefix = "$";
+
+  function Map() {}
+
+  Map.prototype = map.prototype = {
+    constructor: Map,
+    has: function(key) {
+      return (prefix + key) in this;
+    },
+    get: function(key) {
+      return this[prefix + key];
+    },
+    set: function(key, value) {
+      this[prefix + key] = value;
+      return this;
+    },
+    remove: function(key) {
+      var property = prefix + key;
+      return property in this && delete this[property];
+    },
+    clear: function() {
+      for (var property in this) if (property[0] === prefix) delete this[property];
+    },
+    keys: function() {
+      var keys = [];
+      for (var property in this) if (property[0] === prefix) keys.push(property.slice(1));
+      return keys;
+    },
+    values: function() {
+      var values = [];
+      for (var property in this) if (property[0] === prefix) values.push(this[property]);
+      return values;
+    },
+    entries: function() {
+      var entries = [];
+      for (var property in this) if (property[0] === prefix) entries.push({key: property.slice(1), value: this[property]});
+      return entries;
+    },
+    size: function() {
+      var size = 0;
+      for (var property in this) if (property[0] === prefix) ++size;
+      return size;
+    },
+    empty: function() {
+      for (var property in this) if (property[0] === prefix) return false;
+      return true;
+    },
+    each: function(f) {
+      for (var property in this) if (property[0] === prefix) f(this[property], property.slice(1), this);
+    }
+  };
+
+  function map(object, f) {
+    var map = new Map;
+
+    // Copy constructor.
+    if (object instanceof Map) object.each(function(value, key) { map.set(key, value); });
+
+    // Index array by numeric index or specified key function.
+    else if (Array.isArray(object)) {
+      var i = -1,
+          n = object.length,
+          o;
+
+      if (f == null) while (++i < n) map.set(i, object[i]);
+      else while (++i < n) map.set(f(o = object[i], i, object), o);
+    }
+
+    // Convert object to map.
+    else if (object) for (var key in object) map.set(key, object[key]);
+
+    return map;
+  }
+
+  function Set() {}
+
+  var proto = map.prototype;
+
+  Set.prototype = set$2.prototype = {
+    constructor: Set,
+    has: proto.has,
+    add: function(value) {
+      value += "";
+      this[prefix + value] = value;
+      return this;
+    },
+    remove: proto.remove,
+    clear: proto.clear,
+    values: proto.keys,
+    size: proto.size,
+    empty: proto.empty,
+    each: proto.each
+  };
+
+  function set$2(object, f) {
+    var set = new Set;
+
+    // Copy constructor.
+    if (object instanceof Set) object.each(function(value) { set.add(value); });
+
+    // Otherwise, assume it’s an array.
+    else if (object) {
+      var i = -1, n = object.length;
+      if (f == null) while (++i < n) set.add(object[i]);
+      else while (++i < n) set.add(f(object[i], i, object));
+    }
+
+    return set;
   }
 
   function request(url, callback) {
@@ -5346,19 +4957,11 @@
 
   exports.axisBottom = axisBottom;
   exports.axisLeft = axisLeft;
-  exports.bisector = bisector;
   exports.csv = csv$1;
-  exports.dispatch = dispatch;
   exports.easeLinear = linear$1;
   exports.max = max;
   exports.min = min;
-  exports.mouse = mouse;
-  exports.nest = nest;
-  exports.range = sequence;
-  exports.scaleBand = band;
   exports.scaleLinear = linear$2;
-  exports.scaleOrdinal = ordinal;
-  exports.scaleTime = time;
   exports.select = select;
   exports.selectAll = selectAll;
 

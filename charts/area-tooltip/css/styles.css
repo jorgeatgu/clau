@@ -394,6 +394,87 @@ template {
     fill: transparent;
 }
 
+.chart-grid {
+    grid-template-columns: 33% 33% 33%;
+    display: grid;
+    max-width: 55rem;
+    margin-bottom: 4rem;
+    grid-column-gap: 2rem;
+    grid-row-gap: 2rem;
+
+}
+
+.chart-grid-element {
+    border-radius: 3px;
+    background-color: #F6E84E;
+    padding: 1rem;
+    display: inline-block;
+    box-shadow: var(--shadow);
+}
+
+.chart-grid-element:hover {
+        transition: all ease-in 300ms;
+        background-color: #f9e82b;
+        transform: translateY(-.25rem);
+    }
+
+.chart-grid-title {
+    font-family: 'Staatliches', cursive;
+    font-family: var(--title);
+    color: #182956;
+    font-size: 1rem;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.button-color {
+    font-size: 1rem;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-family: var(--roboto);
+    padding: .5rem;
+    cursor: pointer;
+    box-shadow: none;
+    border: 0;
+    height: 2rem;
+    width: 2rem;
+}
+
+.button-color.combo-first {
+        background-color: #9C302C;
+    }
+
+.button-color.combo-second {
+        background-color: #370736;
+    }
+
+.button-color.combo-third {
+        background-color: #313366;
+    }
+
+.button-color.combo-fourth {
+        background-color: #9D2C5D;
+    }
+
+.button-color.combo-fifth {
+        background-color: #111;
+    }
+
+.button-color.combo-sixth {
+        background-color: #ae1044;
+    }
+
+.button-color.combo-seventh {
+        background-color: #213835;
+    }
+
+.button-color.combo-eighth {
+        background-color: #CF6B57;
+    }
+
+.button-color.combo-ninth {
+        background-color: #5A1B1A;
+    }
+
 .chart-lluvia-tooltip text {
         font-family: 'Roboto Condensed', sans-serif;
         font-family: var(--roboto);

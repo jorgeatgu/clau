@@ -1,3 +1,7 @@
+import wesPalette from './../../../../src/js/color.js';
+
+wesPalette();
+
 function directionalDot() {
     const margin = {
         top: 16,
@@ -144,8 +148,7 @@ function directionalDot() {
                 return 6;
             })
             .attr('cy', (d) => scales.count.y(d.primero))
-            .attr('cx', (d) => scales.count.x(d.dia))
-            .attr('fill', '#63a3b2');
+            .attr('cx', (d) => scales.count.x(d.dia));
 
         layerDos
             .merge(newLayerDos)
@@ -159,8 +162,7 @@ function directionalDot() {
                 return 6;
             })
             .attr('cy', (d) => scales.count.y(d.segundo))
-            .attr('cx', (d) => scales.count.x(d.dia))
-            .attr('fill', '#0583a0');
+            .attr('cx', (d) => scales.count.x(d.dia));
 
         drawAxes(g);
     };

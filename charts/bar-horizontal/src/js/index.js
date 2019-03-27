@@ -1,3 +1,7 @@
+import wesPalette from './../../../../src/js/color.js';
+
+wesPalette();
+
 const barHorizontal = () => {
     const margin = {
         top: 24,

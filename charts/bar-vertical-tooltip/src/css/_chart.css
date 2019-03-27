@@ -1,4 +1,5 @@
 .chart {
+    background-color: var(--bg);
     padding: 3rem;
 }
 
@@ -12,7 +13,7 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     padding: 5px 15px;
-    border-left: 5px solid #34009c;
+    border-left: 5px solid var(--element-chart);
     background-color: #F3F3F3;
     box-shadow: 0 3px 4px rgba(0, 0, 0, .2);
     top: 30vh;
@@ -36,5 +37,74 @@
         .domain {
             stroke: none;
         }
+    }
+}
+
+.chart-grid {
+    grid-template-columns: 33% 33% 33%;
+    display: grid;
+    max-width: 55rem;
+    margin-bottom: 4rem;
+    grid-column-gap: 2rem;
+    grid-row-gap: 2rem;
+
+}
+
+.chart-grid-element {
+    border-radius: 3px;
+    background-color: #F6E84E;
+    padding: 1rem;
+    display: inline-block;
+    box-shadow: var(--shadow);
+    &:hover {
+        transition: all ease-in 300ms;
+        background-color: #f9e82b;
+        transform: translateY(-.25rem);
+    }
+}
+
+.chart-grid-title {
+    font-family: var(--title);
+    color: #182956;
+    font-size: 1rem;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.button-color {
+    font-size: 1rem;
+    font-family: var(--roboto);
+    padding: .5rem;
+    cursor: pointer;
+    box-shadow: none;
+    border: 0;
+    height: 2rem;
+    width: 2rem;
+    &.combo-first {
+        background-color: #9C302C;
+    }
+    &.combo-second {
+        background-color: #370736;
+    }
+    &.combo-third {
+        background-color: #313366;
+    }
+    &.combo-fourth {
+        background-color: #9D2C5D;
+    }
+    &.combo-fifth {
+        background-color: #111;
+    }
+    &.combo-sixth {
+        background-color: #ae1044;
+    }
+    &.combo-seventh {
+        background-color: #213835;
+    }
+    &.combo-eighth {
+        background-color: #CF6B57;
+    }
+    &.combo-ninth {
+        background-color: #5A1B1A;
     }
 }

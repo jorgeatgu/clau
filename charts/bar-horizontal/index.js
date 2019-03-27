@@ -2,11 +2,7 @@ import 'd3-transition';
 
 export { select, selectAll } from 'd3-selection';
 
-export { nest } from 'd3-collection';
-
-export { min, max, range } from 'd3-array';
-
-export { line, curveCardinal, arc, curveLinear, area } from 'd3-shape';
+export { min, max } from 'd3-array';
 
 export { scaleLinear, scaleBand } from 'd3-scale';
 

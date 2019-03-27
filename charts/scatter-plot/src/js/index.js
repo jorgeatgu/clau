@@ -1,3 +1,7 @@
+import wesPalette from './../../../../src/js/color.js';
+
+wesPalette();
+
 const barscatter = () => {
     const margin = { top: 24, right: 24, bottom: 24, left: 32 };
     let width = 0;
@@ -100,7 +104,7 @@ const barscatter = () => {
         const newLayer = layer
             .enter()
             .append('circle')
-            .attr('class', 'scatter-circles scatter-bgc6');
+            .attr('class', 'scatter-circles');
 
         layer
             .merge(newLayer)

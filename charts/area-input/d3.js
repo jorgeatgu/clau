@@ -2943,20 +2943,6 @@
   var ascendingBisect = bisector(ascending$1);
   var bisectRight = ascendingBisect.right;
 
-  function sequence(start, stop, step) {
-    start = +start, stop = +stop, step = (n = arguments.length) < 2 ? (stop = start, start = 0, 1) : n < 3 ? 1 : +step;
-
-    var i = -1,
-        n = Math.max(0, Math.ceil((stop - start) / step)) | 0,
-        range = new Array(n);
-
-    while (++i < n) {
-      range[i] = start + i * step;
-    }
-
-    return range;
-  }
-
   var e10 = Math.sqrt(50),
       e5 = Math.sqrt(10),
       e2 = Math.sqrt(2);
@@ -5625,7 +5611,6 @@
   exports.max = max;
   exports.min = min;
   exports.nest = nest;
-  exports.range = sequence;
   exports.scaleLinear = linear$2;
   exports.scaleTime = time;
   exports.select = select;

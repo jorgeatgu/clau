@@ -2943,20 +2943,6 @@
   var ascendingBisect = bisector(ascending$1);
   var bisectRight = ascendingBisect.right;
 
-  function sequence(start, stop, step) {
-    start = +start, stop = +stop, step = (n = arguments.length) < 2 ? (stop = start, start = 0, 1) : n < 3 ? 1 : +step;
-
-    var i = -1,
-        n = Math.max(0, Math.ceil((stop - start) / step)) | 0,
-        range = new Array(n);
-
-    while (++i < n) {
-      range[i] = start + i * step;
-    }
-
-    return range;
-  }
-
   var e10 = Math.sqrt(50),
       e5 = Math.sqrt(10),
       e2 = Math.sqrt(2);
@@ -3190,284 +3176,7 @@
     };
   }
 
-  var abs = Math.abs;
-  var atan2 = Math.atan2;
-  var cos = Math.cos;
-  var max$1 = Math.max;
-  var min$1 = Math.min;
-  var sin = Math.sin;
-  var sqrt = Math.sqrt;
-
-  var epsilon$1 = 1e-12;
   var pi$2 = Math.PI;
-  var halfPi = pi$2 / 2;
-  var tau$2 = 2 * pi$2;
-
-  function acos(x) {
-    return x > 1 ? 0 : x < -1 ? pi$2 : Math.acos(x);
-  }
-
-  function asin(x) {
-    return x >= 1 ? halfPi : x <= -1 ? -halfPi : Math.asin(x);
-  }
-
-  function arcInnerRadius(d) {
-    return d.innerRadius;
-  }
-
-  function arcOuterRadius(d) {
-    return d.outerRadius;
-  }
-
-  function arcStartAngle(d) {
-    return d.startAngle;
-  }
-
-  function arcEndAngle(d) {
-    return d.endAngle;
-  }
-
-  function arcPadAngle(d) {
-    return d && d.padAngle; // Note: optional!
-  }
-
-  function intersect(x0, y0, x1, y1, x2, y2, x3, y3) {
-    var x10 = x1 - x0, y10 = y1 - y0,
-        x32 = x3 - x2, y32 = y3 - y2,
-        t = y32 * x10 - x32 * y10;
-    if (t * t < epsilon$1) return;
-    t = (x32 * (y0 - y2) - y32 * (x0 - x2)) / t;
-    return [x0 + t * x10, y0 + t * y10];
-  }
-
-  // Compute perpendicular offset line of length rc.
-  // http://mathworld.wolfram.com/Circle-LineIntersection.html
-  function cornerTangents(x0, y0, x1, y1, r1, rc, cw) {
-    var x01 = x0 - x1,
-        y01 = y0 - y1,
-        lo = (cw ? rc : -rc) / sqrt(x01 * x01 + y01 * y01),
-        ox = lo * y01,
-        oy = -lo * x01,
-        x11 = x0 + ox,
-        y11 = y0 + oy,
-        x10 = x1 + ox,
-        y10 = y1 + oy,
-        x00 = (x11 + x10) / 2,
-        y00 = (y11 + y10) / 2,
-        dx = x10 - x11,
-        dy = y10 - y11,
-        d2 = dx * dx + dy * dy,
-        r = r1 - rc,
-        D = x11 * y10 - x10 * y11,
-        d = (dy < 0 ? -1 : 1) * sqrt(max$1(0, r * r * d2 - D * D)),
-        cx0 = (D * dy - dx * d) / d2,
-        cy0 = (-D * dx - dy * d) / d2,
-        cx1 = (D * dy + dx * d) / d2,
-        cy1 = (-D * dx + dy * d) / d2,
-        dx0 = cx0 - x00,
-        dy0 = cy0 - y00,
-        dx1 = cx1 - x00,
-        dy1 = cy1 - y00;
-
-    // Pick the closer of the two intersection points.
-    // TODO Is there a faster way to determine which intersection to use?
-    if (dx0 * dx0 + dy0 * dy0 > dx1 * dx1 + dy1 * dy1) cx0 = cx1, cy0 = cy1;
-
-    return {
-      cx: cx0,
-      cy: cy0,
-      x01: -ox,
-      y01: -oy,
-      x11: cx0 * (r1 / r - 1),
-      y11: cy0 * (r1 / r - 1)
-    };
-  }
-
-  function arc() {
-    var innerRadius = arcInnerRadius,
-        outerRadius = arcOuterRadius,
-        cornerRadius = constant$2(0),
-        padRadius = null,
-        startAngle = arcStartAngle,
-        endAngle = arcEndAngle,
-        padAngle = arcPadAngle,
-        context = null;
-
-    function arc() {
-      var buffer,
-          r,
-          r0 = +innerRadius.apply(this, arguments),
-          r1 = +outerRadius.apply(this, arguments),
-          a0 = startAngle.apply(this, arguments) - halfPi,
-          a1 = endAngle.apply(this, arguments) - halfPi,
-          da = abs(a1 - a0),
-          cw = a1 > a0;
-
-      if (!context) context = buffer = path();
-
-      // Ensure that the outer radius is always larger than the inner radius.
-      if (r1 < r0) r = r1, r1 = r0, r0 = r;
-
-      // Is it a point?
-      if (!(r1 > epsilon$1)) context.moveTo(0, 0);
-
-      // Or is it a circle or annulus?
-      else if (da > tau$2 - epsilon$1) {
-        context.moveTo(r1 * cos(a0), r1 * sin(a0));
-        context.arc(0, 0, r1, a0, a1, !cw);
-        if (r0 > epsilon$1) {
-          context.moveTo(r0 * cos(a1), r0 * sin(a1));
-          context.arc(0, 0, r0, a1, a0, cw);
-        }
-      }
-
-      // Or is it a circular or annular sector?
-      else {
-        var a01 = a0,
-            a11 = a1,
-            a00 = a0,
-            a10 = a1,
-            da0 = da,
-            da1 = da,
-            ap = padAngle.apply(this, arguments) / 2,
-            rp = (ap > epsilon$1) && (padRadius ? +padRadius.apply(this, arguments) : sqrt(r0 * r0 + r1 * r1)),
-            rc = min$1(abs(r1 - r0) / 2, +cornerRadius.apply(this, arguments)),
-            rc0 = rc,
-            rc1 = rc,
-            t0,
-            t1;
-
-        // Apply padding? Note that since r1 ≥ r0, da1 ≥ da0.
-        if (rp > epsilon$1) {
-          var p0 = asin(rp / r0 * sin(ap)),
-              p1 = asin(rp / r1 * sin(ap));
-          if ((da0 -= p0 * 2) > epsilon$1) p0 *= (cw ? 1 : -1), a00 += p0, a10 -= p0;
-          else da0 = 0, a00 = a10 = (a0 + a1) / 2;
-          if ((da1 -= p1 * 2) > epsilon$1) p1 *= (cw ? 1 : -1), a01 += p1, a11 -= p1;
-          else da1 = 0, a01 = a11 = (a0 + a1) / 2;
-        }
-
-        var x01 = r1 * cos(a01),
-            y01 = r1 * sin(a01),
-            x10 = r0 * cos(a10),
-            y10 = r0 * sin(a10);
-
-        // Apply rounded corners?
-        if (rc > epsilon$1) {
-          var x11 = r1 * cos(a11),
-              y11 = r1 * sin(a11),
-              x00 = r0 * cos(a00),
-              y00 = r0 * sin(a00),
-              oc;
-
-          // Restrict the corner radius according to the sector angle.
-          if (da < pi$2 && (oc = intersect(x01, y01, x00, y00, x11, y11, x10, y10))) {
-            var ax = x01 - oc[0],
-                ay = y01 - oc[1],
-                bx = x11 - oc[0],
-                by = y11 - oc[1],
-                kc = 1 / sin(acos((ax * bx + ay * by) / (sqrt(ax * ax + ay * ay) * sqrt(bx * bx + by * by))) / 2),
-                lc = sqrt(oc[0] * oc[0] + oc[1] * oc[1]);
-            rc0 = min$1(rc, (r0 - lc) / (kc - 1));
-            rc1 = min$1(rc, (r1 - lc) / (kc + 1));
-          }
-        }
-
-        // Is the sector collapsed to a line?
-        if (!(da1 > epsilon$1)) context.moveTo(x01, y01);
-
-        // Does the sector’s outer ring have rounded corners?
-        else if (rc1 > epsilon$1) {
-          t0 = cornerTangents(x00, y00, x01, y01, r1, rc1, cw);
-          t1 = cornerTangents(x11, y11, x10, y10, r1, rc1, cw);
-
-          context.moveTo(t0.cx + t0.x01, t0.cy + t0.y01);
-
-          // Have the corners merged?
-          if (rc1 < rc) context.arc(t0.cx, t0.cy, rc1, atan2(t0.y01, t0.x01), atan2(t1.y01, t1.x01), !cw);
-
-          // Otherwise, draw the two corners and the ring.
-          else {
-            context.arc(t0.cx, t0.cy, rc1, atan2(t0.y01, t0.x01), atan2(t0.y11, t0.x11), !cw);
-            context.arc(0, 0, r1, atan2(t0.cy + t0.y11, t0.cx + t0.x11), atan2(t1.cy + t1.y11, t1.cx + t1.x11), !cw);
-            context.arc(t1.cx, t1.cy, rc1, atan2(t1.y11, t1.x11), atan2(t1.y01, t1.x01), !cw);
-          }
-        }
-
-        // Or is the outer ring just a circular arc?
-        else context.moveTo(x01, y01), context.arc(0, 0, r1, a01, a11, !cw);
-
-        // Is there no inner ring, and it’s a circular sector?
-        // Or perhaps it’s an annular sector collapsed due to padding?
-        if (!(r0 > epsilon$1) || !(da0 > epsilon$1)) context.lineTo(x10, y10);
-
-        // Does the sector’s inner ring (or point) have rounded corners?
-        else if (rc0 > epsilon$1) {
-          t0 = cornerTangents(x10, y10, x11, y11, r0, -rc0, cw);
-          t1 = cornerTangents(x01, y01, x00, y00, r0, -rc0, cw);
-
-          context.lineTo(t0.cx + t0.x01, t0.cy + t0.y01);
-
-          // Have the corners merged?
-          if (rc0 < rc) context.arc(t0.cx, t0.cy, rc0, atan2(t0.y01, t0.x01), atan2(t1.y01, t1.x01), !cw);
-
-          // Otherwise, draw the two corners and the ring.
-          else {
-            context.arc(t0.cx, t0.cy, rc0, atan2(t0.y01, t0.x01), atan2(t0.y11, t0.x11), !cw);
-            context.arc(0, 0, r0, atan2(t0.cy + t0.y11, t0.cx + t0.x11), atan2(t1.cy + t1.y11, t1.cx + t1.x11), cw);
-            context.arc(t1.cx, t1.cy, rc0, atan2(t1.y11, t1.x11), atan2(t1.y01, t1.x01), !cw);
-          }
-        }
-
-        // Or is the inner ring just a circular arc?
-        else context.arc(0, 0, r0, a10, a00, cw);
-      }
-
-      context.closePath();
-
-      if (buffer) return context = null, buffer + "" || null;
-    }
-
-    arc.centroid = function() {
-      var r = (+innerRadius.apply(this, arguments) + +outerRadius.apply(this, arguments)) / 2,
-          a = (+startAngle.apply(this, arguments) + +endAngle.apply(this, arguments)) / 2 - pi$2 / 2;
-      return [cos(a) * r, sin(a) * r];
-    };
-
-    arc.innerRadius = function(_) {
-      return arguments.length ? (innerRadius = typeof _ === "function" ? _ : constant$2(+_), arc) : innerRadius;
-    };
-
-    arc.outerRadius = function(_) {
-      return arguments.length ? (outerRadius = typeof _ === "function" ? _ : constant$2(+_), arc) : outerRadius;
-    };
-
-    arc.cornerRadius = function(_) {
-      return arguments.length ? (cornerRadius = typeof _ === "function" ? _ : constant$2(+_), arc) : cornerRadius;
-    };
-
-    arc.padRadius = function(_) {
-      return arguments.length ? (padRadius = _ == null ? null : typeof _ === "function" ? _ : constant$2(+_), arc) : padRadius;
-    };
-
-    arc.startAngle = function(_) {
-      return arguments.length ? (startAngle = typeof _ === "function" ? _ : constant$2(+_), arc) : startAngle;
-    };
-
-    arc.endAngle = function(_) {
-      return arguments.length ? (endAngle = typeof _ === "function" ? _ : constant$2(+_), arc) : endAngle;
-    };
-
-    arc.padAngle = function(_) {
-      return arguments.length ? (padAngle = typeof _ === "function" ? _ : constant$2(+_), arc) : padAngle;
-    };
-
-    arc.context = function(_) {
-      return arguments.length ? ((context = _ == null ? null : _), arc) : context;
-    };
-
-    return arc;
-  }
 
   function Linear(context) {
     this._context = context;
@@ -3560,172 +3269,6 @@
     return line;
   }
 
-  function area() {
-    var x0 = x,
-        x1 = null,
-        y0 = constant$2(0),
-        y1 = y,
-        defined = constant$2(true),
-        context = null,
-        curve = curveLinear,
-        output = null;
-
-    function area(data) {
-      var i,
-          j,
-          k,
-          n = data.length,
-          d,
-          defined0 = false,
-          buffer,
-          x0z = new Array(n),
-          y0z = new Array(n);
-
-      if (context == null) output = curve(buffer = path());
-
-      for (i = 0; i <= n; ++i) {
-        if (!(i < n && defined(d = data[i], i, data)) === defined0) {
-          if (defined0 = !defined0) {
-            j = i;
-            output.areaStart();
-            output.lineStart();
-          } else {
-            output.lineEnd();
-            output.lineStart();
-            for (k = i - 1; k >= j; --k) {
-              output.point(x0z[k], y0z[k]);
-            }
-            output.lineEnd();
-            output.areaEnd();
-          }
-        }
-        if (defined0) {
-          x0z[i] = +x0(d, i, data), y0z[i] = +y0(d, i, data);
-          output.point(x1 ? +x1(d, i, data) : x0z[i], y1 ? +y1(d, i, data) : y0z[i]);
-        }
-      }
-
-      if (buffer) return output = null, buffer + "" || null;
-    }
-
-    function arealine() {
-      return line().defined(defined).curve(curve).context(context);
-    }
-
-    area.x = function(_) {
-      return arguments.length ? (x0 = typeof _ === "function" ? _ : constant$2(+_), x1 = null, area) : x0;
-    };
-
-    area.x0 = function(_) {
-      return arguments.length ? (x0 = typeof _ === "function" ? _ : constant$2(+_), area) : x0;
-    };
-
-    area.x1 = function(_) {
-      return arguments.length ? (x1 = _ == null ? null : typeof _ === "function" ? _ : constant$2(+_), area) : x1;
-    };
-
-    area.y = function(_) {
-      return arguments.length ? (y0 = typeof _ === "function" ? _ : constant$2(+_), y1 = null, area) : y0;
-    };
-
-    area.y0 = function(_) {
-      return arguments.length ? (y0 = typeof _ === "function" ? _ : constant$2(+_), area) : y0;
-    };
-
-    area.y1 = function(_) {
-      return arguments.length ? (y1 = _ == null ? null : typeof _ === "function" ? _ : constant$2(+_), area) : y1;
-    };
-
-    area.lineX0 =
-    area.lineY0 = function() {
-      return arealine().x(x0).y(y0);
-    };
-
-    area.lineY1 = function() {
-      return arealine().x(x0).y(y1);
-    };
-
-    area.lineX1 = function() {
-      return arealine().x(x1).y(y0);
-    };
-
-    area.defined = function(_) {
-      return arguments.length ? (defined = typeof _ === "function" ? _ : constant$2(!!_), area) : defined;
-    };
-
-    area.curve = function(_) {
-      return arguments.length ? (curve = _, context != null && (output = curve(context)), area) : curve;
-    };
-
-    area.context = function(_) {
-      return arguments.length ? (_ == null ? context = output = null : output = curve(context = _), area) : context;
-    };
-
-    return area;
-  }
-
-  function point(that, x, y) {
-    that._context.bezierCurveTo(
-      that._x1 + that._k * (that._x2 - that._x0),
-      that._y1 + that._k * (that._y2 - that._y0),
-      that._x2 + that._k * (that._x1 - x),
-      that._y2 + that._k * (that._y1 - y),
-      that._x2,
-      that._y2
-    );
-  }
-
-  function Cardinal(context, tension) {
-    this._context = context;
-    this._k = (1 - tension) / 6;
-  }
-
-  Cardinal.prototype = {
-    areaStart: function() {
-      this._line = 0;
-    },
-    areaEnd: function() {
-      this._line = NaN;
-    },
-    lineStart: function() {
-      this._x0 = this._x1 = this._x2 =
-      this._y0 = this._y1 = this._y2 = NaN;
-      this._point = 0;
-    },
-    lineEnd: function() {
-      switch (this._point) {
-        case 2: this._context.lineTo(this._x2, this._y2); break;
-        case 3: point(this, this._x1, this._y1); break;
-      }
-      if (this._line || (this._line !== 0 && this._point === 1)) this._context.closePath();
-      this._line = 1 - this._line;
-    },
-    point: function(x, y) {
-      x = +x, y = +y;
-      switch (this._point) {
-        case 0: this._point = 1; this._line ? this._context.lineTo(x, y) : this._context.moveTo(x, y); break;
-        case 1: this._point = 2; this._x1 = x, this._y1 = y; break;
-        case 2: this._point = 3; // proceed
-        default: point(this, x, y); break;
-      }
-      this._x0 = this._x1, this._x1 = this._x2, this._x2 = x;
-      this._y0 = this._y1, this._y1 = this._y2, this._y2 = y;
-    }
-  };
-
-  var cardinal = (function custom(tension) {
-
-    function cardinal(context) {
-      return new Cardinal(context, tension);
-    }
-
-    cardinal.tension = function(tension) {
-      return custom(+tension);
-    };
-
-    return cardinal;
-  })(0);
-
   function sign(x) {
     return x < 0 ? -1 : 1;
   }
@@ -3752,7 +3295,7 @@
   // According to https://en.wikipedia.org/wiki/Cubic_Hermite_spline#Representations
   // "you can express cubic Hermite interpolation in terms of cubic Bézier curves
   // with respect to the four values p0, p0 + m0 / 3, p1 - m1 / 3, p1".
-  function point$1(that, t0, t1) {
+  function point(that, t0, t1) {
     var x0 = that._x0,
         y0 = that._y0,
         x1 = that._x1,
@@ -3781,7 +3324,7 @@
     lineEnd: function() {
       switch (this._point) {
         case 2: this._context.lineTo(this._x1, this._y1); break;
-        case 3: point$1(this, this._t0, slope2(this, this._t0)); break;
+        case 3: point(this, this._t0, slope2(this, this._t0)); break;
       }
       if (this._line || (this._line !== 0 && this._point === 1)) this._context.closePath();
       this._line = 1 - this._line;
@@ -3794,8 +3337,8 @@
       switch (this._point) {
         case 0: this._point = 1; this._line ? this._context.lineTo(x, y) : this._context.moveTo(x, y); break;
         case 1: this._point = 2; break;
-        case 2: this._point = 3; point$1(this, slope2(this, t1 = slope3(this, x, y)), t1); break;
-        default: point$1(this, this._t0, t1 = slope3(this, x, y)); break;
+        case 2: this._point = 3; point(this, slope2(this, t1 = slope3(this, x, y)), t1); break;
+        default: point(this, this._t0, t1 = slope3(this, x, y)); break;
       }
 
       this._x0 = this._x1, this._x1 = x;
@@ -3875,86 +3418,6 @@
     initRange.apply(scale, arguments);
 
     return scale;
-  }
-
-  function band() {
-    var scale = ordinal().unknown(undefined),
-        domain = scale.domain,
-        ordinalRange = scale.range,
-        r0 = 0,
-        r1 = 1,
-        step,
-        bandwidth,
-        round = false,
-        paddingInner = 0,
-        paddingOuter = 0,
-        align = 0.5;
-
-    delete scale.unknown;
-
-    function rescale() {
-      var n = domain().length,
-          reverse = r1 < r0,
-          start = reverse ? r1 : r0,
-          stop = reverse ? r0 : r1;
-      step = (stop - start) / Math.max(1, n - paddingInner + paddingOuter * 2);
-      if (round) step = Math.floor(step);
-      start += (stop - start - step * (n - paddingInner)) * align;
-      bandwidth = step * (1 - paddingInner);
-      if (round) start = Math.round(start), bandwidth = Math.round(bandwidth);
-      var values = sequence(n).map(function(i) { return start + step * i; });
-      return ordinalRange(reverse ? values.reverse() : values);
-    }
-
-    scale.domain = function(_) {
-      return arguments.length ? (domain(_), rescale()) : domain();
-    };
-
-    scale.range = function(_) {
-      return arguments.length ? ([r0, r1] = _, r0 = +r0, r1 = +r1, rescale()) : [r0, r1];
-    };
-
-    scale.rangeRound = function(_) {
-      return [r0, r1] = _, r0 = +r0, r1 = +r1, round = true, rescale();
-    };
-
-    scale.bandwidth = function() {
-      return bandwidth;
-    };
-
-    scale.step = function() {
-      return step;
-    };
-
-    scale.round = function(_) {
-      return arguments.length ? (round = !!_, rescale()) : round;
-    };
-
-    scale.padding = function(_) {
-      return arguments.length ? (paddingInner = Math.min(1, paddingOuter = +_), rescale()) : paddingInner;
-    };
-
-    scale.paddingInner = function(_) {
-      return arguments.length ? (paddingInner = Math.min(1, _), rescale()) : paddingInner;
-    };
-
-    scale.paddingOuter = function(_) {
-      return arguments.length ? (paddingOuter = +_, rescale()) : paddingOuter;
-    };
-
-    scale.align = function(_) {
-      return arguments.length ? (align = Math.max(0, Math.min(1, _)), rescale()) : align;
-    };
-
-    scale.copy = function() {
-      return band(domain(), [r0, r1])
-          .round(round)
-          .paddingInner(paddingInner)
-          .paddingOuter(paddingOuter)
-          .align(align);
-    };
-
-    return initRange.apply(rescale(), arguments);
   }
 
   function constant$3(x) {
@@ -5585,7 +5048,7 @@
       right = 2,
       bottom = 3,
       left = 4,
-      epsilon$2 = 1e-6;
+      epsilon$1 = 1e-6;
 
   function translateX(x) {
     return "translate(" + (x + 0.5) + ",0)";
@@ -5662,11 +5125,11 @@
         text = text.transition(context);
 
         tickExit = tickExit.transition(context)
-            .attr("opacity", epsilon$2)
+            .attr("opacity", epsilon$1)
             .attr("transform", function(d) { return isFinite(d = position(d)) ? transform(d) : this.getAttribute("transform"); });
 
         tickEnter
-            .attr("opacity", epsilon$2)
+            .attr("opacity", epsilon$1)
             .attr("transform", function(d) { var p = this.parentNode.__axis; return transform(p && isFinite(p = p(d)) ? p : position(d)); });
       }
 
@@ -6081,20 +5544,14 @@
 
   var csv$1 = dsv$1("text/csv", csvParse);
 
-  exports.arc = arc;
-  exports.area = area;
   exports.axisBottom = axisBottom;
   exports.axisLeft = axisLeft;
   exports.csv = csv$1;
-  exports.curveCardinal = cardinal;
-  exports.curveLinear = curveLinear;
   exports.easeLinear = linear$1;
   exports.line = line;
   exports.max = max;
   exports.min = min;
   exports.nest = nest;
-  exports.range = sequence;
-  exports.scaleBand = band;
   exports.scaleLinear = linear$2;
   exports.scaleOrdinal = ordinal;
   exports.scaleTime = time;

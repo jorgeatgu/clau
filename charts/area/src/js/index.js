@@ -1,3 +1,7 @@
+import wesPalette from './../../../../src/js/color.js';
+
+wesPalette();
+
 const area = () => {
     const margin = { top: 24, right: 16, bottom: 24, left: 16 };
     let width = 0;

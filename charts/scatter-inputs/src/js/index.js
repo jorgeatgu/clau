@@ -1,3 +1,7 @@
+import wesPalette from './../../../../src/js/color.js';
+
+wesPalette();
+
 const scatterInput = () => {
     const margin = { top: 48, right: 16, bottom: 24, left: 32 };
     let width = 0;

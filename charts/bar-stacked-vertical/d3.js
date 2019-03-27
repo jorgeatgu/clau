@@ -685,8 +685,6 @@
 
   var filterEvents = {};
 
-  exports.event = null;
-
   if (typeof document !== "undefined") {
     var element = document.documentElement;
     if (!("onmouseenter" in element)) {
@@ -706,12 +704,9 @@
 
   function contextListener(listener, index, group) {
     return function(event1) {
-      var event0 = exports.event; // Events can be reentrant (e.g., focus).
-      exports.event = event1;
       try {
         listener.call(this, this.__data__, index, group);
       } finally {
-        exports.event = event0;
       }
     };
   }
@@ -863,32 +858,6 @@
     return typeof selector === "string"
         ? new Selection([[document.querySelector(selector)]], [document.documentElement])
         : new Selection([[selector]], root);
-  }
-
-  function sourceEvent() {
-    var current = exports.event, source;
-    while (source = current.sourceEvent) current = source;
-    return current;
-  }
-
-  function point(node, event) {
-    var svg = node.ownerSVGElement || node;
-
-    if (svg.createSVGPoint) {
-      var point = svg.createSVGPoint();
-      point.x = event.clientX, point.y = event.clientY;
-      point = point.matrixTransform(node.getScreenCTM().inverse());
-      return [point.x, point.y];
-    }
-
-    var rect = node.getBoundingClientRect();
-    return [event.clientX - rect.left - node.clientLeft, event.clientY - rect.top - node.clientTop];
-  }
-
-  function mouse(node) {
-    var event = sourceEvent();
-    if (event.changedTouches) event = event.changedTouches[0];
-    return point(node, event);
   }
 
   function selectAll(selector) {
@@ -2753,188 +2722,6 @@
   selection.prototype.interrupt = selection_interrupt;
   selection.prototype.transition = selection_transition;
 
-  var prefix = "$";
-
-  function Map$1() {}
-
-  Map$1.prototype = map.prototype = {
-    constructor: Map$1,
-    has: function(key) {
-      return (prefix + key) in this;
-    },
-    get: function(key) {
-      return this[prefix + key];
-    },
-    set: function(key, value) {
-      this[prefix + key] = value;
-      return this;
-    },
-    remove: function(key) {
-      var property = prefix + key;
-      return property in this && delete this[property];
-    },
-    clear: function() {
-      for (var property in this) if (property[0] === prefix) delete this[property];
-    },
-    keys: function() {
-      var keys = [];
-      for (var property in this) if (property[0] === prefix) keys.push(property.slice(1));
-      return keys;
-    },
-    values: function() {
-      var values = [];
-      for (var property in this) if (property[0] === prefix) values.push(this[property]);
-      return values;
-    },
-    entries: function() {
-      var entries = [];
-      for (var property in this) if (property[0] === prefix) entries.push({key: property.slice(1), value: this[property]});
-      return entries;
-    },
-    size: function() {
-      var size = 0;
-      for (var property in this) if (property[0] === prefix) ++size;
-      return size;
-    },
-    empty: function() {
-      for (var property in this) if (property[0] === prefix) return false;
-      return true;
-    },
-    each: function(f) {
-      for (var property in this) if (property[0] === prefix) f(this[property], property.slice(1), this);
-    }
-  };
-
-  function map(object, f) {
-    var map = new Map$1;
-
-    // Copy constructor.
-    if (object instanceof Map$1) object.each(function(value, key) { map.set(key, value); });
-
-    // Index array by numeric index or specified key function.
-    else if (Array.isArray(object)) {
-      var i = -1,
-          n = object.length,
-          o;
-
-      if (f == null) while (++i < n) map.set(i, object[i]);
-      else while (++i < n) map.set(f(o = object[i], i, object), o);
-    }
-
-    // Convert object to map.
-    else if (object) for (var key in object) map.set(key, object[key]);
-
-    return map;
-  }
-
-  function nest() {
-    var keys = [],
-        sortKeys = [],
-        sortValues,
-        rollup,
-        nest;
-
-    function apply(array, depth, createResult, setResult) {
-      if (depth >= keys.length) {
-        if (sortValues != null) array.sort(sortValues);
-        return rollup != null ? rollup(array) : array;
-      }
-
-      var i = -1,
-          n = array.length,
-          key = keys[depth++],
-          keyValue,
-          value,
-          valuesByKey = map(),
-          values,
-          result = createResult();
-
-      while (++i < n) {
-        if (values = valuesByKey.get(keyValue = key(value = array[i]) + "")) {
-          values.push(value);
-        } else {
-          valuesByKey.set(keyValue, [value]);
-        }
-      }
-
-      valuesByKey.each(function(values, key) {
-        setResult(result, key, apply(values, depth, createResult, setResult));
-      });
-
-      return result;
-    }
-
-    function entries(map, depth) {
-      if (++depth > keys.length) return map;
-      var array, sortKey = sortKeys[depth - 1];
-      if (rollup != null && depth >= keys.length) array = map.entries();
-      else array = [], map.each(function(v, k) { array.push({key: k, values: entries(v, depth)}); });
-      return sortKey != null ? array.sort(function(a, b) { return sortKey(a.key, b.key); }) : array;
-    }
-
-    return nest = {
-      object: function(array) { return apply(array, 0, createObject, setObject); },
-      map: function(array) { return apply(array, 0, createMap, setMap); },
-      entries: function(array) { return entries(apply(array, 0, createMap, setMap), 0); },
-      key: function(d) { keys.push(d); return nest; },
-      sortKeys: function(order) { sortKeys[keys.length - 1] = order; return nest; },
-      sortValues: function(order) { sortValues = order; return nest; },
-      rollup: function(f) { rollup = f; return nest; }
-    };
-  }
-
-  function createObject() {
-    return {};
-  }
-
-  function setObject(object, key, value) {
-    object[key] = value;
-  }
-
-  function createMap() {
-    return map();
-  }
-
-  function setMap(map, key, value) {
-    map.set(key, value);
-  }
-
-  function Set() {}
-
-  var proto = map.prototype;
-
-  Set.prototype = set$2.prototype = {
-    constructor: Set,
-    has: proto.has,
-    add: function(value) {
-      value += "";
-      this[prefix + value] = value;
-      return this;
-    },
-    remove: proto.remove,
-    clear: proto.clear,
-    values: proto.keys,
-    size: proto.size,
-    empty: proto.empty,
-    each: proto.each
-  };
-
-  function set$2(object, f) {
-    var set = new Set;
-
-    // Copy constructor.
-    if (object instanceof Set) object.each(function(value) { set.add(value); });
-
-    // Otherwise, assume it’s an array.
-    else if (object) {
-      var i = -1, n = object.length;
-      if (f == null) while (++i < n) set.add(object[i]);
-      else while (++i < n) set.add(f(object[i], i, object));
-    }
-
-    return set;
-  }
-
   function ascending$1(a, b) {
     return a < b ? -1 : a > b ? 1 : a >= b ? 0 : NaN;
   }
@@ -3124,7 +2911,7 @@
   // According to https://en.wikipedia.org/wiki/Cubic_Hermite_spline#Representations
   // "you can express cubic Hermite interpolation in terms of cubic Bézier curves
   // with respect to the four values p0, p0 + m0 / 3, p1 - m1 / 3, p1".
-  function point$1(that, t0, t1) {
+  function point(that, t0, t1) {
     var x0 = that._x0,
         y0 = that._y0,
         x1 = that._x1,
@@ -3153,7 +2940,7 @@
     lineEnd: function() {
       switch (this._point) {
         case 2: this._context.lineTo(this._x1, this._y1); break;
-        case 3: point$1(this, this._t0, slope2(this, this._t0)); break;
+        case 3: point(this, this._t0, slope2(this, this._t0)); break;
       }
       if (this._line || (this._line !== 0 && this._point === 1)) this._context.closePath();
       this._line = 1 - this._line;
@@ -3166,8 +2953,8 @@
       switch (this._point) {
         case 0: this._point = 1; this._line ? this._context.lineTo(x, y) : this._context.moveTo(x, y); break;
         case 1: this._point = 2; break;
-        case 2: this._point = 3; point$1(this, slope2(this, t1 = slope3(this, x, y)), t1); break;
-        default: point$1(this, this._t0, t1 = slope3(this, x, y)); break;
+        case 2: this._point = 3; point(this, slope2(this, t1 = slope3(this, x, y)), t1); break;
+        default: point(this, this._t0, t1 = slope3(this, x, y)); break;
       }
 
       this._x0 = this._x1, this._x1 = x;
@@ -5039,6 +4826,116 @@
     return axis(left, scale);
   }
 
+  var prefix = "$";
+
+  function Map$1() {}
+
+  Map$1.prototype = map.prototype = {
+    constructor: Map$1,
+    has: function(key) {
+      return (prefix + key) in this;
+    },
+    get: function(key) {
+      return this[prefix + key];
+    },
+    set: function(key, value) {
+      this[prefix + key] = value;
+      return this;
+    },
+    remove: function(key) {
+      var property = prefix + key;
+      return property in this && delete this[property];
+    },
+    clear: function() {
+      for (var property in this) if (property[0] === prefix) delete this[property];
+    },
+    keys: function() {
+      var keys = [];
+      for (var property in this) if (property[0] === prefix) keys.push(property.slice(1));
+      return keys;
+    },
+    values: function() {
+      var values = [];
+      for (var property in this) if (property[0] === prefix) values.push(this[property]);
+      return values;
+    },
+    entries: function() {
+      var entries = [];
+      for (var property in this) if (property[0] === prefix) entries.push({key: property.slice(1), value: this[property]});
+      return entries;
+    },
+    size: function() {
+      var size = 0;
+      for (var property in this) if (property[0] === prefix) ++size;
+      return size;
+    },
+    empty: function() {
+      for (var property in this) if (property[0] === prefix) return false;
+      return true;
+    },
+    each: function(f) {
+      for (var property in this) if (property[0] === prefix) f(this[property], property.slice(1), this);
+    }
+  };
+
+  function map(object, f) {
+    var map = new Map$1;
+
+    // Copy constructor.
+    if (object instanceof Map$1) object.each(function(value, key) { map.set(key, value); });
+
+    // Index array by numeric index or specified key function.
+    else if (Array.isArray(object)) {
+      var i = -1,
+          n = object.length,
+          o;
+
+      if (f == null) while (++i < n) map.set(i, object[i]);
+      else while (++i < n) map.set(f(o = object[i], i, object), o);
+    }
+
+    // Convert object to map.
+    else if (object) for (var key in object) map.set(key, object[key]);
+
+    return map;
+  }
+
+  function Set() {}
+
+  var proto = map.prototype;
+
+  Set.prototype = set$2.prototype = {
+    constructor: Set,
+    has: proto.has,
+    add: function(value) {
+      value += "";
+      this[prefix + value] = value;
+      return this;
+    },
+    remove: proto.remove,
+    clear: proto.clear,
+    values: proto.keys,
+    size: proto.size,
+    empty: proto.empty,
+    each: proto.each
+  };
+
+  function set$2(object, f) {
+    var set = new Set;
+
+    // Copy constructor.
+    if (object instanceof Set) object.each(function(value) { set.add(value); });
+
+    // Otherwise, assume it’s an array.
+    else if (object) {
+      var i = -1, n = object.length;
+      if (f == null) while (++i < n) set.add(object[i]);
+      else while (++i < n) set.add(f(object[i], i, object));
+    }
+
+    return set;
+  }
+
   function request(url, callback) {
     var request,
         event = dispatch("beforesend", "progress", "load", "error"),
@@ -5377,14 +5274,10 @@
 
   exports.axisBottom = axisBottom;
   exports.axisLeft = axisLeft;
-  exports.bisector = bisector;
   exports.csv = csv$1;
   exports.easeLinear = linear$1;
   exports.max = max;
   exports.min = min;
-  exports.mouse = mouse;
-  exports.nest = nest;
-  exports.range = sequence;
   exports.scaleBand = band;
   exports.scaleLinear = linear$2;
   exports.scaleOrdinal = ordinal;

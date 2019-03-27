@@ -1,14 +1,8 @@
 import 'd3-transition';
 
-export { select, selectAll, mouse, event } from 'd3-selection';
+export { select, selectAll } from 'd3-selection';
 
-export { dispatch } from 'd3-dispatch';
-
-export { nest } from 'd3-collection';
-
-export { min, max, bisector, range, group } from 'd3-array';
-
-export { line, curveCardinal, arc, curveLinear, area } from 'd3-shape';
+export { min, max } from 'd3-array';
 
 export { scaleTime, scaleLinear } from 'd3-scale';
 

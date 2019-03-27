@@ -2,11 +2,9 @@ import 'd3-transition';
 
 export { select, selectAll, mouse, event } from 'd3-selection';
 
-export { dispatch } from 'd3-dispatch';
+export { min, max, bisector } from 'd3-array';
 
-export { min, max, bisector, range, group } from 'd3-array';
-
-export { line, curveCardinal, area } from 'd3-shape';
+export { curveCardinal, area } from 'd3-shape';
 
 export { scaleTime, scaleLinear } from 'd3-scale';
 

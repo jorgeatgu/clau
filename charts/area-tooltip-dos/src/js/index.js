@@ -1,3 +1,7 @@
+import wesPalette from './../../../../src/js/color.js';
+
+wesPalette();
+
 const areaTooltipDue = () => {
     const margin = { top: 24, right: 24, bottom: 24, left: 24 };
     let width = 0;

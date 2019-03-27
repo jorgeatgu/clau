@@ -1,12 +1,12 @@
 import 'd3-transition';
 
-export { select, selectAll, mouse, event } from 'd3-selection';
+export { select, selectAll } from 'd3-selection';
 
-export { min, max, bisector, range, group } from 'd3-array';
+export { min, max } from 'd3-array';
 
-export { line, curveCardinal } from 'd3-shape';
+export { line } from 'd3-shape';
 
-export { scaleTime, scaleLinear, scaleOrdinal, scaleBand } from 'd3-scale';
+export { scaleTime, scaleLinear } from 'd3-scale';
 
 export { axisBottom, axisLeft } from 'd3-axis';
 

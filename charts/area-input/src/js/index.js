@@ -1,4 +1,4 @@
-import wesPalette from './../../color.js';
+import wesPalette from './../../../../src/js/color.js';
 
 wesPalette();
 

@@ -1,10 +1,8 @@
 import 'd3-transition';
 
-export { select, selectAll, mouse, event } from 'd3-selection';
+export { select, selectAll } from 'd3-selection';
 
-export { nest } from 'd3-collection';
-
-export { min, max, bisector, range } from 'd3-array';
+export { min, max } from 'd3-array';
 
 export { stack } from 'd3-shape';
 

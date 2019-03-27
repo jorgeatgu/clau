@@ -4,7 +4,7 @@ export { select, selectAll } from 'd3-selection';
 
 export { nest } from 'd3-collection';
 
-export { min, max, range } from 'd3-array';
+export { min, max } from 'd3-array';
 
 export { area } from 'd3-shape';
 
