@@ -410,7 +410,7 @@ template {
         }
 
 .chart-grid {
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: 80%;
     display: grid;
     max-width: 55rem;
     margin-bottom: 4rem;
@@ -493,9 +493,11 @@ template {
 @media only screen and (min-width: 48rem) {
 
     .chart {
-        background-color: #f1f1f1;
-        background-color: var(--bg);
         padding: 3rem;
+    }
+
+    .chart-grid {
+        grid-template-columns: 33% 33% 33%;
     }
 }
 
@@ -521,6 +523,11 @@ body {
 .chart-container {
     max-width: 65rem;
     margin: 0 auto;
+}
+
+.similar-chart {
+    max-width: 40rem;
+    padding: 0 1rem;
 }
 
 .footer {

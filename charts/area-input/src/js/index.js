@@ -17,7 +17,7 @@ const areaInput = () => {
     const temp = 'ºC';
 
     const setupScales = () => {
-        const countX = d3.scaleTime().domain([1951, 2018]);
+        const countX = d3.scaleLinear().domain([1951, 2018]);
 
         const countY = d3.scaleLinear().domain([0, 20]);
 

@@ -23,7 +23,7 @@
 }
 
 .chart-grid {
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: 80%;
     display: grid;
     max-width: 55rem;
     margin-bottom: 4rem;
@@ -88,5 +88,16 @@
     }
     &.combo-ninth {
         background-color: #5A1B1A;
+    }
+}
+
+@media only screen and (min-width: 48rem) {
+
+    .chart {
+        padding: 3rem;
+    }
+
+    .chart-grid {
+        grid-template-columns: 33% 33% 33%;
     }
 }

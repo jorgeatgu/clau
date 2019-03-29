@@ -12,9 +12,16 @@ const area = () => {
     let dataz;
 
     const setupScales = () => {
-        const countX = d3.scaleTime().domain([1951, 2017]);
+        const countX = d3
+            .scaleLinear()
+            .domain([
+                d3.min(dataz, (d) => d.fecha),
+                d3.max(dataz, (d) => d.fecha)
+            ]);
 
-        const countY = d3.scaleLinear().domain([0, 60]);
+        const countY = d3
+            .scaleLinear()
+            .domain([0, d3.max(dataz, (d) => d.dias_lluvia * 1.25)]);
 
         scales.count = { x: countX, y: countY };
     };
@@ -41,7 +48,7 @@ const area = () => {
             .ticks(13);
 
         g.select('.axis-x')
-            .attr('transform', 'translate(0,' + height + ')')
+            .attr('transform', `translate(0,${height})`)
             .call(axisX);
 
         const axisY = d3
@@ -62,7 +69,7 @@ const area = () => {
 
         svg.attr('width', w).attr('height', h);
 
-        const translate = 'translate(' + margin.left + ',' + margin.top + ')';
+        const translate = `translate(${margin.left},${margin.top})`;
 
         const g = svg.select('.container');
 

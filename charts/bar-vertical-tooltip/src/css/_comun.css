@@ -18,6 +18,11 @@ body {
     margin: 0 auto;
 }
 
+.similar-chart {
+    max-width: 40rem;
+    padding: 0 1rem;
+}
+
 .footer {
     background-color: #E25772;
     width: 100%;

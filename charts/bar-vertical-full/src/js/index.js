@@ -45,8 +45,8 @@ const barVerticalFull = () => {
         const axisX = d3.axisBottom(scales.count.x).tickFormat(d3.format('d'));
 
         g.select('.axis-x')
-            .attr('transform', 'translate(0,' + height + ')')
-            .call(axisX);
+    .attr('transform', `translate(0,${height})`)
+    .call(axisX);
     };
 
     const updateChart = (dataz) => {
@@ -58,7 +58,7 @@ const barVerticalFull = () => {
 
         svg.attr('width', w).attr('height', h);
 
-        const translate = 'translate(' + margin.left + ',' + margin.top + ')';
+        const translate = `translate(${margin.left},${margin.top})`;
 
         const g = svg.select('.vertical-full-lluvia-container');
 

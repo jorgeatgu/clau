@@ -45,8 +45,8 @@ const barStackedVertical = () => {
             .tickFormat(d3.format('d'));
 
         g.select('.axis-x')
-            .attr('transform', 'translate(0,' + height + ')')
-            .call(axisX);
+    .attr('transform', `translate(0,${height})`)
+    .call(axisX);
 
         const axisY = d3
             .axisLeft(scales.count.y)
@@ -67,7 +67,7 @@ const barStackedVertical = () => {
 
         svg.attr('width', w).attr('height', h);
 
-        const translate = 'translate(' + margin.left + ',' + margin.top + ')';
+        const translate = `translate(${margin.left},${margin.top})`;
 
         const g = svg.select('.bar-stack-container');
 

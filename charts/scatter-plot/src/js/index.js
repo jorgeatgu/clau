@@ -66,8 +66,8 @@ const barscatter = () => {
             .ticks(20);
 
         g.select('.axis-x')
-            .attr('transform', 'translate(0,' + height + ')')
-            .call(axisX);
+    .attr('transform', `translate(0,${height})`)
+    .call(axisX);
 
         const axisY = d3
             .axisLeft(scales.count.y)
@@ -89,7 +89,7 @@ const barscatter = () => {
 
         svg.attr('width', w).attr('height', h);
 
-        const translate = 'translate(' + margin.left + ',' + margin.top + ')';
+        const translate = `translate(${margin.left},${margin.top})`;
 
         const g = svg.select('.chart-lluvia-scatter-container');
 

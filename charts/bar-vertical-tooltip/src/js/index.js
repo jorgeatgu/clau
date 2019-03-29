@@ -47,8 +47,8 @@ const barVerticalTooltip = () => {
         const axisX = d3.axisBottom(scales.count.x).tickFormat(d3.format('d'));
 
         g.select('.axis-x')
-            .attr('transform', 'translate(0,' + height + ')')
-            .call(axisX);
+    .attr('transform', `translate(0,${height})`)
+    .call(axisX);
 
         const axisY = d3
             .axisLeft(scales.count.y)
@@ -68,7 +68,7 @@ const barVerticalTooltip = () => {
 
         svg.attr('width', w).attr('height', h);
 
-        const translate = 'translate(' + margin.left + ',' + margin.top + ')';
+        const translate = `translate(${margin.left},${margin.top})`;
 
         const g = svg.select('.chart-lluvia-bar-vertical-tooltip-container');
 

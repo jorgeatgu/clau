@@ -1,6 +1,6 @@
 .chart {
     background-color: var(--bg);
-    padding: 3rem;
+    padding: .5rem;
 }
 
 .chart-temperature-max {
@@ -94,3 +94,10 @@
     }
 }
 
+@media only screen and (min-width: 48rem) {
+
+    .chart {
+        padding: 3rem;
+    }
+
+}
